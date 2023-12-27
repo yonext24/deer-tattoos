@@ -11,7 +11,13 @@ export type Tattoo = {
 }
 const getTattoos = async (): Promise<Tattoo[]> => {
   const a = tattoos
-    .map((el, num) => ({ ...el, __number__: num }))
+    .map(
+      (el, num): Tattoo => ({
+        ...el,
+        __number__: num,
+        type: el.type as 'single' | 'double' | 'quad',
+      }),
+    )
     .sort((a, b) => {
       if (a.type === 'single' && a.__number__ % 2 !== 0) return -1
       return 0
