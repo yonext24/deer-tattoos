@@ -1,0 +1,11 @@
+[
+  { "id": 1, "image": "/a.jpg", "type": "single" },
+  { "id": 2, "image": "/a.jpg", "type": "single" },
+  { "id": 3, "image": "/a.jpg", "type": "single" },
+  { "id": 4, "image": "/b.jpg", "type": "double" },
+  { "id": 5, "image": "/a.jpg", "type": "single" },
+  { "id": 6, "image": "/a.jpg", "type": "single" },
+  { "id": 7, "image": "/a.jpg", "type": "single" },
+  { "id": 8, "image": "/a.jpg", "type": "quad" },
+  { "id": 9, "image": "/a.jpg", "type": "single" }
+]
