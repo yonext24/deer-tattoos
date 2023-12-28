@@ -5,6 +5,8 @@ import { getTattoos } from '@/lib/firebase/utils/tattoos'
 import { CategoriesFilter } from '@/components/filters/categories-filter/categories-filter'
 import { cache } from 'react'
 
+export const revalidate = 3600
+
 const localeGetTattoos = cache(getTattoos)
 
 export default async function Page({

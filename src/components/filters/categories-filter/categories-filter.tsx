@@ -22,6 +22,8 @@ import { getStyles } from '@/lib/firebase/utils/styles'
 import { cn } from '@/lib/utils/utils'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
+import { useNavigation } from '@/hooks/useNavigation'
+import Spinner from '@/components/ui/common/spinner'
 
 export function CategoriesFilter({
   searchParams,
@@ -29,6 +31,15 @@ export function CategoriesFilter({
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const [styles, setStyles] = useState<Style[]>([])
+  const [navigating, setNavigating] = useState<false | string>(false)
+
+  const { route } = useNavigation({
+    on: {
+      routeChanged: () => {
+        setNavigating(false)
+      },
+    },
+  })
 
   useEffect(() => {
     getStyles().then(setStyles)
@@ -47,10 +58,13 @@ export function CategoriesFilter({
         params.append('style', value)
       }
 
+      setNavigating(value)
       router.push(createUrl('/tatuajes', params))
     },
     [router, searchParams],
   )
+
+  console.log(navigating)
 
   const params = generateParams(searchParams)
   const selectedValues = params.getAll('style')
@@ -70,9 +84,13 @@ export function CategoriesFilter({
                 const isSelected = selectedValues.includes(
                   String(el.name).toLocaleLowerCase(),
                 )
+                const isCurrentElementLoading =
+                  (typeof navigating === 'string' &&
+                    navigating.toLowerCase()) === el.name.toLocaleLowerCase()
                 return (
                   <CommandItem onSelect={handleSelect} key={el.name}>
                     <div
+                      data-loading={isCurrentElementLoading}
                       className={cn(
                         'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
                         isSelected
@@ -83,6 +101,9 @@ export function CategoriesFilter({
                       <CheckIcon className={cn('h-4 w-4')} />
                     </div>
                     <span>{el.name}</span>
+                    {isCurrentElementLoading && (
+                      <Spinner className="border-2 ml-auto text-white" />
+                    )}
                   </CommandItem>
                 )
               })}
