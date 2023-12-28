@@ -5,6 +5,8 @@ import { Section } from '../common/section'
 import { cn } from '@/lib/utils/utils'
 import { Button } from '@/components/shadcn/ui/button'
 import Image from 'next/image'
+import tattoos from '../../../../public/tattoos.json'
+import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 
 export function Tattoos() {
   const { intersecting, fromRef } = useIntersect({
@@ -32,6 +34,7 @@ export function Tattoos() {
       <div className="h-full w-full flex">
         <div className="grid grid-cols-2 gap-4 py-2 pr-2 m-auto flex-1">
           {Array.from({ length: 4 }).map((_, index) => {
+            const tattoo = tattoos[index]
             return (
               <article
                 key={index}
@@ -41,7 +44,12 @@ export function Tattoos() {
                   intersecting && 'opacity-100',
                 )}
               >
-                <Image src={'/a.jpg'} alt="image" layout="fill" />
+                <ImageWithBlur
+                  src={tattoo.image}
+                  blurDataURL={tattoo.bluredImg}
+                  alt="image"
+                  layout="fill"
+                />
                 <div
                   className="absolute top-0 left-0 w-full h-full z-10 opacity-0 flex items-center justify-center duration-300
               bg-green-dark/50 text-white backdrop-blur-md transition-opacity group-hover:opacity-100 font-thin"

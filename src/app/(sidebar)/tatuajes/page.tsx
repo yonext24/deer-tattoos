@@ -1,36 +1,26 @@
 import { Main } from '@/components/ui/common/main'
 import { Section } from '@/components/ui/common/section'
-import tattoos from '../../../../public/tattoos.json'
 import { TattooCard } from '@/components/tattoo-card/tattoo-card'
+import { getTattoos } from '@/lib/firebase/utils/tattoos'
+import { CategoriesFilter } from '@/components/filters/categories-filter/categories-filter'
+import { cache } from 'react'
 
-export type Tattoo = {
-  id: number
-  image: string
-  type: 'single' | 'double' | 'quad'
-  __number__: number
-}
-const getTattoos = async (): Promise<Tattoo[]> => {
-  const a = tattoos
-    .map(
-      (el, num): Tattoo => ({
-        ...el,
-        __number__: num,
-        type: el.type as 'single' | 'double' | 'quad',
-      }),
-    )
-    .sort((a, b) => {
-      if (a.type === 'single' && a.__number__ % 2 !== 0) return -1
-      return 0
-    })
-  return a
-}
+const localeGetTattoos = cache(getTattoos)
 
-export default async function Page() {
-  const tattoos = await getTattoos()
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
+  const tattoos = await localeGetTattoos(searchParams!)
 
   return (
     <Main>
       <Section className="w-full">
+        <div className="p-4 py-2">
+          <CategoriesFilter searchParams={searchParams} />
+        </div>
+
         <div className="grid grid-cols-2 gap-4 p-4">
           {tattoos.map((tat, index) => (
             <TattooCard

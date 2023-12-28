@@ -1,7 +1,8 @@
-import { Tattoo } from '@/app/(sidebar)/tatuajes/page'
+/* eslint-disable @next/next/no-img-element */
+import { Tattoo } from '@lib/types/tattoo'
 import { cn } from '@/lib/utils/utils'
-import Image from 'next/image'
 import Link from 'next/link'
+import { ImageWithBlur } from './image-with-blur'
 
 type TattooCardProps = Tattoo & {
   withAnimation: boolean
@@ -13,7 +14,9 @@ export function TattooCard({
   image,
   id,
   withAnimation = false,
+  bluredImg,
   delay,
+  styles,
 }: TattooCardProps) {
   const height = {
     single: 400,
@@ -26,7 +29,7 @@ export function TattooCard({
       role="link"
       key={id}
       className={cn(
-        'overflow-hidden rounded',
+        'overflow-hidden rounded relative border border-border group',
         type === 'double' && 'col-start-1 col-end-3',
         type === 'quad' && 'col-start-1 col-end-3',
         withAnimation && 'animate-fadeIn',
@@ -38,15 +41,27 @@ export function TattooCard({
       }
     >
       <Link href={`/tatuajes/${id}`}>
-        <Image
+        <ImageWithBlur
           src={image}
+          loading="lazy"
+          blurDataURL={bluredImg}
           height={height}
           style={{ height }}
           quality={100}
           width={type === 'single' ? 400 : 800}
           alt="Image"
-          className="w-full object-center object-cover"
+          className={cn('w-full object-center object-cover')}
         />
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-green-dark/50 backdrop-blur z-10 flex flex-col items-center justify-evenly
+        transition-opacity opacity-0 group-hover:opacity-100"
+        >
+          {styles.map((style, index) => (
+            <span key={index} className="text-white text-2xl font-thin">
+              {style}
+            </span>
+          ))}
+        </div>
       </Link>
     </article>
   )

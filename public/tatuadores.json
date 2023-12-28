@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Johndoe",
+    "age": 28,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl ultricies nunc.",
+    "styles": ["japanese", "tradicional", "color"],
+    "images": {
+      "background": "",
+      "profile": ""
+    },
+    "media": {
+      "instagram": "",
+      "facebook": "",
+      "twitter": "",
+      "web": ""
+    }
+  },
+  {
+    "name": "Jorge",
+    "age": 23,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl ultricies nunc.",
+    "styles": ["blackwork", "neo-tradicional", "geometrico"],
+    "images": {
+      "background": "",
+      "profile": ""
+    },
+    "media": {
+      "instagram": "",
+      "facebook": "",
+      "twitter": "",
+      "web": ""
+    }
+  },
+  {
+    "name": "David",
+    "age": 31,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl ultricies nunc.",
+    "styles": ["minimalista", "puntillismo"],
+    "images": {
+      "background": "",
+      "profile": ""
+    },
+    "media": {
+      "instagram": "",
+      "facebook": "",
+      "twitter": "",
+      "web": ""
+    }
+  }
+]

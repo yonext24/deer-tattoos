@@ -1,11 +1,74 @@
 [
-  { "id": 1, "image": "/a.jpg", "type": "single" },
-  { "id": 2, "image": "/a.jpg", "type": "single" },
-  { "id": 3, "image": "/a.jpg", "type": "single" },
-  { "id": 4, "image": "/b.jpg", "type": "double" },
-  { "id": 5, "image": "/a.jpg", "type": "single" },
-  { "id": 6, "image": "/a.jpg", "type": "single" },
-  { "id": 7, "image": "/a.jpg", "type": "single" },
-  { "id": 8, "image": "/a.jpg", "type": "quad" },
-  { "id": 9, "image": "/a.jpg", "type": "single" }
+  {
+    "id": 1,
+    "image": "/a.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AIuIgp+RheKbgIN2agCysqvHqpb/0bDQ0c0AAAcFv5F4/+bV//74ACAAAHdOQDEtKmZlYOcbGgr8U4zeAAAAAElFTkSuQmCC",
+    "styles": ["color", "japanese", "tradicional"],
+    "tags": ["koi"],
+    "type": "single"
+  },
+  {
+    "id": 2,
+    "image": "/charly.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPUlEQVR4nGNISkr+eO9KTJCHqoo0Q0pKyrdbZyfV5klKCDB4enmbGugfXdjPy8rAIK+goK2l8f/9dSUJPgAGVRIOVUkBOwAAAABJRU5ErkJggg==",
+    "styles": ["blackwork"],
+    "tags": ["rock", "charly"],
+    "type": "single"
+  },
+  {
+    "id": 4,
+    "image": "/koi.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AAAKECwiGbiklq6fkgBRTEiHcmvkzcf/9u0AaGNeuZ+T2ry6//LoABIXGCsdEks8Loh0Yk3nFuFHoE+JAAAAAElFTkSuQmCC",
+    "styles": ["color", "japanese", "tradicional"],
+    "tags": ["koi"],
+    "type": "double"
+  },
+  {
+    "id": 3,
+    "image": "/saint.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AMe5rf/cx19QSQAABgDs6OD81MqZgX4CAwwA+//54s3FrZSSCAkRAM7Tzce3rf/05gwMDtz7G7m4E/oDAAAAAElFTkSuQmCC",
+    "styles": ["blackwork"],
+    "tags": ["anime"],
+    "type": "single"
+  },
+  {
+    "id": 5,
+    "image": "/b.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AEA+PFNRTjw+QHlkXwCPf3r/9/DLsKnLqJ8ATkZEwKul+uXl/d/bAAMDAxgZGMXEyqursmh8GVdTnaphAAAAAElFTkSuQmCC",
+    "styles": ["blackwork"],
+    "tags": ["leon"],
+    "type": "single"
+  },
+  {
+    "id": 6,
+    "image": "/mujer.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPUlEQVR4nGNgZGJpKSv6//VDckw4AwMDQ0Va6skt2+3s7Ri4eAXmdXSc2rhOW1+bwdPd5+GRQ0lRkdIy0gDsxRLN7n4BcwAAAABJRU5ErkJggg==",
+    "styles": ["blackwork"],
+    "tags": ["persona", "flor", "flores"],
+    "type": "single"
+  },
+  {
+    "id": 7,
+    "image": "/a.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AIuIgp+RheKbgIN2agCysqvHqpb/0bDQ0c0AAAcFv5F4/+bV//74ACAAAHdOQDEtKmZlYOcbGgr8U4zeAAAAAElFTkSuQmCC",
+    "styles": ["color", "japanese", "tradicional"],
+    "tags": ["koi"],
+    "type": "single"
+  },
+  {
+    "id": 8,
+    "image": "/leon.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/APH07aOTjP/f2UIoLgD4/vO9oZ+cdXsZFh0AvLyyt5ybRR0nMAABAEZAOv/PzSsMEHo6SOJIGBLUsKknAAAAAElFTkSuQmCC",
+    "styles": ["blackwork"],
+    "tags": ["leon"],
+    "type": "quad"
+  },
+  {
+    "id": 9,
+    "image": "/a.jpg",
+    "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AIuIgp+RheKbgIN2agCysqvHqpb/0bDQ0c0AAAcFv5F4/+bV//74ACAAAHdOQDEtKmZlYOcbGgr8U4zeAAAAAElFTkSuQmCC",
+    "styles": ["color", "japanese", "tradicional"],
+    "tags": ["koi"],
+    "type": "single"
+  }
 ]

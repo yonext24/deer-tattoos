@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Realismo",
+    "variants": ["realism"]
+  },
+  {
+    "name": "Neo-tradicional",
+    "variants": ["neo-traditional"]
+  },
+  {
+    "name": "Tribal",
+    "variants": ["tribal"]
+  },
+  {
+    "name": "Acuarela",
+    "variants": ["watercolor"]
+  },
+  {
+    "name": "Geométrico",
+    "variants": ["geometric"]
+  },
+  {
+    "name": "Ilustrativo",
+    "variants": ["illustrative"]
+  },
+  {
+    "name": "Maorí",
+    "variants": ["maori"]
+  },
+  {
+    "name": "Trash Polka",
+    "variants": ["trash-polka"]
+  },
+  {
+    "name": "Old School",
+    "variants": ["old-school"]
+  },
+  {
+    "name": "Lettering o caligrafía",
+    "variants": ["lettering"]
+  },
+  {
+    "name": "Blackwork",
+    "variants": ["blackwork"]
+  },
+  {
+    "name": "Biomecánico",
+    "variants": ["biomechanical"]
+  },
+  {
+    "name": "Minimalista",
+    "variants": ["minimalist"]
+  },
+  {
+    "name": "Puntillismo",
+    "variants": ["pointillism"]
+  },
+  {
+    "name": "Escritura a mano",
+    "variants": ["handwriting"]
+  },
+  {
+    "name": "Etnico o cultural",
+    "variants": ["ethnic-cultural"]
+  },
+  {
+    "name": "Hiperrealismo",
+    "variants": ["hyperrealism"]
+  },
+  {
+    "name": "Silueta",
+    "variants": ["silhouette"]
+  },
+  {
+    "name": "Graffiti",
+    "variants": ["graffiti"]
+  },
+  {
+    "name": "Fantasía",
+    "variants": ["fantasy"]
+  }
+]
