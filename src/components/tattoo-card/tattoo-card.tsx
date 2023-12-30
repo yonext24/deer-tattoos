@@ -11,7 +11,7 @@ type TattooCardProps = Tattoo & {
 
 export function TattooCard({
   type,
-  image,
+  images,
   id,
   withAnimation = false,
   bluredImg,
@@ -42,9 +42,9 @@ export function TattooCard({
     >
       <Link href={`/tatuajes/${id}`}>
         <ImageWithBlur
-          src={image}
+          src={images.main.src}
           loading="lazy"
-          blurDataURL={bluredImg}
+          blurDataURL={images.bluredImg}
           height={height}
           style={{ height }}
           quality={100}

@@ -1,9 +1,17 @@
 export type Tattoo = {
   id: number
-  image: string
+  images: {
+    main: {
+      height: number
+      width: number
+      src: string
+    }
+    bluredImg: string
+  }
   type: 'single' | 'double' | 'quad'
   styles: string[]
   bluredImg: string
   tags: string[]
-  __number__: number
 }
+
+export type TattooWithIndex = Tattoo & { __number__: number }

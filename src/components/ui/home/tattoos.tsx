@@ -4,7 +4,6 @@ import { useIntersect } from '@/hooks/useIntersect'
 import { Section } from '../common/section'
 import { cn } from '@/lib/utils/utils'
 import { Button } from '@/components/shadcn/ui/button'
-import Image from 'next/image'
 import tattoos from '../../../../public/tattoos.json'
 import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 
@@ -45,8 +44,8 @@ export function Tattoos() {
                 )}
               >
                 <ImageWithBlur
-                  src={tattoo.image}
-                  blurDataURL={tattoo.bluredImg}
+                  src={tattoo.images.main.src}
+                  blurDataURL={tattoo.images.bluredImg}
                   alt="image"
                   layout="fill"
                 />
