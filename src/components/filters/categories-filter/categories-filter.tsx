@@ -21,19 +21,17 @@ import { useCallback, useEffect, useState } from 'react'
 import { getStyles } from '@/lib/firebase/utils/styles'
 import { cn } from '@/lib/utils/utils'
 import { CheckIcon } from '@radix-ui/react-icons'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useNavigation } from '@/hooks/useNavigation'
 import Spinner from '@/components/ui/common/spinner'
 
-export function CategoriesFilter({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined }
-}) {
+export function CategoriesFilter() {
   const [styles, setStyles] = useState<Style[]>([])
   const [navigating, setNavigating] = useState<false | string>(false)
 
-  const { route } = useNavigation({
+  const searchParams = useSearchParams()
+
+  useNavigation({
     on: {
       routeChanged: () => {
         setNavigating(false)
@@ -50,6 +48,7 @@ export function CategoriesFilter({
   const handleSelect = useCallback(
     (value: string) => {
       const params = generateParams(searchParams)
+
       const selectedValues = params.getAll('style')
 
       if (selectedValues.includes(value)) {
@@ -63,8 +62,6 @@ export function CategoriesFilter({
     },
     [router, searchParams],
   )
-
-  console.log(navigating)
 
   const params = generateParams(searchParams)
   const selectedValues = params.getAll('style')

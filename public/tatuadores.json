@@ -1,6 +1,7 @@
 [
   {
-    "name": "Johndoe",
+    "slug": "juan",
+    "name": "Juan",
     "age": 28,
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl ultricies nunc.",
     "styles": ["japanese", "tradicional", "color"],
@@ -16,6 +17,7 @@
     }
   },
   {
+    "slug": "jorge",
     "name": "Jorge",
     "age": 23,
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl ultricies nunc.",
@@ -32,6 +34,7 @@
     }
   },
   {
+    "slug": "david",
     "name": "David",
     "age": 31,
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl ultricies nunc.",

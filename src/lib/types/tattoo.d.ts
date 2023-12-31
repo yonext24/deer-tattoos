@@ -10,7 +10,6 @@ export type Tattoo = {
   }
   type: 'single' | 'double' | 'quad'
   styles: string[]
-  bluredImg: string
   tags: string[]
 }
 

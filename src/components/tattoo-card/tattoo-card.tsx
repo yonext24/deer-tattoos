@@ -14,7 +14,6 @@ export function TattooCard({
   images,
   id,
   withAnimation = false,
-  bluredImg,
   delay,
   styles,
 }: TattooCardProps) {

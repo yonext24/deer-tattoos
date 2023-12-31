@@ -11,3 +11,18 @@ export const searchInEvery = (search: string, arr: string[]) => {
   }
   return false
 }
+
+export function removeAccents(input: string): string {
+  const accentMap: { [key: string]: string } = {
+    á: 'a',
+    é: 'e',
+    í: 'i',
+    ó: 'o',
+    ú: 'u',
+    ü: 'u',
+  }
+
+  return input.replace(/[áéíóúü]/gi, function (match) {
+    return accentMap[match.toLowerCase()] || match
+  })
+}

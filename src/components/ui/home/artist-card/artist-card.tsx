@@ -22,7 +22,7 @@ export function ArtistCard({
   delay: number
 }) {
   return (
-    <Link href="/" className="w-[550px] ">
+    <Link href="/" className="max-w-[350px] w-full">
       <Card
         className="data-[intersected=false]:opacity-0 duration-300 transition-[opacity,border-color] group hover:border-green"
         style={{

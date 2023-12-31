@@ -3,9 +3,21 @@ import tattoos from '../../../../../public/tattoos.json'
 import { Back } from '@/components/ui/common/back'
 import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
+import { notFound } from 'next/navigation'
+import { Artist } from '@/components/ui/tatuajes/artist/artist'
+
+export const generateStaticParams = () => {
+  return tattoos.map((tattoo) => ({
+    params: { slug: String(tattoo.id) },
+  }))
+}
 
 const getTattoo = async (slug: string) => {
-  return tattoos.find((tattoo) => String(tattoo.id) === slug)
+  const tattoo = tattoos.find((tattoo) => String(tattoo.id) === slug)
+  if (!tattoo) {
+    notFound()
+  }
+  return tattoo
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -15,7 +27,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <Main className="ml-auto flex flex-col gap-4 p-4 w-[700px]">
-      <Back />
+      <div className="w-full flex justify-between items-start">
+        <Back />
+        <Artist slug={tattoo.artist.slug} name={tattoo.artist.name} />
+      </div>
       <picture className="relative overflow-hidden w-full ">
         <ImageWithBlur
           alt="Image"

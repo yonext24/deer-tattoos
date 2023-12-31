@@ -7,17 +7,19 @@
     "images": {
       "main": { "src": "/a.jpg", "width": 1080, "height": 1080 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AIuIgp+RheKbgIN2agCysqvHqpb/0bDQ0c0AAAcFv5F4/+bV//74ACAAAHdOQDEtKmZlYOcbGgr8U4zeAAAAAElFTkSuQmCC"
-    }
+    },
+    "artist": { "name": "David", "slug": "david" }
   },
   {
     "id": 2,
-    "styles": ["blackwork"],
+    "styles": ["blackwork", "fantasia", "tribal"],
     "tags": ["rock", "charly"],
     "type": "single",
     "images": {
       "main": { "src": "/charly.jpg", "width": 1440, "height": 1440 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPUlEQVR4nGNISkr+eO9KTJCHqoo0Q0pKyrdbZyfV5klKCDB4enmbGugfXdjPy8rAIK+goK2l8f/9dSUJPgAGVRIOVUkBOwAAAABJRU5ErkJggg=="
-    }
+    },
+    "artist": { "name": "Jorge", "slug": "jorge" }
   },
   {
     "id": 4,
@@ -27,7 +29,8 @@
     "images": {
       "main": { "src": "/koi.jpg", "width": 1440, "height": 1440 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AAAKECwiGbiklq6fkgBRTEiHcmvkzcf/9u0AaGNeuZ+T2ry6//LoABIXGCsdEks8Loh0Yk3nFuFHoE+JAAAAAElFTkSuQmCC"
-    }
+    },
+    "artist": { "name": "Jorge", "slug": "jorge" }
   },
   {
     "id": 3,
@@ -37,7 +40,8 @@
     "images": {
       "main": { "src": "/saint.jpg", "width": 1440, "height": 1440 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AMe5rf/cx19QSQAABgDs6OD81MqZgX4CAwwA+//54s3FrZSSCAkRAM7Tzce3rf/05gwMDtz7G7m4E/oDAAAAAElFTkSuQmCC"
-    }
+    },
+    "artist": { "name": "Juan", "slug": "juan" }
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "images": {
       "main": { "src": "/b.jpg", "width": 1440, "height": 1440 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AEA+PFNRTjw+QHlkXwCPf3r/9/DLsKnLqJ8ATkZEwKul+uXl/d/bAAMDAxgZGMXEyqursmh8GVdTnaphAAAAAElFTkSuQmCC"
-    }
+    },
+    "artist": { "name": "Juan", "slug": "juan" }
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "images": {
       "main": { "src": "/mujer.jpg", "width": 1440, "height": 1440 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPUlEQVR4nGNgZGJpKSv6//VDckw4AwMDQ0Va6skt2+3s7Ri4eAXmdXSc2rhOW1+bwdPd5+GRQ0lRkdIy0gDsxRLN7n4BcwAAAABJRU5ErkJggg=="
-    }
+    },
+    "artist": { "name": "David", "slug": "david" }
   },
   {
     "id": 7,
@@ -67,7 +73,8 @@
     "images": {
       "main": { "src": "/a.jpg", "width": 1080, "height": 1080 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AIuIgp+RheKbgIN2agCysqvHqpb/0bDQ0c0AAAcFv5F4/+bV//74ACAAAHdOQDEtKmZlYOcbGgr8U4zeAAAAAElFTkSuQmCC"
-    }
+    },
+    "artist": { "name": "Jorge", "slug": "jorge" }
   },
   {
     "id": 8,
@@ -77,7 +84,8 @@
     "images": {
       "main": { "src": "/leon.jpg", "width": 1440, "height": 1440 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/APH07aOTjP/f2UIoLgD4/vO9oZ+cdXsZFh0AvLyyt5ybRR0nMAABAEZAOv/PzSsMEHo6SOJIGBLUsKknAAAAAElFTkSuQmCC"
-    }
+    },
+    "artist": { "name": "David", "slug": "david" }
   },
   {
     "id": 9,
@@ -87,6 +95,7 @@
     "images": {
       "main": { "src": "/a.jpg", "width": 1080, "height": 1080 },
       "bluredImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAP0lEQVR4nAE0AMv/AIuIgp+RheKbgIN2agCysqvHqpb/0bDQ0c0AAAcFv5F4/+bV//74ACAAAHdOQDEtKmZlYOcbGgr8U4zeAAAAAElFTkSuQmCC"
-    }
+    },
+    "artist": { "name": "David", "slug": "david" }
   }
 ]

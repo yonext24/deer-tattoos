@@ -3,31 +3,10 @@
 import { useIntersect } from '@/hooks/useIntersect'
 import { Section } from '../common/section'
 import { ArtistCard } from './artist-card/artist-card'
+import { Artist } from '@/lib/types/artist'
+import { cn } from '@/lib/utils/utils'
 
-const artists = [
-  {
-    name: 'Jorge',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
-  },
-  {
-    name: 'Jorge',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
-  },
-  {
-    name: 'Jorge',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
-  },
-  {
-    name: 'Jorge',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
-  },
-]
-
-export function Artists() {
+export function Artists({ artists }: { artists: Artist[] }) {
   const { fromRef, intersecting } = useIntersect({ once: true })
 
   return (
@@ -37,7 +16,7 @@ export function Artists() {
       id="artistas"
     >
       <h2 className="text-6xl font-light mb-4">Artistas</h2>
-      <div className="flex gap-4">
+      <div className={cn('flex gap-4', artists.length >= 5 && 'flex-wrap')}>
         {artists.map((artist, index) => (
           <ArtistCard
             key={index}

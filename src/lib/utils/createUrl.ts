@@ -10,20 +10,32 @@ export const createUrl = (
   return `${pathname}${queryString}`
 }
 
-export const generateParams = (params?: {
-  [key: string]: string | string[] | undefined
-}) => {
+export const generateParams = (
+  params?:
+    | ReadonlyURLSearchParams
+    | {
+        [key: string]: string | string[] | undefined
+      },
+) => {
   const urlParams = new URLSearchParams()
 
   if (!params) return urlParams
 
-  Object.entries(params).forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      value.forEach((val) => urlParams.append(key, val))
-    } else {
-      urlParams.set(key, value ?? '')
-    }
-  })
+  if (params instanceof ReadonlyURLSearchParams) {
+    const arr = Array.from(params.entries())
+
+    arr.forEach(([key, value]) => {
+      urlParams.append(key, value)
+    })
+  } else {
+    Object.entries(params).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((val) => urlParams.append(key, val))
+      } else {
+        urlParams.set(key, value ?? '')
+      }
+    })
+  }
 
   return urlParams
 }
