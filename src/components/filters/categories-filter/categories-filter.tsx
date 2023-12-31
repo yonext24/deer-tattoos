@@ -21,7 +21,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { getStyles } from '@/lib/firebase/utils/styles'
 import { cn } from '@/lib/utils/utils'
 import { CheckIcon } from '@radix-ui/react-icons'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useNavigation } from '@/hooks/useNavigation'
 import Spinner from '@/components/ui/common/spinner'
 
@@ -44,6 +44,7 @@ export function CategoriesFilter() {
   }, [])
 
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleSelect = useCallback(
     (value: string) => {
@@ -58,9 +59,9 @@ export function CategoriesFilter() {
       }
 
       setNavigating(value)
-      router.push(createUrl('/tatuajes', params))
+      router.push(createUrl(pathname, params))
     },
-    [router, searchParams],
+    [router, searchParams, pathname],
   )
 
   const params = generateParams(searchParams)

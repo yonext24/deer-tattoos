@@ -9,20 +9,17 @@ import {
 import { ArtistCardMedia } from './artist-card-media'
 import Link from 'next/link'
 import { DoubleLeftIcon } from '@/components/icons'
+import { Artist } from '@/lib/types/artist'
 
 export function ArtistCard({
   name,
   intersected,
   delay,
   description,
-}: {
-  name: string
-  description: string
-  intersected: boolean
-  delay: number
-}) {
+  slug,
+}: Artist & { intersected: boolean; delay: number }) {
   return (
-    <Link href="/" className="max-w-[350px] w-full">
+    <Link href={`/tatuador/${slug}/tatuajes`} className="max-w-[350px] w-full">
       <Card
         className="data-[intersected=false]:opacity-0 duration-300 transition-[opacity,border-color] group hover:border-green"
         style={{

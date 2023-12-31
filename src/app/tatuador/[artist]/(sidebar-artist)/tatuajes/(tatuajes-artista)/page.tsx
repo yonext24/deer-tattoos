@@ -1,34 +1,37 @@
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
 import { TattooCard } from '@/components/tattoo-card/tattoo-card'
 import { ColumnLayout } from '@/components/ui/tatuajes/column-layout'
-import { getTattoos } from '@/lib/firebase/utils/tattoos'
+import { getArtistTattoos } from '@/lib/firebase/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
 import { Suspense } from 'react'
 
-export default async function Page({
+export default function Page({
   searchParams,
+  params,
 }: {
   searchParams: SearchParamsType
+  params: { artist: string }
 }) {
-  const paramsToString = `${searchParams?.style}-${searchParams?.search}-${searchParams?.page}-${searchParams?.size}`
+  const key = JSON.stringify(searchParams)
 
   return (
-    <Suspense key={paramsToString} fallback={<Skeletons />}>
-      <Children searchParams={searchParams} />
+    <Suspense fallback={<Skeletons />} key={key}>
+      <Children params={params} searchParams={searchParams} />
     </Suspense>
   )
 }
 
 const Children = async ({
+  params,
   searchParams,
 }: {
+  params: { artist: string }
   searchParams: SearchParamsType
 }) => {
-  const { data: tattoos } = await getTattoos(
-    searchParams?.style,
-    searchParams?.search as string | undefined,
-    searchParams?.page as string | undefined,
-  )
+  const { data: tattoos } = await getArtistTattoos(params.artist, {
+    search: searchParams?.search as string | undefined,
+    style: searchParams?.style as string | string[] | undefined,
+  })
 
   return (
     <ColumnLayout>

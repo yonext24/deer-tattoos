@@ -15,6 +15,7 @@ export default function Layout({
         <div className="p-4 py-2">
           <CategoriesFilter />
         </div>
+
         {children}
         {pagination}
       </Section>

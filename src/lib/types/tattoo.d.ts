@@ -11,6 +11,10 @@ export type Tattoo = {
   type: 'single' | 'double' | 'quad'
   styles: string[]
   tags: string[]
+  artist: {
+    name: string
+    slug: string
+  }
 }
 
 export type TattooWithIndex = Tattoo & { __number__: number }

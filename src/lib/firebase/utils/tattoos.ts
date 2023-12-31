@@ -1,56 +1,81 @@
-import { Tattoo, TattooWithIndex } from '@lib/types/tattoo'
+import { Tattoo } from '@lib/types/tattoo'
 import { sortTats } from '@/lib/utils/sortTats'
 import tattoos from '../../../../public/tattoos.json'
-import { removeAccents, searchInEvery } from '@/lib/utils/utils'
+import { filterTattoos, paginate } from '@/lib/utils/utils'
+import { cache } from 'react'
+import { WithPagination } from '@/lib/types/common'
 
-export const getTattoos = async ({
+const getTattoos = async ({
   search,
   style,
+  page = '1',
+  size = '8',
 }: {
   search?: string
   style?: string | string[]
-}): Promise<Tattoo[]> => {
+  page?: string
+  size?: string
+}): Promise<WithPagination<Tattoo[]>> => {
   await new Promise((res) => {
     setTimeout(res, 2000)
   })
 
-  const filtered = (tattoos as Tattoo[]).filter((el) => {
-    const stylesOfTattoo = el.styles
-    const normalizedStylesOfTattoo = stylesOfTattoo.map((el) =>
-      removeAccents(el),
-    )
+  const filtered = filterTattoos(tattoos as Tattoo[], { search, style })
 
-    const stack = []
+  const {
+    data: paginatedTattoos,
+    total,
+    parsedPage,
+  } = paginate(filtered, { size, page })
 
-    if (search) stack.push(searchInEvery(search, el.tags))
-    if (Array.isArray(style)) {
-      const normalizedPropStyles = style.map((el) => removeAccents(el))
+  const finalData = sortTats(paginatedTattoos)
 
-      normalizedPropStyles.forEach((style) => {
-        stack.push(normalizedStylesOfTattoo.includes(style))
-      })
-    }
-    if (typeof style === 'string') {
-      stack.push(normalizedStylesOfTattoo.includes(removeAccents(style)))
-    }
-
-    return stack.every((el) => el)
-  })
-
-  const filteredWithIndex: TattooWithIndex[] = filtered.map(
-    (el, num): TattooWithIndex => ({
-      ...el,
-      __number__: num,
-      type: el.type as TattooWithIndex['type'],
-    }),
-  )
-
-  const a = sortTats(filteredWithIndex)
-
-  return a
+  return {
+    data: finalData,
+    page: parsedPage,
+    total,
+  }
 }
 
-export const getRankedTattoos = async (): Promise<Tattoo[]> => {
+const getArtistTattoos = async (
+  slug: string,
+  {
+    search,
+    style,
+    page = '1',
+    size = '8',
+  }: {
+    search?: string
+    style?: string | string[]
+    page?: string
+    size?: string
+  },
+): Promise<WithPagination<Tattoo[]>> => {
+  await new Promise((res) => {
+    setTimeout(res, 500)
+  })
+
+  const filteredByArtist = (tattoos as Tattoo[]).filter(
+    (el) => el.artist.slug === slug,
+  )
+  const filtered = filterTattoos(filteredByArtist, { search, style })
+
+  const {
+    data: paginatedTattoos,
+    total,
+    parsedPage,
+  } = paginate(filtered, { page, size })
+
+  const sorted = sortTats(paginatedTattoos)
+
+  return {
+    page: parsedPage,
+    total,
+    data: sorted,
+  }
+}
+
+const getRankedTattoos = async (): Promise<Tattoo[]> => {
   await new Promise((res) => {
     setTimeout(res, 500)
   })
@@ -58,4 +83,35 @@ export const getRankedTattoos = async (): Promise<Tattoo[]> => {
   return tattoos
     .map(({ type, ...el }) => ({ ...el, type: type as Tattoo['type'] }))
     .slice(0, 4)
+}
+
+const cachedGetTattoos = cache(
+  (style?: string | string[], search?: string, page?: string) => {
+    return getTattoos({ style, search, page })
+  },
+)
+const cachedGetRankedTattoos = cache(() => getRankedTattoos())
+const cachedGetArtistTattos = cache(
+  (
+    slug: string,
+    {
+      style,
+      search,
+      page,
+      size,
+    }: {
+      style?: string | string[]
+      search?: string
+      page?: string
+      size?: string
+    },
+  ) => {
+    return getArtistTattoos(slug, { style, search, page, size })
+  },
+)
+
+export {
+  cachedGetTattoos as getTattoos,
+  cachedGetRankedTattoos as getRankedTattoos,
+  cachedGetArtistTattos as getArtistTattoos,
 }

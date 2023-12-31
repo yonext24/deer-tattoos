@@ -37,7 +37,7 @@ export function ArtistDropdown({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link href={`/artista/${slug}`}>Ver más tatuajes</Link>
+            <Link href={`/tatuador/${slug}/tatuajes`}>Ver más tatuajes</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

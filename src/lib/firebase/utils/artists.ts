@@ -8,7 +8,7 @@ export const getAllArtists = async (): Promise<Artist[]> => {
 }
 
 export const getArtistForCard = async (slug: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 700))
+  await new Promise((resolve) => setTimeout(resolve, 500))
 
   const artist = tatuadores.find((tatuador: Artist) => tatuador.slug === slug)
 
