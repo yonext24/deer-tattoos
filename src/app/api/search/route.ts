@@ -1,10 +1,12 @@
 import tattoos from '../../../../public/tattoos.json'
 import categories from '../../../../public/categories.json'
+import artists from '../../../../public/tatuadores.json'
 
 export type SearchResponse = {
   content: string
-  type: 'search' | 'category'
+  type: 'search' | 'category' | 'artist'
   href: 'string'
+  image?: string
 }[]
 
 export const GET = (request: Request) => {
@@ -38,6 +40,21 @@ export const GET = (request: Request) => {
         href: `/category/${el.name}`,
       }
     })
+    .slice(0, 4)
 
-  return Response.json(search.concat(cats) as SearchResponse)
+  const arts = artists
+    .filter((art) => {
+      return art.name.toLowerCase().includes(query.toLowerCase())
+    })
+    .map((el) => {
+      return {
+        content: el.name,
+        type: 'artist',
+        href: `/tatuador/${el.slug}/tatuajes`,
+        image: el.images.profile,
+      }
+    })
+
+  const res = search.concat(cats).concat(arts) as SearchResponse
+  return Response.json(res)
 }

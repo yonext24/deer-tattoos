@@ -17,8 +17,6 @@ export function TatuajesPagination({
   page: number
   path?: string
 }) {
-  console.log({ page, total })
-
   return (
     <Pagination>
       <PaginationContent>
@@ -32,11 +30,16 @@ export function TatuajesPagination({
         />
 
         {Array.from({ length: total }).map((el, index) => {
+          const isActive = page === index + 1
           return (
             <PaginationLink
               key={index}
               href={`${path}?page=${index + 1}`}
               isActive={page === index + 1}
+              aria-disabled={page <= 1}
+              tabIndex={(isActive && -1) || undefined}
+              data-disabled={isActive}
+              className="data-[disabled=true]:pointer-events-none"
             >
               {index + 1}
             </PaginationLink>

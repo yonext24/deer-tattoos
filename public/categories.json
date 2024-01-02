@@ -78,5 +78,13 @@
   {
     "name": "Fantasía",
     "variants": ["fantasy"]
+  },
+  {
+    "name": "Jj",
+    "variants": ["jj"]
+  },
+  {
+    "name": "Japones",
+    "variants": ["japones"]
   }
 ]

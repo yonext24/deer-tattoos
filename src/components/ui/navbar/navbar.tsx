@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { NavInput } from './nav-input'
+import { NavInput } from './nav-input/nav-input'
 
 const navEntrys = [
   { text: 'Inicio', href: '/' },

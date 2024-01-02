@@ -19,7 +19,7 @@ export function Sidebar({ artist }: { artist?: Artist }) {
       <div className="flex flex-col sticky h-[var(--section-min-height)] top-[var(--navbar-height)] left-0">
         <SidebarArtistSection
           image={artist?.images?.profile}
-          backgroundImage={artist?.images?.profile}
+          backgroundImage={artist?.images?.background}
         />
         <h3 className="text-center text-2xl font-extralight mt-2">
           {artist?.name ?? 'Deer Tattoos'}
