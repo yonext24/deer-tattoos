@@ -7,7 +7,7 @@ import { getArtistForCard } from '@/lib/firebase/utils/artists'
 import { ArtistDropdown } from './artist-dropdown'
 import Image from 'next/image'
 
-export function Artist({ slug, name }: { slug: string; name: string }) {
+export function Artist({ slug }: { slug: string }) {
   const [status, setStatus] = useState<{
     type: 'loading' | 'error' | 'success'
     message?: string
@@ -30,7 +30,7 @@ export function Artist({ slug, name }: { slug: string; name: string }) {
   }
 
   return (
-    <ArtistDropdown name={name} media={artist.media} slug={slug}>
+    <ArtistDropdown media={artist.media} name={artist.name} slug={slug}>
       <div className="flex min-w-32 gap-2 cursor-pointer" role="button">
         {/* <Image
           width={40}
@@ -41,7 +41,7 @@ export function Artist({ slug, name }: { slug: string; name: string }) {
         /> */}
         <div className="w-10 h-10 rounded-full bg-green"></div>
         <div className="flex flex-col">
-          <span className="ml-2">{name}</span>
+          <span className="ml-2">{artist.name}</span>
           <span className="ml-2 text-sm text-gray-500">Artista</span>
         </div>
       </div>

@@ -12,21 +12,15 @@ type TattooCardProps = Tattoo & {
 export function TattooCard({
   type,
   images,
-  id,
+  slug,
   withAnimation = false,
   delay,
   styles,
 }: TattooCardProps) {
-  const height = {
-    single: 400,
-    double: 800,
-    quad: 800,
-  }[type] as number
-
   return (
     <article
       role="link"
-      key={id}
+      key={slug}
       className={cn(
         'overflow-hidden rounded relative border border-border hover:border-gold transition-colors group',
         type === 'double' && 'col-start-1 col-end-3',
@@ -39,15 +33,14 @@ export function TattooCard({
           : {}
       }
     >
-      <Link href={`/tatuajes/${id}`}>
+      <Link href={`/tatuajes/${slug}`}>
         <ImageWithBlur
-          src={images.main.src}
+          src={images.card.src}
           loading="lazy"
-          blurDataURL={images.bluredImg}
-          height={height}
-          style={{ height }}
+          blurDataURL={images.card.blured}
+          height={images.card.height}
+          width={images.card.width}
           quality={100}
-          width={type === 'single' ? 400 : 800}
           alt="Image"
           className={cn('w-full object-center object-cover')}
         />
@@ -56,7 +49,7 @@ export function TattooCard({
         transition-opacity opacity-0 group-hover:opacity-100"
         >
           {styles.map((style, index) => (
-            <span key={index} className="text-white text-2xl font-thin">
+            <span key={index} className="text-white text-2xl fonst-thin">
               {style}
             </span>
           ))}

@@ -40,8 +40,11 @@ export const generateParams = (
   return urlParams
 }
 
-export const matchPathname = (pathname: string) => {
-  const acceptedPathnames = ['/tatuajes', '/tatuador/*/tatuajes']
+export const matchPathname = (pathname: string, arrayOfPaths?: string[]) => {
+  const acceptedPathnames = arrayOfPaths ?? [
+    '/tatuajes',
+    '/tatuador/*/tatuajes',
+  ]
   const accepted =
     acceptedPathnames.find((path) => {
       const reg = new RegExp(`^${path}`.replace('*', '[a-zA-Z]+'))

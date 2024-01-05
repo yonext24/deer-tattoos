@@ -1,16 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { matchPathname } from './lib/utils/createUrl'
+import { getToken } from 'next-auth/jwt'
 
-export function middleware(request: NextRequest) {
-  // Store current request url in a custom header, which you can read later
-  const requestHeaders = new Headers(request.headers)
-  requestHeaders.set('x-url', request.url)
+const privateRoutes = ['/admin/*', '/admin']
 
-  return NextResponse.next({
-    request: {
-      // Apply new request headers
-      headers: requestHeaders,
-    },
-  })
+const isPrivate = (url: string) => {
+  return matchPathname(url, privateRoutes)
+}
+
+export async function middleware(request: NextRequest) {
+  if (isPrivate(request.nextUrl.pathname)) {
+    const token = await getToken({
+      req: request,
+    })
+
+    if (token?.role === 'admin') {
+      return NextResponse.next()
+    }
+
+    const url = request.nextUrl.clone()
+    url.pathname = '/api/auth/signin'
+    return NextResponse.redirect(url)
+  }
+
+  return NextResponse.next()
 }
 
 export const config = {

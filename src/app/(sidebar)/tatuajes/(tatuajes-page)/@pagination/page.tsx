@@ -13,7 +13,7 @@ export default async function Page({
 
   return (
     <Section className="!min-h-[auto] mt-2">
-      <Suspense key={paramsToString} fallback={'WENAAAAS'}>
+      <Suspense key={paramsToString}>
         <Children searchParams={searchParams} />
       </Suspense>
     </Section>
@@ -29,6 +29,7 @@ const Children = async ({
     searchParams?.style,
     searchParams?.search as string | undefined,
     searchParams?.page as string | undefined,
+    searchParams?.size as string | undefined,
   )
 
   if (total === 0) return null

@@ -1,9 +1,11 @@
 import { Tattoo } from '@lib/types/tattoo'
 import { sortTats } from '@/lib/utils/sortTats'
-import tattoos from '../../../../public/tattoos.json'
 import { filterTattoos, paginate } from '@/lib/utils/utils'
 import { cache } from 'react'
 import { WithPagination } from '@/lib/types/common'
+import { appFetch } from '@/lib/utils/appFetch'
+import { filterAndPaginateTattoos } from '@backend/utils/tattoos-utils'
+import { tattooConverter } from '@backend/converters/tattoo-converter'
 
 const getTattoos = async ({
   search,
@@ -16,19 +18,13 @@ const getTattoos = async ({
   page?: string
   size?: string
 }): Promise<WithPagination<Tattoo[]>> => {
-  await new Promise((res) => {
-    setTimeout(res, 2000)
-  })
-
-  const filtered = filterTattoos(tattoos as Tattoo[], { search, style })
-
   const {
-    data: paginatedTattoos,
     total,
-    parsedPage,
-  } = paginate(filtered, { size, page })
-
-  const finalData = sortTats(paginatedTattoos)
+    data,
+    page: parsedPage,
+  } = await filterAndPaginateTattoos({ search, style }, { page, size })
+  const convertedData = tattooConverter(data as [])
+  const finalData = sortTats(convertedData)
 
   return {
     data: finalData,
@@ -51,9 +47,7 @@ const getArtistTattoos = async (
     size?: string
   },
 ): Promise<WithPagination<Tattoo[]>> => {
-  await new Promise((res) => {
-    setTimeout(res, 500)
-  })
+  const tattoos: Tattoo[] = await appFetch('http://localhost:3000/api/tattoos')
 
   const filteredByArtist = (tattoos as Tattoo[]).filter(
     (el) => el.artist.slug === slug,
@@ -76,9 +70,7 @@ const getArtistTattoos = async (
 }
 
 const getRankedTattoos = async (): Promise<Tattoo[]> => {
-  await new Promise((res) => {
-    setTimeout(res, 500)
-  })
+  const tattoos: Tattoo[] = await appFetch('http://localhost:3000/api/tattoos')
 
   return tattoos
     .map(({ type, ...el }) => ({ ...el, type: type as Tattoo['type'] }))
@@ -86,8 +78,13 @@ const getRankedTattoos = async (): Promise<Tattoo[]> => {
 }
 
 const cachedGetTattoos = cache(
-  (style?: string | string[], search?: string, page?: string) => {
-    return getTattoos({ style, search, page })
+  (
+    style?: string | string[],
+    search?: string,
+    page?: string,
+    size?: string,
+  ) => {
+    return getTattoos({ style, search, page, size })
   },
 )
 const cachedGetRankedTattoos = cache(() => getRankedTattoos())

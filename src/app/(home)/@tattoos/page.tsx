@@ -18,7 +18,7 @@ export default async function Page() {
           >
             <ImageWithBlur
               src={tattoo.images.main.src}
-              blurDataURL={tattoo.images.bluredImg}
+              blurDataURL={tattoo.images.main.blured}
               alt="image"
               loading="lazy"
               height={tattoo.images.main.height}

@@ -3,6 +3,7 @@ import './globals.css'
 import { FontSans, FontTitle } from '@/lib/fonts'
 import { Navbar } from '@/components/ui/navbar/navbar'
 import { cn } from '@/lib/utils/utils'
+import { Toaster } from '@/components/shadcn/ui/sonner'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -25,6 +26,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Toaster />
       </body>
     </html>
   )

@@ -4,6 +4,7 @@
 import { Badge } from '@/components/shadcn/ui/badge'
 import { Button } from '@/components/shadcn/ui/button'
 import { Separator } from '@/components/shadcn/ui/separator'
+import { cn } from '@/lib/utils/utils'
 import { HTMLAttributes, forwardRef } from 'react'
 
 type Props = HTMLAttributes<HTMLButtonElement> & {
@@ -11,12 +12,12 @@ type Props = HTMLAttributes<HTMLButtonElement> & {
 }
 
 export const CategoriesFilterMainButton = forwardRef<HTMLButtonElement, Props>(
-  ({ selectedValues, ...props }, ref) => {
+  ({ selectedValues, className, ...props }, ref) => {
     return (
       <Button
         variant="outline"
         size="default"
-        className="h-8 border-dashed"
+        className={cn('h-8 border-dashed', className)}
         ref={ref}
         {...props}
       >

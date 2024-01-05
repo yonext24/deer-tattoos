@@ -28,6 +28,7 @@ const Children = async ({
     searchParams?.style,
     searchParams?.search as string | undefined,
     searchParams?.page as string | undefined,
+    searchParams?.size as string | undefined,
   )
 
   return (

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "downlevelIteration": true,
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -23,7 +24,8 @@
       "@components/*": ["./src/components/*"],
       "@lib/*": ["./src/lib/*"],
       "@hooks/*": ["./src/lib/hooks/*"],
-      "@utils/*": ["./src/lib/utils/*"]
+      "@utils/*": ["./src/lib/utils/*"],
+      "@backend/*": ["./backend/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

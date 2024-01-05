@@ -5,6 +5,7 @@ import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
 import { notFound } from 'next/navigation'
 import { Artist } from '@/components/ui/tatuajes/artist/artist'
+import { getTattooBySlug } from '@backend/utils/tattoos-utils'
 
 export const generateStaticParams = () => {
   return tattoos.map((tattoo) => ({
@@ -13,7 +14,7 @@ export const generateStaticParams = () => {
 }
 
 const getTattoo = async (slug: string) => {
-  const tattoo = tattoos.find((tattoo) => String(tattoo.id) === slug)
+  const tattoo = await getTattooBySlug(slug, true)
   if (!tattoo) {
     notFound()
   }
@@ -23,13 +24,11 @@ const getTattoo = async (slug: string) => {
 export default async function Page({ params }: { params: { slug: string } }) {
   const tattoo = await getTattoo(params.slug)
 
-  if (!tattoo) return <div>Not found</div>
-
   return (
     <Main className="ml-auto flex flex-col gap-4 p-4 w-[700px]">
       <div className="w-full flex justify-between items-start">
         <Back />
-        <Artist slug={tattoo.artist.slug} name={tattoo.artist.name} />
+        <Artist slug={tattoo.artist.slug} />
       </div>
       <picture className="relative overflow-hidden w-full ">
         <ImageWithBlur
@@ -37,7 +36,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           src={tattoo.images.main.src}
           height={tattoo.images.main.height}
           width={tattoo.images.main.width}
-          blurDataURL={tattoo.images.bluredImg}
+          blurDataURL={tattoo.images.main.blured}
           className="w-full max-w-auto max-h-auto"
         />
       </picture>
