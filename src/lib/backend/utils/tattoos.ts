@@ -1,9 +1,7 @@
 import { Tattoo } from '@lib/types/tattoo'
 import { sortTats } from '@/lib/utils/sortTats'
-import { filterTattoos, paginate } from '@/lib/utils/utils'
 import { cache } from 'react'
 import { WithPagination } from '@/lib/types/common'
-import { appFetch } from '@/lib/utils/appFetch'
 import { filterAndPaginateTattoos } from '@backend/utils/tattoos-utils'
 import { tattooConverter } from '@backend/converters/tattoo-converter'
 
@@ -45,22 +43,22 @@ const getArtistTattoos = async (
     style?: string | string[]
     page?: string
     size?: string
-  },
+  }
 ): Promise<WithPagination<Tattoo[]>> => {
-  const tattoos: Tattoo[] = await appFetch('http://localhost:3000/api/tattoos')
-
-  const filteredByArtist = (tattoos as Tattoo[]).filter(
-    (el) => el.artist.slug === slug,
-  )
-  const filtered = filterTattoos(filteredByArtist, { search, style })
-
   const {
-    data: paginatedTattoos,
+    data,
+    page: parsedPage,
     total,
-    parsedPage,
-  } = paginate(filtered, { page, size })
+  } = await filterAndPaginateTattoos(
+    {
+      search,
+      style,
+      artist: slug,
+    },
+    { page, size }
+  )
 
-  const sorted = sortTats(paginatedTattoos)
+  const sorted = sortTats(data as Tattoo[])
 
   return {
     page: parsedPage,
@@ -70,11 +68,12 @@ const getArtistTattoos = async (
 }
 
 const getRankedTattoos = async (): Promise<Tattoo[]> => {
-  const tattoos: Tattoo[] = await appFetch('http://localhost:3000/api/tattoos')
+  const { data } = await getTattoos({
+    size: '4',
+    page: '1',
+  })
 
-  return tattoos
-    .map(({ type, ...el }) => ({ ...el, type: type as Tattoo['type'] }))
-    .slice(0, 4)
+  return data
 }
 
 const cachedGetTattoos = cache(
@@ -82,10 +81,10 @@ const cachedGetTattoos = cache(
     style?: string | string[],
     search?: string,
     page?: string,
-    size?: string,
+    size?: string
   ) => {
     return getTattoos({ style, search, page, size })
-  },
+  }
 )
 const cachedGetRankedTattoos = cache(() => getRankedTattoos())
 const cachedGetArtistTattos = cache(
@@ -101,10 +100,10 @@ const cachedGetArtistTattos = cache(
       search?: string
       page?: string
       size?: string
-    },
+    }
   ) => {
     return getArtistTattoos(slug, { style, search, page, size })
-  },
+  }
 )
 
 export {

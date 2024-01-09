@@ -15,8 +15,12 @@ const formSchema = zod.object({
       required_error:
         'El título es obligatorio y debe tener como mínimo un caracter',
     })
+    .regex(
+      /^[a-zA-Z\s]+$/,
+      'El título solo puede contener letras (sin acentos)'
+    )
     .min(1, 'El título es obligatorio y debe tener como mínimo un caracter')
-    .max(50, 'El título no puede tener más de 50 caracteres'),
+    .max(70, 'El título no puede tener más de 70 caracteres'),
   styles: zod
     .array(zod.string().min(1))
     .nonempty({ message: 'Tenés que elegir al menos un estilo' }),
@@ -39,17 +43,15 @@ const formSchema = zod.object({
         !isNaN(Number(card_height)) && !isNaN(Number(card_width)),
       {
         message: 'Algo salió mal al subir la imágen, volvé a intenarlo.',
-      },
+      }
     ),
   // .refine(
   //   ({ card }) => card?.type,
   //   'Algo salió mal al subir la imágen, volvé a intenarlo.',
   // ),
-  artist: zod
-    .object({
-      slug: zod.string().min(1),
-    })
-    .optional(),
+  artist: zod.object({
+    slug: zod.string().min(1),
+  }),
 })
 
 export type AddTatuajesFormValues = zod.infer<typeof formSchema>
@@ -66,7 +68,7 @@ const formDefaultValues = {
     original: undefined,
   },
   artist: {
-    slug: undefined,
+    slug: '',
   },
 }
 export function useAddTatuajesForm() {

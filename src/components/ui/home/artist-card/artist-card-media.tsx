@@ -1,3 +1,4 @@
+import { Artist } from '@/lib/types/artist'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,8 +8,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@components/shadcn/ui/dropdown-menu'
+import Link from 'next/link'
 
-export function ArtistCardMedia({ children }: { children: React.ReactNode }) {
+export function ArtistCardMedia({
+  children,
+  medias,
+}: {
+  children: React.ReactNode
+  medias: Artist['medias']
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -16,15 +24,13 @@ export function ArtistCardMedia({ children }: { children: React.ReactNode }) {
         <DropdownMenuLabel>Redes</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <span>Instagram</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <span>Facebook</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <span>Web</span>
-          </DropdownMenuItem>
+          {Object.entries(medias)
+            .filter(([key, value]) => Boolean(value))
+            .map(([key, value]) => (
+              <DropdownMenuItem key={value}>
+                <Link href={value as string}>{key}</Link>
+              </DropdownMenuItem>
+            ))}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

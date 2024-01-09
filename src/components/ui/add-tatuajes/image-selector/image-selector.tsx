@@ -4,7 +4,7 @@
 import 'react-image-crop/dist/ReactCrop.css'
 
 import { useEffect, useRef, useState } from 'react'
-import { ImageSelectorButton } from './image-selector-button'
+import { ImageSelectorButton } from '../../common/image-selector-button'
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog'
 import { ImageSelectorModal } from './image-selector-modal'
 import { Crop, PixelCrop } from 'react-image-crop'
@@ -92,7 +92,7 @@ export function ImageSelector({
           setCroppedImageUrl(previewUrl)
           setCroppedImageBlob(blob)
           setOpen(false)
-        },
+        }
       )
     }
   }, [JSON.stringify(cropped), imageElement, JSON.stringify(imageData)])
@@ -123,8 +123,8 @@ export function ImageSelector({
       {croppedImageUrl && (
         <div className="w-[500px]">
           <TattooCard
-            artist={{ slug: 'Ejemplo' }}
-            id={2}
+            artistSlug=""
+            id={''}
             slug=""
             images={{
               main: {

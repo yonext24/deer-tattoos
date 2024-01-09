@@ -3,7 +3,7 @@
 import { Artist } from '@/lib/types/artist'
 import { useEffect, useState } from 'react'
 import { ArtistSkeleton } from './artist-skeleton'
-import { getArtistForCard } from '@/lib/firebase/utils/artists'
+import { getArtistForCard } from '@/lib/backend/utils/artists'
 import { ArtistDropdown } from './artist-dropdown'
 import Image from 'next/image'
 
@@ -30,7 +30,7 @@ export function Artist({ slug }: { slug: string }) {
   }
 
   return (
-    <ArtistDropdown media={artist.media} name={artist.name} slug={slug}>
+    <ArtistDropdown media={artist.medias} name={artist.name} slug={slug}>
       <div className="flex min-w-32 gap-2 cursor-pointer" role="button">
         {/* <Image
           width={40}

@@ -1,6 +1,6 @@
 import { Section } from '@/components/ui/common/section'
 import { TatuajesPagination } from '@/components/ui/tatuajes/pagination/tatuajes-pagination'
-import { getArtistTattoos, getTattoos } from '@/lib/firebase/utils/tattoos'
+import { getArtistTattoos, getTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
 
 export default async function Page({

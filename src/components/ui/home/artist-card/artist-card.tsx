@@ -10,6 +10,8 @@ import { ArtistCardMedia } from './artist-card-media'
 import Link from 'next/link'
 import { DoubleLeftIcon } from '@/components/icons'
 import { Artist } from '@/lib/types/artist'
+import Image from 'next/image'
+import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 
 export function ArtistCard({
   name,
@@ -17,6 +19,8 @@ export function ArtistCard({
   delay,
   description,
   slug,
+  images,
+  medias,
 }: Artist & { intersected: boolean; delay: number }) {
   return (
     <Link href={`/tatuador/${slug}/tatuajes`} className="max-w-[350px] w-full">
@@ -28,7 +32,17 @@ export function ArtistCard({
         data-intersected={intersected}
       >
         <CardHeader>
-          <div className="h-[200px] bg-white w-full rounded-xl"></div>
+          {images.profile && (
+            <div className="relative">
+              <ImageWithBlur
+                width={300}
+                height={200}
+                alt={`Imágen de ${name}`}
+                src={images.profile.src}
+                blurDataURL={images.profile.blured}
+              />
+            </div>
+          )}
         </CardHeader>
         <CardContent>
           <CardTitle className="font-light text-3xl group-hover:text-green-light transition-colors duration-300">
@@ -45,7 +59,7 @@ export function ArtistCard({
             </div>
             <span className="hover:underline">Ver Tatuajes</span>
           </div>
-          <ArtistCardMedia>
+          <ArtistCardMedia medias={medias}>
             <Button variant={'outline'}>Redes</Button>
           </ArtistCardMedia>
         </CardFooter>

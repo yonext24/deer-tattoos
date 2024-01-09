@@ -20,7 +20,7 @@ export function ArtistDropdown({
   children: React.ReactNode
   slug: string
   name: string
-  media: Artist['media']
+  media: Artist['medias']
 }) {
   const parsedMedias = Object.entries(media).map(([key, value]) => {
     return {

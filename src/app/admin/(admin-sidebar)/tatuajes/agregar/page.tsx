@@ -21,14 +21,7 @@ import { SubmitButton } from '@/components/ui/common/submit-button'
 
 export default function Page() {
   const { form, onSubmit } = useAddTatuajesForm()
-  const {
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors },
-  } = form
-
-  const all = watch()
+  const { handleSubmit, control, watch } = form
 
   return (
     <Main className="max-w-[800px] px-3 py-5">

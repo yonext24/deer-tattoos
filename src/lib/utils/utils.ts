@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { Tattoo } from '../types/tattoo'
+import { Artist } from '../types/artist'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -28,14 +29,25 @@ export function removeAccents(input: string): string {
   })
 }
 
+export const parseArtistMedias = (medias: Artist['medias']) => {
+  return Object.entries(medias)
+    .filter(([key, value]) => Boolean(value))
+    .map(([key, value]) => {
+      return {
+        text: key,
+        url: value as string,
+      }
+    })
+}
+
 export const filterTattoos = (
   _tattoos: Tattoo[],
-  { search, style }: { search?: string; style?: string | string[] },
+  { search, style }: { search?: string; style?: string | string[] }
 ) => {
   return _tattoos.filter((el) => {
     const stylesOfTattoo = el.styles
     const normalizedStylesOfTattoo = stylesOfTattoo.map((el) =>
-      removeAccents(el),
+      removeAccents(el)
     )
 
     const stack = []
@@ -59,7 +71,7 @@ export const filterTattoos = (
 
 export const paginate = <T>(
   array: T[],
-  { size, page }: { size: string | number; page: string | number },
+  { size, page }: { size: string | number; page: string | number }
 ) => {
   const parsedSize = parseInt(size as string)
   const parsedPage = parseInt(page as string)

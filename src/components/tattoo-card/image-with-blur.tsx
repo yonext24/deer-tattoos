@@ -12,7 +12,7 @@ export type ImageWithBlurProps = Omit<ImageProps, 'placeholder'> & {}
 export const ImageWithBlur = forwardRef(
   (
     { blurDataURL, onLoad, ...props }: ImageWithBlurProps,
-    ref: ForwardedRef<HTMLImageElement>,
+    ref: ForwardedRef<HTMLImageElement>
   ) => {
     const [loaded, setLoaded] = useState<boolean>(false)
 
@@ -28,7 +28,7 @@ export const ImageWithBlur = forwardRef(
           className={cn(
             'w-full object-center object-cover',
             !loaded && 'opacity-0',
-            props.className,
+            props.className
           )}
           blurDataURL={blurDataURL}
           {...props}
@@ -37,11 +37,11 @@ export const ImageWithBlur = forwardRef(
           src={blurDataURL}
           alt="blured image"
           className={cn(
-            'absolute top-0 left-0 h-full w-full z-10 opacity-100 transition-opacity blur-3xl duration-200',
-            loaded && 'opacity-0',
+            'absolute top-0 left-0 h-full w-full z-10 opacity-100 transition-opacity blur-3xl duration-300',
+            loaded && 'opacity-0'
           )}
         />
       </>
     )
-  },
+  }
 )

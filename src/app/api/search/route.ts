@@ -1,15 +1,13 @@
-import tattoos from '../../../../public/tattoos.json'
-import categories from '../../../../public/categories.json'
-import artists from '../../../../public/tatuadores.json'
+import { prisma } from '@backend/prisma'
 
 export type SearchResponse = {
   content: string
   type: 'search' | 'category' | 'artist'
-  href: 'string'
+  href: string
   image?: string
 }[]
 
-export const GET = (request: Request) => {
+export const GET = async (request: Request) => {
   const url = request.url
   const params = new URLSearchParams(url.split('?')[1])
   const query = params.get('q')
@@ -18,43 +16,61 @@ export const GET = (request: Request) => {
     return Response.json([] as SearchResponse)
   }
 
-  const search = tattoos
-    .map((tattoo) => tattoo.tags)
-    .flat()
-    .filter((tag) => {
-      return tag.toLowerCase().includes(query.toLowerCase())
-    })
-    .map((el) => ({ content: el, type: 'search', href: `/search?q=${el}` }))
+  // @ts-ignore
+  const search = (await prisma.tattoo.findRaw({
+    filter: {
+      $or: [
+        { tags: { $regex: query, $options: 'i' } },
+        { title: { $regex: query, $options: 'i' } },
+        { styles: { $regex: query, $options: 'i' } },
+      ],
+    },
+    options: {
+      projection: { tags: true, styles: true, title: true, _id: false },
+      limit: 1,
+    },
+  })) as { tags: string[]; styles: string[]; title: string }[]
 
-  const cats = categories
-    .filter((cat) => {
-      const toFilter = [cat.name, ...cat.variants]
-      return toFilter.some((el) =>
-        el.toLowerCase().includes(query.toLowerCase()),
+  const parsedSearch = search.flatMap((item) => {
+    const arr = []
+
+    const matchesWithStyles = item.styles.filter((style) =>
+      new RegExp(query, 'i').test(style)
+    )
+
+    if (matchesWithStyles.length > 0) {
+      arr.push(
+        matchesWithStyles.map((el) => ({
+          content: el,
+          type: 'category' as SearchResponse[0]['type'],
+          href: `/category/${el}`,
+        }))
       )
-    })
-    .map((el) => {
-      return {
-        content: el.name,
-        type: 'category',
-        href: `/category/${el.name}`,
-      }
-    })
-    .slice(0, 4)
+    }
 
-  const arts = artists
-    .filter((art) => {
-      return art.name.toLowerCase().includes(query.toLowerCase())
-    })
-    .map((el) => {
-      return {
-        content: el.name,
-        type: 'artist',
-        href: `/tatuador/${el.slug}/tatuajes`,
-        image: el.images.profile,
-      }
-    })
+    const matchesWithTags = item.tags.filter((tag) =>
+      new RegExp(query, 'i').test(tag)
+    )
 
-  const res = search.concat(cats).concat(arts) as SearchResponse
-  return Response.json(res)
+    if (matchesWithTags.length > 0)
+      arr.push(
+        matchesWithTags.map((el) => ({
+          content: el,
+          type: 'category',
+          href: `/category/${el}`,
+        }))
+      )
+
+    const matchesWithTitle = new RegExp(query, 'i').test(item.title)
+    if (matchesWithTitle && arr.length === 0)
+      return [
+        { type: 'search', content: item.title, href: `/search?q=${query}` },
+      ]
+
+    return arr.flatMap((el) => el)
+  })
+
+  console.log(parsedSearch)
+
+  return Response.json(parsedSearch)
 }

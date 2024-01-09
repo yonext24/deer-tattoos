@@ -1,7 +1,7 @@
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
 import { TattooCard } from '@/components/tattoo-card/tattoo-card'
 import { ColumnLayout } from '@/components/ui/tatuajes/column-layout'
-import { getArtistTattoos } from '@/lib/firebase/utils/tattoos'
+import { getArtistTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
 import { Suspense } from 'react'
 

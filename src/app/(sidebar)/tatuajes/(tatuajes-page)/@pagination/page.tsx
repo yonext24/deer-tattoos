@@ -1,6 +1,6 @@
 import { Section } from '@/components/ui/common/section'
 import { TatuajesPagination } from '@/components/ui/tatuajes/pagination/tatuajes-pagination'
-import { getTattoos } from '@/lib/firebase/utils/tattoos'
+import { getTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
 import { Suspense } from 'react'
 
@@ -29,7 +29,7 @@ const Children = async ({
     searchParams?.style,
     searchParams?.search as string | undefined,
     searchParams?.page as string | undefined,
-    searchParams?.size as string | undefined,
+    searchParams?.size as string | undefined
   )
 
   if (total === 0) return null

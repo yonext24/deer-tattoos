@@ -7,7 +7,11 @@ import { buttonVariants } from '@/components/shadcn/ui/button'
 import Link from 'next/link'
 import { cn } from '@/lib/utils/utils'
 
-const entrys = [{ text: 'Agregar Tatuaje', href: '/admin/tatuajes/agregar' }]
+const entrys = [
+  { text: 'Agregar Tatuaje', href: '/admin/tatuajes/agregar' },
+  { text: 'Ver tatuajes', href: '/admin/tatuajes' },
+  { text: 'Agregar Artista', href: '/admin/artistas/agregar' },
+]
 
 export async function AdminSidebar() {
   const session = await auth()
@@ -23,7 +27,7 @@ export async function AdminSidebar() {
             <Link
               className={cn(
                 buttonVariants({ variant: 'ghost', size: 'lg' }),
-                'rounded-md text-start justify-start',
+                'rounded-md text-start justify-start'
               )}
               href={href}
               key={href}

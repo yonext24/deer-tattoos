@@ -18,7 +18,7 @@ import {
 
 import { Style } from '@/lib/types/style'
 import { useCallback, useEffect, useState } from 'react'
-import { getStyles } from '@/lib/firebase/utils/styles'
+import { getStyles } from '@/lib/backend/utils/styles'
 import { cn } from '@/lib/utils/utils'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -61,7 +61,7 @@ export function CategoriesFilter() {
       setNavigating(value)
       router.push(createUrl(pathname, params))
     },
-    [router, searchParams, pathname],
+    [router, searchParams, pathname]
   )
 
   const params = generateParams(searchParams)
@@ -80,7 +80,7 @@ export function CategoriesFilter() {
             <CommandGroup>
               {styles.map((el) => {
                 const isSelected = selectedValues.includes(
-                  String(el.name).toLocaleLowerCase(),
+                  String(el.name).toLocaleLowerCase()
                 )
                 const isCurrentElementLoading =
                   (typeof navigating === 'string' &&
@@ -93,7 +93,7 @@ export function CategoriesFilter() {
                         'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
                         isSelected
                           ? 'bg-primary text-primary-foreground'
-                          : 'opacity-50 [&_svg]:invisible',
+                          : 'opacity-50 [&_svg]:invisible'
                       )}
                     >
                       <CheckIcon className={cn('h-4 w-4')} />

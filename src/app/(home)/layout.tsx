@@ -1,4 +1,9 @@
 import { Main } from '@/components/ui/common/main'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Inicio',
+}
 
 type LayoutProps = {
   children: React.ReactNode

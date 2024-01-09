@@ -5,7 +5,15 @@ import Image from 'next/image'
 export function HomeHeader() {
   return (
     <div className="relative overflow-hidden border-b border-[hsl(var(--border))]">
-      <div className="before:absolute before:border-l before:border-[hsl(var(--border))] before:rotate-12 before:w-[60%] before:h-[200vh] before:right-[-10%] before:-top-1/3 before:bg-green/60 before:-z-10" />
+      <div
+        className="
+      before:absolute before:border-l 
+      before:border-[hsl(var(--border))] 
+      before:rotate-12 before:w-[60%] 
+      before:h-[200vh] before:right-[-10%] 
+      before:-top-1/3 before:bg-gradient-to-r from-green/40 to-green/70 before:-z-10"
+      />
+
       <Section className="relative grid grid-cols-[1.2fr_1fr] gap-8 overflow-hidden w-full flex-1">
         <div className="grid-col-[1] h-full flex items-center">
           <div className="p-2 border border-[hsl(var(--border))] w-max shadow-lg">

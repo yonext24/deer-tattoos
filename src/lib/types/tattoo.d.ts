@@ -1,5 +1,5 @@
-export type TattooWithoutArtist = {
-  id: number
+export type Tattoo = {
+  id: string
   slug: string
   images: {
     main: {
@@ -18,12 +18,7 @@ export type TattooWithoutArtist = {
   type: 'single' | 'double' | 'quad'
   styles: string[]
   tags: string[]
-}
-
-export type Tattoo = TattooWithoutArtist & {
-  artist: {
-    slug: string
-  }
+  artistSlug: string
 }
 
 export type TattooWithIndex = Tattoo & { __number__: number }

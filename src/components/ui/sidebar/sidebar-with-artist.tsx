@@ -1,11 +1,8 @@
-import { getArtistForCard } from '@/lib/firebase/utils/artists'
+import { getArtistForCard } from '@/lib/backend/utils/artists'
 import { Sidebar } from './sidebar'
-import { cache } from 'react'
-
-const localGetArtistForCard = cache(getArtistForCard)
 
 export async function SidebarWithArtist({ slug }: { slug: string }) {
-  const artist = await localGetArtistForCard(slug)
+  const artist = await getArtistForCard(slug).catch(() => null)
 
   return <Sidebar artist={artist} />
 }

@@ -1,6 +1,9 @@
 import { bucket } from './config'
 
-export const uploadImage = async (file: File, path: string) => {
+export const uploadImage = async (
+  file: File,
+  path: string
+): Promise<string> => {
   const blobStream = bucket.file(path).createWriteStream({
     metadata: {
       contentType: file.type,

@@ -1,20 +1,23 @@
 import { Main } from '@/components/ui/common/main'
-import tattoos from '../../../../../public/tattoos.json'
 import { Back } from '@/components/ui/common/back'
 import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
 import { notFound } from 'next/navigation'
 import { Artist } from '@/components/ui/tatuajes/artist/artist'
-import { getTattooBySlug } from '@backend/utils/tattoos-utils'
+import {
+  filterAndPaginateTattoos,
+  getTattooBySlug,
+} from '@backend/utils/tattoos-utils'
 
-export const generateStaticParams = () => {
-  return tattoos.map((tattoo) => ({
-    params: { slug: String(tattoo.id) },
-  }))
+export const dynamicParams = true
+
+export const generateStaticParams = async () => {
+  const { data } = await filterAndPaginateTattoos({}, { page: 1, size: 1000 })
+  return data.map((tattoo) => ({ params: { slug: tattoo.slug } }))
 }
 
 const getTattoo = async (slug: string) => {
-  const tattoo = await getTattooBySlug(slug, true)
+  const tattoo = await getTattooBySlug(slug).catch(() => null)
   if (!tattoo) {
     notFound()
   }
@@ -28,7 +31,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <Main className="ml-auto flex flex-col gap-4 p-4 w-[700px]">
       <div className="w-full flex justify-between items-start">
         <Back />
-        <Artist slug={tattoo.artist.slug} />
+        <Artist slug={tattoo.artistSlug} />
       </div>
       <picture className="relative overflow-hidden w-full ">
         <ImageWithBlur

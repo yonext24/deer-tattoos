@@ -1,7 +1,7 @@
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
 import { TattooCard } from '@/components/tattoo-card/tattoo-card'
 import { ColumnLayout } from '@/components/ui/tatuajes/column-layout'
-import { getTattoos } from '@/lib/firebase/utils/tattoos'
+import { getTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
 import { Suspense } from 'react'
 
@@ -28,7 +28,7 @@ const Children = async ({
     searchParams?.style,
     searchParams?.search as string | undefined,
     searchParams?.page as string | undefined,
-    searchParams?.size as string | undefined,
+    searchParams?.size as string | undefined
   )
 
   return (
