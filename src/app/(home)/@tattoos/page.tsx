@@ -43,7 +43,8 @@ export default async function Page() {
           <article
             key={tattoo.id}
             className={cn(
-              'rounded w-[var(--tattoo-width)] h-[var(--tattoo-height)] transition-opacity duration-300 relative overflow-hidden group cursor-pointer'
+              'rounded w-[var(--tattoo-width)] h-[var(--tattoo-height)] transition-opacity duration-300 relative overflow-hidden group cursor-pointer',
+              'hover:scale-110 hover:z-10 transition-transform duration-300 '
             )}
           >
             <ImageWithBlur

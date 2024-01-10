@@ -52,14 +52,16 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+}
 
+@layer components {
   #carousel_wrapper {
     --amount-of-tattoos_in-vertical-view: 2;
     --amount-of-tattoos-in-horizontal-view: 3;
     --amount-of-tattoos: 24;
     /* En realidad hay 27, pero esta es la forma más simple de hacer que no se vea el borde inferior */
-    --tattoo-width: 250px;
-    --tattoo-height: 250px;
+    --tattoo-width: 300px;
+    --tattoo-height: 280px;
     --padding: 10px;
     --initial-offset: 250px;
     --end-offset: 250px;
@@ -90,7 +92,8 @@ html {
           (
               (
                 (var(--amount-of-tattoos-by-half) * var(--tattoo-height)) +
-                  var(--total-vertical-padding) - (510px)
+                  var(--total-vertical-padding) -
+                  (var(--tattoo-height) * 2 + var(--padding))
               )
             ) * -1
         )
@@ -109,10 +112,13 @@ html {
           var(--total-vertical-padding)
       )
     );
-    animation: scroll 15s linear infinite;
+    animation: scroll 17s linear infinite;
     gap: var(--padding);
     width: auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+  }
+  #carousel:has(> article:hover) {
+    animation-play-state: paused;
   }
 }

@@ -87,6 +87,10 @@ const config = {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
+        'fade-in-from-right': {
+          from: { opacity: '0', transform: 'translateX(5%)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
         rotation: {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
@@ -96,6 +100,7 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         fadeIn: 'fade-in 0.2s ease-out',
+        fadeFromRight: 'fade-in-from-right 0.2s ease-out',
         rotation: 'rotation 1s linear infinite',
       },
     },

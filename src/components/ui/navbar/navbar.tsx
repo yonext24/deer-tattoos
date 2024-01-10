@@ -10,7 +10,7 @@ const navEntrys = [
 export function Navbar() {
   return (
     <nav
-      className="bg-black/50 backdrop-blur border-b border-border min-h-[var(--navbar-height)] font-sans w-full shadow-lg sticky top-0 z-20
+      className="bg-black/80 supports-[backdrop-filter]:bg-black/50 backdrop-blur border-b border-border min-h-[var(--navbar-height)] font-sans w-full shadow-lg sticky top-0 z-20
     flex justify-center"
     >
       <div className="w-full max-w-[var(--content-max-width)] mx-[var(--content-margin)] flex justify-between items-center gap-4">
