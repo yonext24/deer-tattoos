@@ -8,6 +8,7 @@ import {
   filterAndPaginateTattoos,
   getTattooBySlug,
 } from '@backend/utils/tattoos-utils'
+import { getArtistForCard } from '@/lib/backend/utils/artists'
 
 export const dynamicParams = true
 
@@ -26,12 +27,13 @@ const getTattoo = async (slug: string) => {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const tattoo = await getTattoo(params.slug)
+  const artist = await getArtistForCard(tattoo.artistSlug).catch(() => null)
 
   return (
     <Main className="ml-auto flex flex-col gap-4 p-4 w-[700px]">
       <div className="w-full flex justify-between items-start">
         <Back />
-        <Artist slug={tattoo.artistSlug} />
+        <Artist artist={artist} />
       </div>
       <picture className="relative overflow-hidden w-full ">
         <ImageWithBlur

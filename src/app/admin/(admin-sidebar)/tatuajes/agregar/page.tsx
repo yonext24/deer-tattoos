@@ -66,8 +66,8 @@ export default function Page() {
                     <ArtistSelector onChange={onChange} value={value} />
                   </FormControl>
                   <FormDescription>
-                    El artista del que va a ser el dibujo, no es obligatorio
-                    elegir uno.
+                    El artista del que va a ser el tatuaje, si no se elige uno
+                    simplemente pertenecerá a la galería.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

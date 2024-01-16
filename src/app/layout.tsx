@@ -5,30 +5,27 @@ import { Navbar } from '@/components/ui/navbar/navbar'
 import { cn } from '@/lib/utils/utils'
 import { Toaster } from '@/components/shadcn/ui/sonner'
 
+export const mainKeywords = [
+  'tatuajes lanus',
+  'tatuajes lomas de zamora',
+  'tatuajes buenos aires',
+  'tatuajes argentina',
+  'tatuajes zona sur',
+  'tatuajes zona oeste',
+  'tatuajes zona centro',
+  'local de tatuajes lanus',
+  'local de tatuajes',
+]
+
 export const metadata: Metadata = {
   title: {
-    template: '%s | DEER TATTOOS',
+    template: '%s | DEER Tattoos',
     default: 'DEER TATTOOS',
   },
   description:
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
   applicationName: 'DEER TATTOOS',
-  keywords: [
-    'tattoo',
-    'tatuaje',
-    'tatuajes',
-    'tatuajes lanus',
-    'lanus',
-    'lomas',
-    'lomas de zamora',
-    'tatuajes buenos aires',
-    'buenos aires',
-    'tatuajes argentina',
-    'tatuajes zona sur',
-    'tatuajes zona oeste',
-    'tatuajes zona centro',
-    'zona centro',
-  ],
+  keywords: mainKeywords,
   category: 'Tatuajes',
 }
 

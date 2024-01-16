@@ -13,7 +13,7 @@ export const getTattooBySlug = cache(
       },
     })
 
-    return tattoo
+    return tattoo as Tattoo
   }
 )
 
@@ -52,11 +52,13 @@ export const filterAndPaginateTattoos = cache(
       })
     }
 
+    console.log({ style })
+
     if (style) {
       if (Array.isArray(style)) {
         where.AND.push({
           styles: {
-            hasSome: style,
+            hasEvery: style,
           },
         })
       } else {
@@ -67,6 +69,8 @@ export const filterAndPaginateTattoos = cache(
         })
       }
     }
+
+    console.log(where.AND)
 
     // Realizar la consulta Prisma con paginación y filtrado
     const [data, total] = await Promise.all([

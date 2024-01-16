@@ -1,6 +1,7 @@
 export type Tattoo = {
   id: string
   slug: string
+  title: string
   images: {
     main: {
       height: number

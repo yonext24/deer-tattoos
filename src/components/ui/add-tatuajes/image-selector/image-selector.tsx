@@ -124,6 +124,7 @@ export function ImageSelector({
         <div className="w-[500px]">
           <TattooCard
             artistSlug=""
+            title=""
             id={''}
             slug=""
             images={{

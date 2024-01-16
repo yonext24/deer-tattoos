@@ -14,16 +14,19 @@ import { appFetch } from '@/lib/utils/appFetch'
 import { SelectGroup } from '@radix-ui/react-select'
 import { useEffect, useMemo, useState } from 'react'
 
+const NONE_VALUE = null
+const NONE_STRING = 'none'
+
 export function ArtistSelector({
   value,
   onChange,
 }: {
-  value: string
+  value: string | null
   onChange: any
 }) {
   const [artists, setArtists] = useState<Artist[]>([])
   const [status, setStatus] = useState<'loading' | 'error' | 'success'>(
-    'loading',
+    'loading'
   )
 
   useEffect(() => {
@@ -35,14 +38,23 @@ export function ArtistSelector({
       .catch(() => setStatus('error'))
   }, [])
 
+  console.log({ value })
+
   const selectedName = useMemo(() => {
-    if (!value || artists.length === 0) return null
+    if (status === 'loading') return 'Cargando...'
+    if (status === 'error') return 'Algo salió mal'
+
+    if (value === undefined || value === NONE_STRING) return 'Ninguno'
     const artist = artists.find((artist) => artist.slug === value)
-    return artist?.name ?? null
-  }, [value, artists])
+    return artist?.name ?? NONE_VALUE
+  }, [value, artists, status])
 
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select
+      defaultValue={NONE_STRING}
+      value={value === NONE_VALUE ? NONE_STRING : value}
+      onValueChange={onChange}
+    >
       <SelectTrigger>
         <FormControl>
           <SelectValue placeholder="Selecciona un artista" asChild>
@@ -60,13 +72,19 @@ export function ArtistSelector({
               if (status === 'success') return 'Selecciona un artista'
             })()}
           </SelectLabel>
-          {artists.map((artist) => {
-            return (
-              <SelectItem key={artist.slug} value={artist.slug}>
-                {artist.name}
-              </SelectItem>
-            )
-          })}
+          {status === 'success' && (
+            <>
+              <SelectItem value={NONE_STRING}>Ninguno</SelectItem>
+
+              {artists.map((artist) => {
+                return (
+                  <SelectItem key={artist.slug} value={artist.slug}>
+                    {artist.name}
+                  </SelectItem>
+                )
+              })}
+            </>
+          )}
         </SelectGroup>
       </SelectContent>
     </Select>

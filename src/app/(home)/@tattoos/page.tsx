@@ -34,7 +34,6 @@ const transformTattoosToCarousel = (tattoos: Tattoo[]) => {
 export default async function Page() {
   const tattoos = await getRankedTattoos()
   const parsed = transformTattoosToCarousel(tattoos)
-  console.log(parsed.length)
 
   return (
     <Tattoos>

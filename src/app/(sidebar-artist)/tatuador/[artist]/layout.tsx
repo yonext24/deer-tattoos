@@ -2,7 +2,7 @@ import { SidebarSkeleton } from '@/components/ui/sidebar/sidebar-skeleton'
 import { SidebarWithArtist } from '@/components/ui/sidebar/sidebar-with-artist'
 import { Suspense } from 'react'
 
-export default function Layout({
+export default async function Layout({
   children,
   params,
 }: {

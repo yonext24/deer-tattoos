@@ -22,8 +22,7 @@ export const fetchHandler = async (res: Response) => {
 
 export const appFetch = async (url: string, options?: RequestInit) => {
   try {
-    const res = await fetch(url, options).then(fetchHandler)
-    return res
+    return fetch(url, options).then(fetchHandler)
   } catch (err) {
     const errMessage =
       err instanceof Error && err.message === 'Failed to fetch'

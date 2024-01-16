@@ -1,5 +1,5 @@
+import { StylizedLink } from '@/components/stylized-button/stylized-button'
 import { Section } from '../../common/section'
-import { Button } from '@/components/shadcn/ui/button'
 
 export async function Tattoos({ children }: { children: React.ReactNode }) {
   return (
@@ -17,12 +17,9 @@ export async function Tattoos({ children }: { children: React.ReactNode }) {
           laborum minima, at nulla impedit fugiat? Vitae quam magnam atque
           totam?
         </span>
-        <Button
-          variant={'outline'}
-          className="mb-24 self-start mt-6 text-lg py-4 px-7 font-thin"
-        >
+        <StylizedLink href="/tatuajes" className="mt-2" circleRadius="70px">
           Ver más
-        </Button>
+        </StylizedLink>
       </div>
       <div className="h-[510px] w-full overflow-hidden" id="carousel_wrapper">
         <div

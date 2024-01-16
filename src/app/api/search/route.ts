@@ -70,7 +70,35 @@ export const GET = async (request: Request) => {
     return arr.flatMap((el) => el)
   })
 
-  console.log(parsedSearch)
+  const artists = await prisma.artist.findMany({
+    where: {
+      OR: [
+        {
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+        {
+          slug: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+      ],
+    },
+    select: {
+      name: true,
+      slug: true,
+      images: true,
+    },
+  })
 
-  return Response.json(parsedSearch)
+  const parsedArtists = artists.map((artist) => ({
+    type: 'artist',
+    content: artist.name,
+    href: `/artist/${artist.slug}`,
+  }))
+
+  return Response.json([...parsedSearch, ...parsedArtists])
 }

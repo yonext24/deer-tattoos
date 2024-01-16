@@ -2,7 +2,6 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SearchResponse } from '@/app/api/search/route'
-import { useClickOutside } from '@/hooks/useClickOutside'
 import { createUrl, matchPathname } from '@/lib/utils/createUrl'
 import debounce from 'just-debounce-it'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -75,16 +74,21 @@ export function useNavInput() {
   }
 
   const deferred = useDeferredValue(value)
+
   const debouncedGetSearch = useCallback(
-    debounce(async (search: string) => {
-      fetch('/api/search?q=' + search)
-        .then((res) => res.json())
-        .then((data: SearchResponse) => {
-          setSearch(data)
-          if (data.length > 0) setOpen(true)
-        })
-    }, 100),
-    [],
+    debounce(
+      async (search: string) => {
+        fetch('/api/search?q=' + search)
+          .then((res) => res.json())
+          .then((data: SearchResponse) => {
+            setSearch(data)
+            if (data.length > 0) setOpen(true)
+          })
+      },
+      100,
+      true
+    ),
+    []
   )
 
   useEffect(() => {
@@ -110,7 +114,7 @@ export function useNavInput() {
         })
       }
     },
-    [search.length],
+    [search.length]
   )
 
   const handleOptionClick = (index: number) => {
