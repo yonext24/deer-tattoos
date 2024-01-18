@@ -12,7 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { ArtistSelector } from '../../add-tatuajes/artist-selector/artist-selector'
-import { Button } from '@/components/shadcn/ui/button'
+import { appFetch, errorParser } from '@/lib/utils/appFetch'
+import { SubmitModal } from '../../common/submit-modal'
 
 const formSchema = z.object({
   artist: z.object({
@@ -24,10 +25,12 @@ const formSchema = z.object({
 })
 
 export function ChangeArtistModal({
+  id,
   artistSlug,
   onArtistChange,
   closeModal,
 }: {
+  id: string
   artistSlug: string | null
   closeModal: () => void
   onArtistChange: (slug: string | null) => void
@@ -41,16 +44,30 @@ export function ChangeArtistModal({
     },
   })
 
-  const { control, handleSubmit } = form
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = form
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     if (data.artist.slug === artistSlug) {
       closeModal()
       return
     }
 
-    onArtistChange(data.artist.slug)
-    closeModal()
+    try {
+      await appFetch('/api/tattoos', {
+        method: 'PATCH',
+        body: JSON.stringify({ id, artistSlug: data.artist.slug }),
+      })
+
+      onArtistChange(data.artist.slug)
+      closeModal()
+    } catch (err) {
+      setError('root', { message: errorParser(err) })
+    }
   })
 
   return (
@@ -77,12 +94,11 @@ export function ChangeArtistModal({
               )
             }}
           />
-          <div className="flex justify-end gap-4 mt-3">
-            <Button variant="secondary" type="button" onClick={closeModal}>
-              Cancelar
-            </Button>
-            <Button variant="default">Modificar</Button>
-          </div>
+          <SubmitModal
+            loading={isSubmitting}
+            error={errors?.root?.message}
+            closeModal={closeModal}
+          />
         </form>
       </Form>
     </div>

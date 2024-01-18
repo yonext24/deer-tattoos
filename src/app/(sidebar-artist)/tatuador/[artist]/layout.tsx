@@ -1,3 +1,4 @@
+import { TattoosFooter } from '@/components/ui/footers/tattoos-footer'
 import { SidebarSkeleton } from '@/components/ui/sidebar/sidebar-skeleton'
 import { SidebarWithArtist } from '@/components/ui/sidebar/sidebar-with-artist'
 import { Suspense } from 'react'
@@ -14,7 +15,10 @@ export default async function Layout({
       <Suspense key={params.artist} fallback={<SidebarSkeleton />}>
         <SidebarWithArtist slug={params.artist} />
       </Suspense>
-      {children}
+      <div className="flex flex-col gap-4">
+        {children}
+        <TattoosFooter />
+      </div>
     </div>
   )
 }

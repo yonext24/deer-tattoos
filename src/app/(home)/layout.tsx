@@ -1,4 +1,5 @@
 import { Main } from '@/components/ui/common/main'
+import { MainFooter } from '@/components/ui/footers/main-footer'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -17,10 +18,13 @@ export default function HomeLayout({
   artists,
 }: LayoutProps) {
   return (
-    <Main withMarginOnTop>
-      {children}
-      {tattoos}
-      {artists}
-    </Main>
+    <>
+      <Main withMarginOnTop>
+        {children}
+        {tattoos}
+        {artists}
+      </Main>
+      <MainFooter />
+    </>
   )
 }

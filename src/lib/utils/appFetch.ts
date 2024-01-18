@@ -29,8 +29,14 @@ export const appFetch = async (url: string, options?: RequestInit) => {
         ? 'Ocurrió un error, es posible que el servidor esté caído, si el problema persiste contactá a soporte.'
         : 'Algo salió mal, si el problema persiste contactá a soporte'
 
-    console.error(err)
-
     throw new Error(errMessage)
   }
+}
+
+export const errorParser = (error: unknown) => {
+  if (error instanceof Error) {
+    return error.message
+  }
+
+  return 'Algo salió mal, porfavor inténtalo denuevo.'
 }

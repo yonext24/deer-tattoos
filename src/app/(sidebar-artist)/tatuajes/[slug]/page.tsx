@@ -9,6 +9,7 @@ import {
   getTattooBySlug,
 } from '@backend/utils/tattoos-utils'
 import { getArtistForCard } from '@/lib/backend/utils/artists'
+import { TattoosFooter } from '@/components/ui/footers/tattoos-footer'
 
 export const dynamicParams = true
 

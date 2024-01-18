@@ -1,3 +1,4 @@
+import { TattoosFooter } from '@/components/ui/footers/tattoos-footer'
 import { SidebarSkeleton } from '@/components/ui/sidebar/sidebar-skeleton'
 import { SidebarWithArtist } from '@/components/ui/sidebar/sidebar-with-artist'
 import { getTattooBySlug } from '@backend/utils/tattoos-utils'
@@ -17,7 +18,10 @@ export default async function Layout({
       <Suspense key={tattoo?.artistSlug} fallback={<SidebarSkeleton />}>
         <SidebarWithArtist slug={tattoo?.artistSlug} />
       </Suspense>
-      {children}
+      <div className="flex flex-col gap-4">
+        {children}
+        <TattoosFooter />
+      </div>
     </div>
   )
 }

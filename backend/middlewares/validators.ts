@@ -34,8 +34,6 @@ const TattooCreateSchema = z.object({
 export type TattooCreateBodyType = z.infer<typeof TattooCreateSchema>
 
 export const TattooCreateValidator: Middleware = async (req, next) => {
-  let styles, tags, type, artist, card, original
-
   try {
     const body = await req.parsedBody('formData')
 
@@ -47,15 +45,35 @@ export const TattooCreateValidator: Middleware = async (req, next) => {
 
     body.card_height = card_height
     body.card_width = card_width
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new AppError(400, error.errors[0].message)
+    }
+    console.log({ error })
+    throw badFormatError
+  }
 
-    card = body.card
-    original = body.original
-    artist = body.artist
-    styles = body.styles
-    tags = body.tags
-    type = body.type
+  next()
+}
+
+const TattooUpdateSchema = z.object({
+  id: z.string().min(1, 'No se encontró el tatuaje que se quiere modificar.'),
+  tags: z.array(z.string().min(1)).optional(),
+  styles: z.array(z.string().min(1)).optional(),
+  artistSlug: z.string().min(1).nullable().optional(),
+})
+
+export type TattooUpdateSchemaType = z.infer<typeof TattooUpdateSchema>
+
+export const TattooUpdateValidator: Middleware = async (req, next) => {
+  try {
+    const body = await req.parsedBody()
+    TattooUpdateSchema.parse(body)
   } catch (error) {
     console.log({ error })
+    if (error instanceof z.ZodError) {
+      throw new AppError(400, error.errors[0].message)
+    }
     throw badFormatError
   }
 
@@ -107,6 +125,9 @@ export const ArtistCreateValidator: Middleware = async (req, next) => {
     artistFormSchema.parse(body)
   } catch (error) {
     console.log({ error })
+    if (error instanceof z.ZodError) {
+      throw new AppError(400, error.errors[0].message)
+    }
     if (error instanceof AppError) {
       throw error
     }

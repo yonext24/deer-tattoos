@@ -11,9 +11,10 @@ import { useForm } from 'react-hook-form'
 import { CategorySelector } from '../../add-tatuajes/category-selector/category-selector'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Button } from '@/components/shadcn/ui/button'
 import { TagsSelector } from '../../add-tatuajes/tags-selector/tags-selector'
 import { modalStyles } from '@/lib/utils/styles'
+import { appFetch, errorParser } from '@/lib/utils/appFetch'
+import { SubmitModal } from '../../common/submit-modal'
 
 const formSchema = z.object({
   styles: z.array(z.string().min(1)),
@@ -27,10 +28,7 @@ export function EditStylesModal({
   id,
   onChangeData,
 }: {
-  onChangeData: (data: {
-    tags?: string[]
-    styles?: string[]
-  }) => void
+  onChangeData: (data: { tags?: string[]; styles?: string[] }) => void
   id: string
   closeModal: () => void
   initialStyles?: string[]
@@ -43,10 +41,24 @@ export function EditStylesModal({
     },
     resolver: zodResolver(formSchema),
   })
-  const { handleSubmit, control } = form
-  const onSubmit = handleSubmit((data) => {
-    onChangeData(data)
-    closeModal()
+  const {
+    handleSubmit,
+    control,
+    setError,
+    formState: { isSubmitting, errors },
+  } = form
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const res = await appFetch(`/api/tattoos`, {
+        method: 'PATCH',
+        body: JSON.stringify({ id, ...data }),
+      })
+
+      onChangeData(data)
+      closeModal()
+    } catch (error) {
+      setError('root', { message: errorParser(error) })
+    }
   })
 
   return (
@@ -97,12 +109,11 @@ export function EditStylesModal({
             }}
           />
 
-          <div className="flex justify-end gap-4 mt-3">
-            <Button variant="secondary" type="button" onClick={closeModal}>
-              Cancelar
-            </Button>
-            <Button variant="default">Modificar</Button>
-          </div>
+          <SubmitModal
+            closeModal={closeModal}
+            loading={isSubmitting}
+            error={errors.root?.message}
+          />
         </form>
       </Form>
     </div>

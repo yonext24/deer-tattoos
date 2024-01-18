@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server'
 import { AppError, ParsedRequest } from '@backend/middlewares/helpers'
 import { prisma } from '@backend/prisma'
 import { tattooConverter } from '@backend/converters/tattoo-converter'
-import { TattooCreateBodyType } from '@backend/middlewares/validators'
+import {
+  TattooCreateBodyType,
+  TattooUpdateSchemaType,
+} from '@backend/middlewares/validators'
 import { uploadImage } from '@backend/firebase/utils'
 import {
   generateTattooSlug,
@@ -87,5 +90,52 @@ export const tattooController = {
     })
 
     return NextResponse.json(nuevoTatuaje)
+  },
+
+  deleteTattoo: async (request: ParsedRequest) => {
+    try {
+      const { id } = (await request.parsedBody()) as { id: string }
+      if (!id) {
+        throw new AppError(
+          400,
+          'No se encontró el tatuaje que se quiere borrar, porfavor inténtalo denuevo.'
+        )
+      }
+
+      const deleted = await prisma.tattoo.delete({ where: { id } })
+
+      return NextResponse.json(deleted)
+    } catch (err) {
+      console.error(`Error al eliminar el tatuaje: ${err}`)
+      throw new AppError(500, 'Algo salió mal al eliminar el tatuaje.')
+    }
+  },
+
+  updateTattoo: async (request: ParsedRequest) => {
+    try {
+      const { styles, tags, artistSlug, id } =
+        (await request.parsedBody()) as TattooUpdateSchemaType
+
+      const toUpdate: any = {}
+
+      if (styles !== undefined) {
+        toUpdate['styles'] = styles
+      }
+      if (tags !== undefined) {
+        toUpdate['tags'] = tags
+      }
+      if (artistSlug !== undefined) {
+        toUpdate['artistSlug'] = artistSlug
+      }
+
+      const updated = await prisma.tattoo.update({
+        where: { id },
+        data: toUpdate,
+      })
+
+      return NextResponse.json(updated)
+    } catch (err) {
+      throw new AppError(500, 'Algo salió mal al actualizar el tatuaje.')
+    }
   },
 }

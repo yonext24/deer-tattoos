@@ -65,6 +65,7 @@ export function TableActionsDropdown({
             addModal(
               ChangeArtistModal,
               {
+                id: row.original.id,
                 artistSlug: row.original.artistSlug,
                 onArtistChange: (slug) => {
                   table.options.meta?.changeArtist({
