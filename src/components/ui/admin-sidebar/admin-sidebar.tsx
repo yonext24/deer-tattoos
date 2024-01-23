@@ -9,8 +9,9 @@ import { cn } from '@/lib/utils/utils'
 
 const entrys = [
   { text: 'Agregar Tatuaje', href: '/admin/tatuajes/agregar' },
-  { text: 'Ver tatuajes', href: '/admin/tatuajes' },
+  { text: 'Ver Tatuajes', href: '/admin/tatuajes' },
   { text: 'Agregar Artista', href: '/admin/artistas/agregar' },
+  { text: 'Ver Artistas', href: '/admin/artistas' },
 ]
 
 export async function AdminSidebar() {

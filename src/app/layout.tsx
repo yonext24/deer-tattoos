@@ -4,6 +4,7 @@ import { FontSans, FontTitle } from '@/lib/fonts'
 import { Navbar } from '@/components/ui/navbar/navbar'
 import { cn } from '@/lib/utils/utils'
 import { Toaster } from '@/components/shadcn/ui/sonner'
+import { PageProvider } from '@/components/providers/page-provider'
 
 export const mainKeywords = [
   'tatuajes lanus',
@@ -44,7 +45,7 @@ export default function RootLayout({
         )}
       >
         <Navbar />
-        {children}
+        <PageProvider>{children}</PageProvider>
         <Toaster />
       </body>
     </html>

@@ -17,7 +17,10 @@ export const CategoriesFilterMainButton = forwardRef<HTMLButtonElement, Props>(
       <Button
         variant="outline"
         size="default"
-        className={cn('h-8 border-dashed', className)}
+        className={cn(
+          'h-8 border-border hover:border-gold transition-colors',
+          className
+        )}
         ref={ref}
         {...props}
       >
@@ -46,5 +49,5 @@ export const CategoriesFilterMainButton = forwardRef<HTMLButtonElement, Props>(
         )}
       </Button>
     )
-  },
+  }
 )

@@ -16,6 +16,6 @@ export type Artist = {
   medias: {
     instagram: null | string
     facebook: null | string
-    web: null | string
+    website: null | string
   }
 }

@@ -90,17 +90,16 @@ export function useTatuajesTable({
             const { height, width } = image
 
             return (
-              <picture className="h-[50px] w-max flex relative overflow-hidden">
-                <ImageWithBlur
-                  quality={100}
-                  src={image.src}
-                  blurDataURL={image.blured}
-                  alt="Imágen de tatuaje"
-                  className=""
-                  height={50}
-                  width={50 * (width / height)}
-                />
-              </picture>
+              <ImageWithBlur
+                pictureClassName="h-[50px] w-max flex "
+                quality={100}
+                src={image.src}
+                blurDataURL={image.blured}
+                alt="Imágen de tatuaje"
+                className=""
+                height={50}
+                width={50 * (width / height)}
+              />
             )
           } catch (err) {
             return <div className="h-[60px] w-[40px] bg-red-500 rounded"></div>

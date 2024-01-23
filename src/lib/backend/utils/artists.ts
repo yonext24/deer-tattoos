@@ -1,5 +1,4 @@
 import { Artist } from '@/lib/types/artist'
-import tatuadores from '../../../../public/tatuadores.json'
 import { prisma } from '@backend/prisma'
 import { cache } from 'react'
 

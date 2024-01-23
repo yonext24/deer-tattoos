@@ -22,8 +22,8 @@ export const transformSearchParams = <
   args: TransformSearchParamsArgs
 ): {
   [K in keyof TransformSearchParamsArgs]: TransformSearchParamsArgs[K] extends 'unique'
-    ? string | null
-    : string[] | null
+    ? string | undefined
+    : string[] | undefined
 } => {
   const newParams: {
     [K in keyof TransformSearchParamsArgs]: TransformSearchParamsArgs[K]
@@ -37,10 +37,14 @@ export const transformSearchParams = <
       if (type === 'multiple') {
         if (value && Array.isArray(value)) {
           newParams[key as keyof TransformSearchParamsArgs] = value as any
+        } else if (value && typeof value === 'string') {
+          newParams[key as keyof TransformSearchParamsArgs] = [value] as any
         }
       } else {
         if (value && typeof value === 'string')
           newParams[key as keyof TransformSearchParamsArgs] = value as any
+        else if (value && Array.isArray(value))
+          newParams[key as keyof TransformSearchParamsArgs] = value[0] as any
       }
     }
   })

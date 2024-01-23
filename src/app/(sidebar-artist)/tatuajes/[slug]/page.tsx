@@ -4,31 +4,24 @@ import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
 import { notFound } from 'next/navigation'
 import { Artist } from '@/components/ui/tatuajes/artist/artist'
-import {
-  filterAndPaginateTattoos,
-  getTattooBySlug,
-} from '@backend/utils/tattoos-utils'
 import { getArtistForCard } from '@/lib/backend/utils/artists'
-import { TattoosFooter } from '@/components/ui/footers/tattoos-footer'
+import { tattooController } from '@backend/controllers/tattoo-controller'
+import { getTattooBySlug, getTattoos } from '@/lib/backend/utils/tattoos'
 
 export const dynamicParams = true
 
 export const generateStaticParams = async () => {
-  const { data } = await filterAndPaginateTattoos({}, { page: 1, size: 1000 })
+  const { data } = await getTattoos({}, { page: 1, size: 1000 })
   return data.map((tattoo) => ({ params: { slug: tattoo.slug } }))
 }
 
-const getTattoo = async (slug: string) => {
-  const tattoo = await getTattooBySlug(slug).catch(() => null)
-  if (!tattoo) {
-    notFound()
-  }
-  return tattoo
-}
-
 export default async function Page({ params }: { params: { slug: string } }) {
-  const tattoo = await getTattoo(params.slug)
+  const tattoo = await getTattooBySlug(params.slug)
+  if (!tattoo) {
+    return notFound()
+  }
   const artist = await getArtistForCard(tattoo.artistSlug).catch(() => null)
+  tattooController.addRanking({ slug: params.slug })
 
   return (
     <Main className="ml-auto flex flex-col gap-4 p-4 w-[700px]">
@@ -36,16 +29,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <Back />
         <Artist artist={artist} />
       </div>
-      <picture className="relative overflow-hidden w-full ">
-        <ImageWithBlur
-          alt="Image"
-          src={tattoo.images.main.src}
-          height={tattoo.images.main.height}
-          width={tattoo.images.main.width}
-          blurDataURL={tattoo.images.main.blured}
-          className="w-full max-w-auto max-h-auto"
-        />
-      </picture>
+      <ImageWithBlur
+        pictureClassName="w-full"
+        alt="Image"
+        src={tattoo.images.main.src}
+        height={tattoo.images.main.height}
+        width={tattoo.images.main.width}
+        blurDataURL={tattoo.images.main.blured}
+        className="w-full max-w-auto max-h-auto"
+      />
       <h2 className="font-extralight text-4xl mt-4">Tatuajes Relacionados</h2>
       <div className="w-full h-[250px] flex gap-4">
         {Array.from({ length: 3 }).map((_, i) => (

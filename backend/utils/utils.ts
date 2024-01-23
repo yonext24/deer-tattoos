@@ -56,11 +56,11 @@ export const generateArtistSlug = async (name: string, user?: string) => {
   }
 }
 
-export const getBase64 = async (file: Blob) => {
+export const getBase64 = async (file: Blob, size: number = 15) => {
   try {
     const arrBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrBuffer)
-    const { base64 } = await getPlaiceholder(buffer)
+    const { base64 } = await getPlaiceholder(buffer, { size })
     return base64
   } catch (error) {
     //error handling

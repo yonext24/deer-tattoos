@@ -17,6 +17,7 @@ model Tattoo {
 
   artistSlug String?
   artist     Artist? @relation(fields: [artistSlug], references: [slug], onDelete: SetNull)
+  ranking    Int     @default(0)
 
   images TattooImages
 
@@ -62,7 +63,7 @@ type ArtistImage {
 type ArtistMedias {
   instagram String?
   facebook  String?
-  web       String?
+  website   String?
 }
 
 model Account {

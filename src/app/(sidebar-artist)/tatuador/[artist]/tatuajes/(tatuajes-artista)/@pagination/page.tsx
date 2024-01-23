@@ -1,7 +1,8 @@
 import { Section } from '@/components/ui/common/section'
 import { TatuajesPagination } from '@/components/ui/tatuajes/pagination/tatuajes-pagination'
-import { getArtistTattoos, getTattoos } from '@/lib/backend/utils/tattoos'
+import { getArtistTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
+import { transformSearchParams } from '@/lib/utils/utils'
 
 export default async function Page({
   params,
@@ -10,12 +11,19 @@ export default async function Page({
   params: { artist: string }
   searchParams: SearchParamsType
 }) {
-  const { total, page } = await getArtistTattoos(params.artist, {
-    page: searchParams?.page as string,
-    search: searchParams?.search as string,
-    style: searchParams?.style,
-    size: searchParams?.size as string,
+  const filterParams = transformSearchParams(searchParams, {
+    search: 'unique',
+    style: 'multiple',
   })
+  const paginationParams = transformSearchParams(searchParams, {
+    page: 'unique',
+    size: 'unique',
+  })
+  const { total, page } = await getArtistTattoos(
+    params.artist,
+    filterParams,
+    paginationParams
+  )
 
   return (
     <Section className="!min-h-[auto] mt-2">

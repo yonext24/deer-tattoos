@@ -2,125 +2,87 @@
 'use client'
 
 import 'react-image-crop/dist/ReactCrop.css'
-
-import { useEffect, useRef, useState } from 'react'
 import { ImageSelectorButton } from '../../common/image-selector-button'
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog'
-import { ImageSelectorModal } from './image-selector-modal'
-import { Crop, PixelCrop } from 'react-image-crop'
-import { getScale } from '@/lib/utils/canvas-preview'
-import { generateImageUrl } from '@/lib/utils/generateImageUrl'
+import { Crop } from 'react-image-crop'
 import { TattooCard } from '@/components/tattoo-card/tattoo-card'
 import { AddTatuajesFormValues } from '../use-add-tatuajes-form'
-import { Tattoo } from '@/lib/types/tattoo'
+import {
+  onCompletedFuncProps,
+  useControlledPicker,
+} from '@/hooks/useControlledPicker'
+import { ImageCropper } from '../../common/image-cropper'
+import { forwardRef } from 'react'
 
 const initialCrop: Crop = {
-  height: 400,
-  width: 500,
+  height: 80,
+  width: 100,
   x: 0,
   y: 0,
   unit: 'px',
 }
 
-export function ImageSelector({
-  value,
-  onChange,
-}: {
-  value: AddTatuajesFormValues['image']
-  onChange: (data: {
-    card: Blob
-    original: File
-    card_width: number
-    card_height: number
-  }) => void
-}) {
-  1
-  const [open, setOpen] = useState<boolean>(false)
-  const [originalImage, setOriginalImage] = useState<File | null>(null)
-  const [imageElement, setImageElement] = useState<HTMLImageElement>()
-  const [croppedImageBlob, setCroppedImageBlob] = useState<Blob>()
-  const [crop, setCrop] = useState<Crop>(initialCrop)
-  const [imageData, setImageData] = useState<ReturnType<typeof getScale>>()
-  const [cropped, setCropped] = useState<PixelCrop>()
-  const [croppedImageUrl, setCroppedImageUrl] = useState<string>('')
+export const ImageSelector = forwardRef(function ImageSelector(
+  {
+    onChange,
+  }: {
+    value: AddTatuajesFormValues['image']
+    onChange: (data: any) => void
+  },
+  ref
+) {
+  const handleChange = () => {}
 
-  const hasImageBeenInitialized = useRef(false)
+  const {
+    open,
+    setOpen,
+    setCroppedUrl,
+    croppedUrl,
+    originalFile,
+    setOriginalFile,
+    hasImageBeenInitialized,
+  } = useControlledPicker({ onChange: handleChange, ref })
 
-  useEffect(() => {
-    if (!value?.card && hasImageBeenInitialized.current) {
-      hasImageBeenInitialized.current = false
-      setOpen(false)
-      setOriginalImage(null)
-      setImageElement(undefined)
-      setCroppedImageBlob(undefined)
-      setCroppedImageUrl('')
-      setCrop(initialCrop)
-      setImageData(undefined)
-      setCropped(undefined)
-    }
-  }, [hasImageBeenInitialized.current, value?.card])
-
-  useEffect(() => {
-    if (
-      croppedImageBlob &&
-      originalImage &&
-      cropped?.width &&
-      cropped?.height
-    ) {
-      hasImageBeenInitialized.current = true
-      onChange({
-        card: croppedImageBlob,
-        original: originalImage,
-        card_width: cropped.width,
-        card_height: cropped.height,
-      })
-    }
-  }, [croppedImageBlob, originalImage, cropped])
-
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target?.files?.[0]
-    if (!file) return
-
-    setOriginalImage(file)
-    setOpen(true)
+  const onCompleted = ({
+    width,
+    height,
+    cropped,
+    previewUrl,
+    original,
+  }: onCompletedFuncProps) => {
+    setCroppedUrl(previewUrl)
+    onChange({
+      card_width: width,
+      card_height: height,
+      card: cropped,
+      original,
+    })
+    hasImageBeenInitialized.current = true
+    setOpen(false)
   }
-
-  useEffect(() => {
-    if (imageElement && cropped && imageData) {
-      generateImageUrl(imageElement, cropped, imageData).then(
-        ({ blob, previewUrl }) => {
-          setCroppedImageUrl(previewUrl)
-          setCroppedImageBlob(blob)
-          setOpen(false)
-        }
-      )
-    }
-  }, [JSON.stringify(cropped), imageElement, JSON.stringify(imageData)])
 
   return (
     <>
-      <ImageSelectorButton onChange={onFileChange} />
-      <Dialog
-        open={open && Boolean(originalImage)}
-        onOpenChange={(c) => {
-          setOpen(c)
+      <ImageSelectorButton
+        onChange={(e) => {
+          setOriginalFile(e.target.files?.[0])
         }}
-      >
-        <DialogContent className="max-w-[none] w-auto max-h-screen overflow-y-auto my-1">
-          {originalImage && (
-            <ImageSelectorModal
-              setImageData={setImageData}
-              crop={crop}
-              setCrop={setCrop}
-              setImage={setImageElement}
-              setCropped={setCropped}
-              img={originalImage}
-            />
-          )}
+      />
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <ImageCropper
+            image={originalFile}
+            minHeight={80}
+            minWidth={100}
+            aspect={500 / 400}
+            initialCrop={initialCrop}
+            onCompleted={onCompleted}
+          />
         </DialogContent>
       </Dialog>
 
-      {croppedImageUrl && (
+      {croppedUrl && (
         <div className="w-[500px]">
           <TattooCard
             artistSlug=""
@@ -135,7 +97,7 @@ export function ImageSelector({
                 blured: '',
               },
               card: {
-                src: croppedImageUrl,
+                src: croppedUrl,
                 height: 400,
                 width: 500,
                 blured:
@@ -151,4 +113,4 @@ export function ImageSelector({
       )}
     </>
   )
-}
+})

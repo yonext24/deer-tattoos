@@ -15,15 +15,10 @@ export default async function Page({
     size: 'unique',
   })
 
-  const { data: initialTattoos, total } = await getTattoos(
-    undefined,
-    undefined,
-    params.page ?? '1',
-    params.size ?? '10'
-  )
+  const { data: initialTattoos, total } = await getTattoos({}, params)
 
   return (
-    <Main className="flex flex-col px-3 py-5">
+    <Main withAnalytics={false} className="flex flex-col px-3 py-5">
       <h1 className="text-2xl font-extralight">Ver tatuajes</h1>
       <Separator className="my-4" />
       <section className="flex-1 flex flex-col justify-between">

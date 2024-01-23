@@ -1,16 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog'
-import { useEffect, useRef, useState } from 'react'
 import { ImageSelectorButton } from '../../common/image-selector-button'
 import { ImageCropper } from '../../common/image-cropper'
 import { useControlledPicker } from '@/hooks/useControlledPicker'
+import { forwardRef } from 'react'
 
-export function ProfilePicker({
-  onChange,
-}: {
-  value: File
-  onChange: (file: any) => void
-}) {
+export const ProfilePicker = forwardRef(function ProfilePicker(
+  {
+    onChange,
+  }: {
+    value: File
+    onChange: (file: any) => void
+  },
+  ref
+) {
   const {
     open,
     setOriginalFile,
@@ -18,7 +21,7 @@ export function ProfilePicker({
     croppedUrl,
     onCompleted,
     setOpen,
-  } = useControlledPicker({ onChange })
+  } = useControlledPicker({ onChange, ref })
 
   return (
     <>
@@ -58,4 +61,4 @@ export function ProfilePicker({
       )}
     </>
   )
-}
+})

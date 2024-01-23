@@ -3,13 +3,17 @@ import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog'
 import { ImageSelectorButton } from '../../common/image-selector-button'
 import { ImageCropper } from '../../common/image-cropper'
 import { useControlledPicker } from '@/hooks/useControlledPicker'
+import { forwardRef } from 'react'
 
-export function BackgroundPicker({
-  onChange,
-}: {
-  value: File
-  onChange: (file: any) => void
-}) {
+export const BackgroundPicker = forwardRef(function BackgroundPicker(
+  {
+    onChange,
+  }: {
+    value: File
+    onChange: (file: any) => void
+  },
+  ref
+) {
   const {
     open,
     setOriginalFile,
@@ -17,7 +21,7 @@ export function BackgroundPicker({
     croppedUrl,
     onCompleted,
     setOpen,
-  } = useControlledPicker({ onChange })
+  } = useControlledPicker({ onChange, ref })
 
   return (
     <>
@@ -54,4 +58,4 @@ export function BackgroundPicker({
       )}
     </>
   )
-}
+})

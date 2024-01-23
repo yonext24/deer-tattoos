@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { appFetch } from '@/lib/utils/appFetch'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as zod from 'zod'
@@ -28,23 +28,16 @@ const formSchema = zod.object({
   image: zod
     .object({
       card: zod.any(),
-      card_height: zod.any(),
-      card_width: zod.any(),
       original: zod.any(),
+      card_height: zod.number(),
+      card_width: zod.number(),
     })
     .refine(({ card, original }) => Boolean(card) && Boolean(original), {
       message: 'Tenés que elegir una imágen para el tatuaje',
     })
     .refine(({ original }) => original?.size <= MAX_FILE_SIZE, {
       message: `El tamaño máximo permitido es 15MB`,
-    })
-    .refine(
-      ({ card_height, card_width }) =>
-        !isNaN(Number(card_height)) && !isNaN(Number(card_width)),
-      {
-        message: 'Algo salió mal al subir la imágen, volvé a intenarlo.',
-      }
-    ),
+    }),
   // .refine(
   //   ({ card }) => card?.type,
   //   'Algo salió mal al subir la imágen, volvé a intenarlo.',
@@ -77,13 +70,19 @@ export function useAddTatuajesForm() {
     defaultValues: formDefaultValues,
   })
 
+  const img = form.watch('image')
+  const errors = form.formState.errors
+
+  const imageRef = useRef<any>(null)
+
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
+      imageRef?.current?.reset()
       form.reset(formDefaultValues)
     }
   }, [form.formState.isSubmitSuccessful])
 
-  const onSubmit = (data: zod.infer<typeof formSchema>) => {
+  const onSubmit = async (data: zod.infer<typeof formSchema>) => {
     const formData = new FormData()
 
     formData.append('card', data.image.card as Blob)
@@ -96,10 +95,19 @@ export function useAddTatuajesForm() {
     formData.append('artist', JSON.stringify(data.artist))
     formData.append('title', data.title)
 
-    appFetch('/api/tattoos', { method: 'POST', body: formData }).then((res) => {
+    const toastId = 'add-tatuaje-loading-toast'
+    toast.loading('El tatuaje se está creando', { id: toastId })
+    try {
+      await appFetch('/api/tattoos', { method: 'POST', body: formData })
       toast.success('El tatuaje se creó correctamente')
-    })
+    } catch (err) {
+      toast.error(
+        'Algo salió mal al crear el tatuaje, porfavor inténtalo denuevo :('
+      )
+    } finally {
+      toast.dismiss(toastId)
+    }
   }
 
-  return { form, onSubmit }
+  return { form, onSubmit, imageRef }
 }

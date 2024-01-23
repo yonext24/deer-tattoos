@@ -20,10 +20,13 @@ export function ImageCropper({
   image?: File
   onCompleted: ({
     previewUrl,
-    blob,
+    cropped,
   }: {
     previewUrl: string
-    blob: Blob
+    cropped: Blob
+    height: number
+    width: number
+    original?: File
   }) => void
   initialCrop: Crop
   minWidth: number
@@ -53,10 +56,16 @@ export function ImageCropper({
     const { previewUrl, blob } = await generateImageUrl(
       imageRef.current,
       crop as PixelCrop,
-      imageData,
+      imageData
     )
 
-    onCompleted({ previewUrl, blob })
+    onCompleted({
+      previewUrl,
+      cropped: blob,
+      height: crop.height,
+      width: crop.width,
+      original: image,
+    })
   }
 
   return (

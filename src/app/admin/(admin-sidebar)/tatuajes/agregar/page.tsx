@@ -20,11 +20,11 @@ import { ArtistSelector } from '@/components/ui/add-tatuajes/artist-selector/art
 import { SubmitButton } from '@/components/ui/common/submit-button'
 
 export default function Page() {
-  const { form, onSubmit } = useAddTatuajesForm()
-  const { handleSubmit, control, watch } = form
+  const { form, onSubmit, imageRef } = useAddTatuajesForm()
+  const { handleSubmit, control } = form
 
   return (
-    <Main className="max-w-[800px] px-3 py-5">
+    <Main withAnalytics={false} className="max-w-[800px] px-3 py-5">
       <h1 className="text-2xl font-extralight">Agregar tatuaje</h1>
 
       <Separator className="my-4" />
@@ -127,7 +127,11 @@ export default function Page() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Imágen del tatuaje</FormLabel>
                   <FormControl>
-                    <ImageSelector value={value} onChange={onChange} />
+                    <ImageSelector
+                      ref={imageRef}
+                      value={value}
+                      onChange={onChange}
+                    />
                   </FormControl>
                   <FormDescription>
                     La imágen del tatuaje, al subirla, se crearán dos versiones

@@ -3,6 +3,7 @@ import { TattooCard } from '@/components/tattoo-card/tattoo-card'
 import { ColumnLayout } from '@/components/ui/tatuajes/column-layout'
 import { getArtistTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
+import { transformSearchParams } from '@/lib/utils/utils'
 import { Suspense } from 'react'
 
 export default function Page({
@@ -28,10 +29,19 @@ const Children = async ({
   params: { artist: string }
   searchParams: SearchParamsType
 }) => {
-  const { data: tattoos } = await getArtistTattoos(params.artist, {
-    search: searchParams?.search as string | undefined,
-    style: searchParams?.style as string | string[] | undefined,
+  const filterParams = transformSearchParams(searchParams, {
+    search: 'unique',
+    style: 'multiple',
   })
+  const paginationParams = transformSearchParams(searchParams, {
+    page: 'unique',
+    size: 'unique',
+  })
+  const { data: tattoos } = await getArtistTattoos(
+    params.artist,
+    filterParams,
+    paginationParams
+  )
 
   return (
     <ColumnLayout>

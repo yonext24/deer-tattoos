@@ -19,9 +19,12 @@ import { MediaPicker } from '@/components/ui/add-artists/media-picker'
 import { CategorySelector } from '@/components/ui/add-tatuajes/category-selector/category-selector'
 import { Main } from '@/components/ui/common/main'
 import { SubmitButton } from '@/components/ui/common/submit-button'
+import { errorParser } from '@/lib/utils/appFetch'
+import { imageTypeValidation, imageValidation } from '@/lib/utils/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
 const artistFormSchema = z.object({
@@ -45,8 +48,25 @@ const artistFormSchema = z.object({
     .or(z.literal('')),
 
   images: z.object({
-    profile: z.any(),
-    background: z.any(),
+    profile: z
+      .any()
+      .refine(imageValidation, {
+        message: 'La imágen de perfil debe ser un archivo y es obligatoria',
+      })
+      .refine(imageTypeValidation, {
+        message:
+          'El formato de la imágen de perfil debe ser png, jpg, jpeg o webp',
+      }),
+    background: z
+      .any()
+      .refine(imageValidation, {
+        message: 'La imágen de fondo debe ser un archivo',
+      })
+      .refine(imageTypeValidation, {
+        message:
+          'La imágen de fondo debe ser un archivo de tipo png, jpg, jpeg o webp',
+      })
+      .optional(),
   }),
 
   media: z.object({
@@ -96,17 +116,22 @@ export default function Page() {
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, errors, isSubmitSuccessful },
+    formState: { isSubmitting, isSubmitSuccessful },
     setError,
   } = form
 
+  const profileRef = useRef<any>(null)
+  const backgroundRef = useRef<any>(null)
+
   useEffect(() => {
     if (isSubmitSuccessful) {
+      profileRef.current?.reset()
+      backgroundRef.current?.reset()
       form.reset(initialValues)
     }
   }, [isSubmitSuccessful])
 
-  const onSubmit = (data: z.infer<typeof artistFormSchema>) => {
+  const onSubmit = async (data: z.infer<typeof artistFormSchema>) => {
     const formData = new FormData()
 
     formData.append('name', data.name)
@@ -120,15 +145,28 @@ export default function Page() {
     data.media.facebook && formData.append('facebook', data.media.facebook)
     data.media.website && formData.append('website', data.media.website)
 
-    fetch('/api/artists', {
-      method: 'POST',
-      body: formData,
-    }).catch((err) => {
-      setError('root', { message: 'Algo salió mal' })
-    })
+    const toastId = 'creating-artist'
+    toast.loading('Creando artista', { id: toastId })
+    try {
+      await fetch('/api/artists', {
+        method: 'POST',
+        body: formData,
+      })
+      profileRef.current?.reset()
+      backgroundRef.current?.reset()
+      toast.success('Artista creado')
+    } catch (err) {
+      const message = `Algo salió mal al crear el tatuaje :( ${errorParser(
+        err
+      )})`
+      setError('root', { message })
+      toast.error('Algo salió mal al crear el artista :(')
+    } finally {
+      toast.dismiss(toastId)
+    }
   }
   return (
-    <Main className="max-w-[800px] px-3 py-5">
+    <Main withAnalytics={false} className="max-w-[800px] px-3 py-5">
       <h1 className="text-2xl font-extralight">Agregar artista</h1>
       <Separator className="my-4" />
       <Form {...form}>
@@ -136,18 +174,12 @@ export default function Page() {
           <FormField
             control={control}
             name="name"
-            render={({ field: { value, onChange } }) => {
+            render={({ field }) => {
               return (
                 <FormItem>
                   <FormLabel>Nombre</FormLabel>
                   <FormControl>
-                    <Input
-                      autoFocus
-                      className="md:max-w-[300px]"
-                      onChange={(e) => {
-                        onChange(e.target.value)
-                      }}
-                    />
+                    <Input autoFocus className="md:max-w-[300px]" {...field} />
                   </FormControl>
                   <FormDescription>El nombre del artista.</FormDescription>
                   <FormMessage />
@@ -158,7 +190,7 @@ export default function Page() {
           <FormField
             control={control}
             name="description"
-            render={({ field: { value, onChange } }) => {
+            render={({ field }) => {
               return (
                 <FormItem>
                   <FormLabel>Descripción</FormLabel>
@@ -166,9 +198,7 @@ export default function Page() {
                     <Textarea
                       rows={3}
                       className="md:max-w-[350px] resize-none"
-                      onChange={(e) => {
-                        onChange(e.target.value)
-                      }}
+                      {...field}
                     />
                   </FormControl>
                   <FormDescription>
@@ -183,17 +213,12 @@ export default function Page() {
           <FormField
             control={control}
             name="user"
-            render={({ field: { value, onChange } }) => {
+            render={({ field }) => {
               return (
                 <FormItem>
                   <FormLabel>Usuario (opcional)</FormLabel>
                   <FormControl>
-                    <Input
-                      className="md:max-w-[300px]"
-                      onChange={(e) => {
-                        onChange(e.target.value)
-                      }}
-                    />
+                    <Input className="md:max-w-[300px]" {...field} />
                   </FormControl>
                   <FormDescription>
                     El usuario del artista, esto es lo que va a aparecer en la
@@ -239,7 +264,11 @@ export default function Page() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Imagen de perfil</FormLabel>
                   <FormControl>
-                    <ProfilePicker value={value} onChange={onChange} />
+                    <ProfilePicker
+                      ref={profileRef}
+                      value={value}
+                      onChange={onChange}
+                    />
                   </FormControl>
                   <FormDescription>
                     La imagen de perfil del artista, esta aparece en el inicio
@@ -258,7 +287,11 @@ export default function Page() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Imagen de fondo</FormLabel>
                   <FormControl>
-                    <BackgroundPicker value={value} onChange={onChange} />
+                    <BackgroundPicker
+                      ref={backgroundRef}
+                      value={value}
+                      onChange={onChange}
+                    />
                   </FormControl>
                   <FormDescription>
                     La portada del artista, esta es la imágen que aparece en la

@@ -31,8 +31,6 @@ export const tattooController = {
     return NextResponse.json({ data: tattooConverter(data as []), page, total })
   },
 
-  async getTattoo() {},
-
   async createTattoo(request: ParsedRequest) {
     const {
       artist,
@@ -137,5 +135,20 @@ export const tattooController = {
     } catch (err) {
       throw new AppError(500, 'Algo salió mal al actualizar el tatuaje.')
     }
+  },
+  async addRanking({ slug }: { slug: string }) {
+    if (!slug) {
+      throw new AppError(
+        400,
+        'No se encontró el tatuaje que se quiere borrar, porfavor inténtalo denuevo.'
+      )
+    }
+
+    await prisma.tattoo.update({
+      where: { slug },
+      data: { ranking: { increment: 1 } },
+    })
+
+    return NextResponse.json({})
   },
 }

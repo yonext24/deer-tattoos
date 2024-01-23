@@ -4,7 +4,8 @@
 import { SearchResponse } from '@/app/api/search/route'
 import { createUrl, matchPathname } from '@/lib/utils/createUrl'
 import debounce from 'just-debounce-it'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
+import { usePathname, useSearchParams } from 'next/navigation'
 import {
   useCallback,
   useDeferredValue,

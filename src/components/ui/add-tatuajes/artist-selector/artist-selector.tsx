@@ -38,8 +38,6 @@ export function ArtistSelector({
       .catch(() => setStatus('error'))
   }, [])
 
-  console.log({ value })
-
   const selectedName = useMemo(() => {
     if (status === 'loading') return 'Cargando...'
     if (status === 'error') return 'Algo salió mal'

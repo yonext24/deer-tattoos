@@ -6,6 +6,22 @@ import { cn } from '@/lib/utils/utils'
 
 const NECESARY_AMOUNT_OF_TATTOOS = 18
 const NECESARY_AMOUNT_OF_TATTOOS_TO_DUPLICATE = 9
+
+// Funcion para calcular el promedio de aparición del tatuaje y ver si es aceptable
+const isAcceptableToPick = (arr: string[], element: string) => {
+  const total = arr.length
+  const amount = arr.filter((el) => el === element).length
+
+  if (amount <= 0) return true
+
+  const inverseProportion = total / amount
+
+  const amountOfDiferentElements = Array.from(new Set(arr)).length
+  const normalRatio = total / amountOfDiferentElements
+
+  return inverseProportion > normalRatio
+}
+
 // Es necesario duplicar los ultimos 9 tatuajes de la lista, para que la transición de la animación
 // sea fluida.
 // en total se necesitan 27 tatuajes, pero en la animación de css se especifican que se necesitan 24
@@ -15,13 +31,18 @@ const NECESARY_AMOUNT_OF_TATTOOS_TO_DUPLICATE = 9
 // Si no hay suficientes tatuajes, duplica los que hay
 const transformTattoosToCarousel = (tattoos: Tattoo[]) => {
   const copy = [...tattoos]
+  const pickedIds: string[] = []
 
-  if (copy.length < NECESARY_AMOUNT_OF_TATTOOS) {
-    while (copy.length < NECESARY_AMOUNT_OF_TATTOOS) {
-      const randomIndex = Math.floor(Math.random() * copy.length)
-      const randomTattoo = copy[randomIndex]
-      copy.push(randomTattoo)
-    }
+  while (copy.length < NECESARY_AMOUNT_OF_TATTOOS) {
+    const randomIndex = Math.floor(Math.random() * copy.length)
+    const randomTattoo = copy[randomIndex]
+
+    const isAcceptable = isAcceptableToPick(pickedIds, randomTattoo.id)
+    if (!isAcceptable) continue
+
+    pickedIds.push(randomTattoo.id)
+
+    copy.push(randomTattoo)
   }
 
   const firstDuplicate = copy.slice(0, NECESARY_AMOUNT_OF_TATTOOS_TO_DUPLICATE)

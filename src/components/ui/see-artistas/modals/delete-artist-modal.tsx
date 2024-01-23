@@ -1,17 +1,19 @@
 import { modalStyles } from '@/lib/utils/styles'
-import { SubmitModal } from '../../common/submit-modal'
 import { useState } from 'react'
-import { appFetch, errorParser } from '@/lib/utils/appFetch'
+import { SubmitModal } from '../../common/submit-modal'
+import { errorParser } from '@/lib/utils/appFetch'
 
-const DeleteModal = ({
-  closeModal,
+export default function DeleteArtistModal({
+  slug,
+  name,
   onRemove,
-  id,
+  closeModal,
 }: {
-  closeModal: () => void
+  slug: string
+  name: string
   onRemove: () => void
-  id: string
-}) => {
+  closeModal: () => void
+}) {
   const handleRemove = () => {
     onRemove()
     closeModal()
@@ -24,9 +26,12 @@ const DeleteModal = ({
   const handleSubmit = async () => {
     setStatus({ type: 'loading' })
     try {
-      await appFetch(`/api/tattoos`, {
-        body: JSON.stringify({ id }),
-        method: 'DELETE',
+      // await appFetch(`/api/tattoos`, {
+      //   body: JSON.stringify({ id }),
+      //   method: 'DELETE',
+      // })
+      await new Promise((res) => {
+        setTimeout(res, 1500)
       })
       handleRemove()
     } catch (e) {
@@ -38,8 +43,9 @@ const DeleteModal = ({
     <div role="dialog" className={modalStyles({})}>
       <h3 className="font-semibold">Estas seguro?</h3>
       <p className="text-[hsl(var(--muted-foreground))]">
-        Esta acción borrará el tatuaje y todas las imágenes asignadas a él, no
-        se puede revertir.
+        Esta acción borrará el artista y convertirá todos sus tatuajes en parte
+        de la galería {'<NOMBRE DE LA GALERÍA>'}, no se puede revertir, pero se
+        pueden volver a asignar todos sus tatuajes a mano después.
       </p>
       <SubmitModal
         loading={status.type === 'loading'}
@@ -52,5 +58,3 @@ const DeleteModal = ({
     </div>
   )
 }
-
-export default DeleteModal
