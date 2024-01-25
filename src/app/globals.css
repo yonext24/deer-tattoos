@@ -118,7 +118,7 @@ html {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
-  #carousel:has(> article:hover) {
+  #carousel:has(> a:hover) {
     animation-play-state: paused;
   }
 }

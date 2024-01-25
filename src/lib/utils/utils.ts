@@ -108,20 +108,3 @@ export const filterTattoos = (
   })
 }
 
-export const paginate = <T>(
-  array: T[],
-  { size, page }: { size: string | number; page: string | number }
-) => {
-  const parsedSize = parseInt(size as string)
-  const parsedPage = parseInt(page as string)
-
-  const offset = (parsedPage - 1) * parsedSize
-  const data = array.slice(offset).slice(0, parsedSize)
-  const total = Math.ceil(array.length / parsedSize)
-
-  return {
-    data,
-    total,
-    parsedPage,
-  }
-}

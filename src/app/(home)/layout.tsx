@@ -1,5 +1,5 @@
 import { Main } from '@/components/ui/common/main'
-import { MainFooter } from '@/components/ui/footers/main-footer'
+import { MainFooter } from '@/components/footers/main-footer'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { FontSans, FontTitle } from '@/lib/fonts'
-import { Navbar } from '@/components/ui/navbar/navbar'
+import { Navbar } from '@/components/navbar/navbar'
 import { cn } from '@/lib/utils/utils'
 import { Toaster } from '@/components/shadcn/ui/sonner'
 import { PageProvider } from '@/components/providers/page-provider'
@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es">
+    <html lang="es" className="dark">
       <body
         className={cn(
           'bg-black flex flex-col items-center min-h-screen text-white font-sans',

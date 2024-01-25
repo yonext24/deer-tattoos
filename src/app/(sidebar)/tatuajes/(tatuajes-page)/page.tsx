@@ -11,7 +11,9 @@ export default async function Page({
 }: {
   searchParams: SearchParamsType
 }) {
-  const paramsToString = `${searchParams?.style}-${searchParams?.search}-${searchParams?.page}-${searchParams?.size}`
+  const paramsToString = `${JSON.stringify(
+    searchParams?.style
+  )}-${searchParams?.search}-${searchParams?.page}-${searchParams?.size}`
 
   return (
     <Suspense key={paramsToString} fallback={<Skeletons />}>
@@ -35,6 +37,9 @@ const Children = async ({
   })
 
   const { data: tattoos } = await getTattoos(filterParams, paginationParams)
+  // await new Promise((res) => {
+  //   setTimeout(res, 3000)
+  // })
 
   return (
     <ColumnLayout>

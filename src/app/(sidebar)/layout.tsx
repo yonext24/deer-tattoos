@@ -1,5 +1,5 @@
-import { TattoosFooter } from '@/components/ui/footers/tattoos-footer'
-import { Sidebar } from '@/components/ui/sidebar/sidebar'
+import { TattoosFooter } from '@/components/footers/tattoos-footer'
+import { Sidebar } from '@/components/sidebar/sidebar'
 import { getStyles } from '@/lib/backend/utils/styles'
 import { Metadata } from 'next'
 

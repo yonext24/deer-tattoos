@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
       req: request,
     })
 
-    if (true || token?.role === 'admin') {
+    if (token?.role === 'admin') {
       return NextResponse.next()
     }
 

@@ -1,6 +1,6 @@
-import { TattoosFooter } from '@/components/ui/footers/tattoos-footer'
-import { SidebarSkeleton } from '@/components/ui/sidebar/sidebar-skeleton'
-import { SidebarWithArtist } from '@/components/ui/sidebar/sidebar-with-artist'
+import { TattoosFooter } from '@/components/footers/tattoos-footer'
+import { SidebarSkeleton } from '@/components/sidebar/sidebar-skeleton'
+import { SidebarWithArtist } from '@/components/sidebar/sidebar-with-artist'
 import { getTattooBySlug } from '@backend/utils/tattoos-utils'
 import { Suspense } from 'react'
 
