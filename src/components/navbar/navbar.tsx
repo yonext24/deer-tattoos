@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { NavInput } from './nav-input/nav-input'
+import { Suspense } from 'react'
 
 const navEntrys = [
   { text: 'Inicio', href: '/' },
@@ -21,7 +22,9 @@ export function Navbar() {
           <div className="h-full flex items-center">DEER</div>
         </Link>
         <div className="flex-grow flex w-full justify-center">
-          <NavInput />
+          <Suspense>
+            <NavInput />
+          </Suspense>
         </div>
         <div className="flex flex-grow-[.5] gap-2 col-span-3 row-span-1 h-full">
           {navEntrys.map(({ text, href }) => (

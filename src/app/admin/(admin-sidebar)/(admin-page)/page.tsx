@@ -4,6 +4,7 @@ import { queryPipe } from '@/lib/tracking/api'
 import { KpisData } from '@/lib/tracking/types'
 import { SearchParamsType } from '@/lib/types/common'
 import { transformSearchParams } from '@/lib/utils/utils'
+import { Suspense } from 'react'
 
 export default async function Page({
   searchParams,
@@ -21,12 +22,14 @@ export default async function Page({
 
   return (
     <div className="flex-1 grid grid-cols-2 gap-4">
-      <div className="col-start-1 col-end-3">
-        <VisitsChart queryData={queryData} />
-      </div>
-      <div className="">
-        <DevicesChart />
-      </div>
+      <Suspense>
+        <div className="col-start-1 col-end-3">
+          <VisitsChart queryData={queryData} />
+        </div>
+        <div className="">
+          <DevicesChart />
+        </div>
+      </Suspense>
     </div>
   )
 }

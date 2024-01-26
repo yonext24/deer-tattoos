@@ -4,6 +4,7 @@ import { AdminArtistLay } from '@/components/ui/see-artistas/admin-artist-lay'
 import { AdminArtistWrapper } from '@/components/ui/see-artistas/admin-artist-wrapper'
 import { AdminActionsProvider } from '@/components/ui/see-artistas/use-admin-artist-page'
 import { getAllArtists } from '@/lib/backend/utils/artists'
+import { Suspense } from 'react'
 
 export default async function Page() {
   const artists = await getAllArtists()
@@ -14,7 +15,9 @@ export default async function Page() {
       <Separator className="my-4" />
       <AdminArtistLay>
         <AdminActionsProvider artists={artists}>
-          <AdminArtistWrapper />
+          <Suspense>
+            <AdminArtistWrapper />
+          </Suspense>
         </AdminActionsProvider>
       </AdminArtistLay>
     </Main>

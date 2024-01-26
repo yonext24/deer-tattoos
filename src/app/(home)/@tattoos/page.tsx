@@ -5,6 +5,8 @@ import { Tattoo } from '@/lib/types/tattoo'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
 
+export const revalidate = 180
+
 const NECESARY_AMOUNT_OF_TATTOOS = 18
 const NECESARY_AMOUNT_OF_TATTOOS_TO_DUPLICATE = 9
 

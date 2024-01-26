@@ -4,6 +4,7 @@ import { TatuajesTable } from '@/components/ui/see-tatuajes/tatuajes-table/tatua
 import { getTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
 import { transformSearchParams } from '@/lib/utils/utils'
+import { Suspense } from 'react'
 
 export default async function Page({
   searchParams,
@@ -22,7 +23,9 @@ export default async function Page({
       <h1 className="text-2xl font-extralight">Ver tatuajes</h1>
       <Separator className="my-4" />
       <section className="flex-1 flex flex-col justify-between">
-        <TatuajesTable initial={initialTattoos} total={total} />
+        <Suspense>
+          <TatuajesTable initial={initialTattoos} total={total} />
+        </Suspense>
       </section>
     </Main>
   )

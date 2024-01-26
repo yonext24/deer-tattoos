@@ -6,6 +6,9 @@ const nextConfig = {
       { hostname: 'storage.googleapis.com' },
     ],
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 }
 
 module.exports = nextConfig
