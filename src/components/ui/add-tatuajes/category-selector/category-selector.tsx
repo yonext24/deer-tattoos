@@ -56,6 +56,7 @@ export function CategorySelector({
         {selectedValues?.length > 0 &&
           selectedValues.map((option) => (
             <Button
+              type="button"
               size="sm"
               className="py-1 px-2 h-auto bg-black border border-gold/50 text-white hover:bg-gold/10"
               onClick={() => handleRemove(option)}

@@ -12,9 +12,11 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
 
 export function MediaPicker({ extValue, onAccept, ...props }: Props) {
   const [localValue, setLocalValue] = useState<string>(extValue ?? '')
-  const [saved, setSaved] = useState<boolean>(false)
+  const [saved, setSaved] = useState<boolean>(Boolean(extValue))
 
   const handleAccept = () => {
+    if (localValue === '') return
+
     const isSaved = !saved
     setSaved(isSaved)
 

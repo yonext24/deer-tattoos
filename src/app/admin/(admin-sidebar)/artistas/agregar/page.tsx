@@ -73,18 +73,18 @@ const artistFormSchema = z.object({
     instagram: z
       .string()
       .url('El instagram debe ser una url')
-      .optional()
-      .or(z.literal('')),
+      .or(z.literal(''))
+      .transform((value) => (value === '' ? null : value)),
     facebook: z
       .string()
       .url('El facebook debe ser una url')
-      .optional()
-      .or(z.literal('')),
+      .or(z.literal(''))
+      .transform((value) => (value === '' ? null : value)),
     website: z
       .string()
       .url('El website debe ser una url')
-      .optional()
-      .or(z.literal('')),
+      .or(z.literal(''))
+      .transform((value) => (value === '' ? null : value)),
   }),
 
   styles: z.array(z.string().min(1)),

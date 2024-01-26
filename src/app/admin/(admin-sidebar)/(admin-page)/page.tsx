@@ -1,4 +1,5 @@
 import { DevicesChart } from '@/components/ui/admin-panel/charts/devices-chart/devices-chart'
+import { TopPagesChart } from '@/components/ui/admin-panel/charts/pages-chart/pages-chart'
 import { VisitsChart } from '@/components/ui/admin-panel/charts/visits-chart/visits-chart'
 import { queryPipe } from '@/lib/tracking/api'
 import { KpisData } from '@/lib/tracking/types'
@@ -25,6 +26,9 @@ export default async function Page({
       <Suspense>
         <div className="col-start-1 col-end-3">
           <VisitsChart queryData={queryData} />
+        </div>
+        <div className="col-start-1 col-end-3">
+          <TopPagesChart />
         </div>
         <div className="">
           <DevicesChart />

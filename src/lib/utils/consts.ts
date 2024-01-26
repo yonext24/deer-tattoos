@@ -6,3 +6,7 @@ export const devices = {
   'mobile-ios': 'iOS',
   bot: 'Bots',
 } as const
+
+export const permitedMails = JSON.stringify(
+  process.env.PERMITED_MAILS?.split(',')
+)

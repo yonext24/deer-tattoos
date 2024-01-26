@@ -15,9 +15,10 @@ import { useAdminActions } from './use-admin-artist-page'
 import { useCallback } from 'react'
 import { addModal } from 'react-modal-observer'
 import DeleteArtistModal from './modals/delete-artist-modal'
-import { EditArtistModal } from './modals/edit-artist-modal'
 import { Artist } from '@/lib/types/artist'
-import { EditPayload } from './admin-artist-reducer'
+import { EditArtistModal } from './modals/edit-artist-modal'
+import { EditMediasPayload, EditPayload } from './admin-artist-reducer'
+import { EditMediasModal } from './modals/edit-medias-modal'
 
 export function AdminArtistCardDropdown({
   name,
@@ -38,7 +39,7 @@ export function AdminArtistCardDropdown({
 
   const handleOpenEdit = useCallback(() => {
     const onEdit = (props: EditPayload) => {
-      dispatch({ type: 'edit', payload: props })
+      dispatch({ type: 'edit-styles', payload: props })
     }
 
     addModal(EditArtistModal, {
@@ -47,9 +48,20 @@ export function AdminArtistCardDropdown({
       onChangeData: onEdit,
       slug,
       styles,
+    })
+  }, [dispatch, slug, name, description, styles])
+
+  const handleOpenMedias = useCallback(() => {
+    const onEdit = (props: EditMediasPayload) => {
+      dispatch({ type: 'edit-medias', payload: props })
+    }
+
+    addModal(EditMediasModal, {
+      onChangeData: onEdit,
+      slug,
       medias,
     })
-  }, [dispatch, slug, name, description, styles, medias])
+  }, [dispatch, slug, medias])
 
   return (
     <DropdownMenu>
@@ -70,9 +82,13 @@ export function AdminArtistCardDropdown({
           <EyeIcon />
           <span>Ver tatuajes</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleOpenEdit}>
           <Pen />
           <span>Editar</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleOpenMedias}>
+          <Pen />
+          <span>Editar Redes</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Camera />

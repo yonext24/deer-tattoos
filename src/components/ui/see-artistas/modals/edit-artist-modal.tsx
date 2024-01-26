@@ -4,6 +4,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from '@/components/shadcn/ui/form'
 import { useForm } from 'react-hook-form'
@@ -14,6 +15,8 @@ import { modalStyles } from '@/lib/utils/styles'
 import { errorParser } from '@/lib/utils/appFetch'
 import { SubmitModal } from '../../common/submit-modal'
 import { EditPayload } from '../admin-artist-reducer'
+import { Input } from '@/components/shadcn/ui/input'
+import { Textarea } from '@/components/shadcn/ui/textarea'
 
 const formSchema = z.object({
   name: z
@@ -24,23 +27,6 @@ const formSchema = z.object({
     .string()
     .min(15, { message: 'La descripción debe tener al menos 15 caracteres' })
     .max(200, { message: 'La descripción debe tener menos de 50 caracteres' }),
-  media: z.object({
-    instagram: z
-      .string()
-      .url('El instagram debe ser una url')
-      .optional()
-      .or(z.literal('')),
-    facebook: z
-      .string()
-      .url('El facebook debe ser una url')
-      .optional()
-      .or(z.literal('')),
-    website: z
-      .string()
-      .url('El website debe ser una url')
-      .optional()
-      .or(z.literal('')),
-  }),
 })
 
 export function EditArtistModal({
@@ -48,18 +34,12 @@ export function EditArtistModal({
   styles,
   name,
   description,
-  medias,
   closeModal,
   onChangeData,
 }: {
   slug: string
   name: string
   description: string
-  medias: {
-    instagram: string | null
-    facebook: string | null
-    website: string | null
-  }
   styles: string[]
   closeModal: () => void
   onChangeData: (props: EditPayload) => void
@@ -69,11 +49,11 @@ export function EditArtistModal({
       styles: styles ?? [],
       name: name ?? '',
       description: description ?? '',
-      media: {
-        instagram: medias.instagram ?? '',
-        facebook: medias.facebook ?? '',
-        website: medias.website ?? '',
-      },
+      // media: {
+      //   instagram: medias.instagram ?? '',
+      //   facebook: medias.facebook ?? '',
+      //   website: medias.website ?? '',
+      // },
     },
     resolver: zodResolver(formSchema),
   })
@@ -90,6 +70,7 @@ export function EditArtistModal({
       //   body: JSON.stringify({ id, ...data }),
       // })
 
+      console.log({ data })
       onChangeData({ ...data, slug })
       closeModal()
     } catch (error) {
@@ -104,10 +85,47 @@ export function EditArtistModal({
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
           <FormField
             control={control}
+            name="name"
+            render={({ field }) => {
+              return (
+                <FormItem className="flex flex-col items-start">
+                  <FormLabel>Nombre</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormDescription className="text-[hsl(var(--muted-foreground))]">
+                    El nombre del artista.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
+          <FormField
+            control={control}
+            name="description"
+            render={({ field }) => {
+              return (
+                <FormItem className="flex flex-col items-start">
+                  <FormLabel>Descripción</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} />
+                  </FormControl>
+                  <FormDescription className="text-[hsl(var(--muted-foreground))]">
+                    La descripción del artista.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
+          <FormField
+            control={control}
             name="styles"
             render={({ field: { onChange, value } }) => {
               return (
                 <FormItem className="flex flex-col items-start">
+                  <FormLabel>Estilos</FormLabel>
                   <FormControl>
                     <CategorySelector
                       onChange={onChange}

@@ -31,7 +31,7 @@ export const ImageWithBlur = forwardRef(
       <picture className={cn('relative overflow-hidden', pictureClassName)}>
         <Image
           ref={ref}
-          placeholder="blur"
+          placeholder={withSkeleton ? undefined : 'blur'}
           onLoad={(e) => {
             setLoaded(true)
             onLoad?.(e)

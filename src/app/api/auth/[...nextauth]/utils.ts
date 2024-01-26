@@ -9,6 +9,7 @@ import { AuthOptions } from 'next-auth'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@backend/prisma'
 import { Adapter } from 'next-auth/adapters'
+import { permitedMails } from '@/lib/utils/consts'
 
 export const nextAuthOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
@@ -42,6 +43,15 @@ export const nextAuthOptions: AuthOptions = {
       session.user.role = token.role
 
       return session
+    },
+    async signIn(props) {
+      const profile = props.profile
+
+      if (!permitedMails.includes(profile?.email ?? '')) {
+        return false
+      }
+
+      return true
     },
   },
 }

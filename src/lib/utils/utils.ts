@@ -108,3 +108,28 @@ export const filterTattoos = (
   })
 }
 
+export const normalizeDates = ({
+  date_from,
+  date_to,
+}: {
+  date_from: string | null | undefined
+  date_to: string | null | undefined
+}) => {
+  if (!date_from || !date_to) {
+    const today = new Date()
+    const lastWeek = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() - 7
+    )
+    return {
+      date_from: lastWeek.toISOString().split('T')[0],
+      date_to: today.toISOString().split('T')[0],
+    }
+  }
+
+  return {
+    date_from,
+    date_to,
+  }
+}

@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { appFetch, errorParser } from '@/lib/utils/appFetch'
+import { errorParser } from '@/lib/utils/appFetch'
+import { normalizeDates } from '@/lib/utils/utils'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 export function useDependenciesParams<T extends any>({
   initialData,
@@ -16,9 +17,9 @@ export function useDependenciesParams<T extends any>({
   onDataChange: (data: T) => void
   permitFirstFetch?: boolean
   fn: (prop: {
-    fromRaw?: string | null
-    toRaw?: string | null
-    kpiRaw?: string | null
+    date_from?: string | null
+    date_to?: string | null
+    kpiOption?: string | null
   }) => Promise<T>
   excludeDependencies?: { kpi?: boolean; from?: boolean; to?: boolean }
 }) {
@@ -60,7 +61,13 @@ export function useDependenciesParams<T extends any>({
       return
 
     setLoading(true)
-    fn({ fromRaw, toRaw, kpiRaw })
+
+    const { date_from, date_to } = normalizeDates({
+      date_from: fromRaw,
+      date_to: toRaw,
+    })
+
+    fn({ date_from, date_to, kpiOption: kpiRaw })
       .then((newData) => {
         record.current = {
           date_from: fromRaw,
@@ -77,5 +84,13 @@ export function useDependenciesParams<T extends any>({
       })
   }, dependencies)
 
-  return { loading, error, fromRaw, toRaw, kpiRaw }
+  const { date_from, date_to, kpiOption } = useMemo(() => {
+    const { date_from, date_to } = normalizeDates({
+      date_from: fromRaw,
+      date_to: toRaw,
+    })
+    return { date_from, date_to, kpiOption: kpiRaw }
+  }, [fromRaw, toRaw, kpiRaw])
+
+  return { loading, error, date_from, date_to, kpiOption }
 }

@@ -20,9 +20,9 @@ export function DevicesChart() {
     onDataChange: setFullData,
     excludeDependencies: { kpi: true },
     permitFirstFetch: true,
-    fn: ({ fromRaw, toRaw }) =>
+    fn: ({ date_from, date_to }) =>
       appFetch(
-        `/api/tracking/devices?date_from=${fromRaw}&date_to=${toRaw}`,
+        `/api/tracking/devices?date_from=${date_from}&date_to=${date_to}`,
         {}
       ),
   })
@@ -43,7 +43,7 @@ export function DevicesChart() {
     return 'idle'
   })()
   return (
-    <Widget className="min-h-[240px]">
+    <Widget className="min-h-[240px] h-auto">
       <Widget.Title>Top Dispositivos</Widget.Title>
       <Widget.Content noData={!data?.length} status={status} warning={error}>
         <div className="w-full h-full grid grid-cols-2">

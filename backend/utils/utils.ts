@@ -14,7 +14,7 @@ export const generateTattooSlug = async (title: string, styles: string[]) => {
   while (true) {
     const stylesSlug = styles
       .slice(0, initialSlice)
-      .map((style) => removeAccents(style))
+      .map((style) => removeAccents(style.replace(' ', '-')))
 
     const slug =
       removeAccents(title.toLowerCase().replaceAll(' ', '-')) +

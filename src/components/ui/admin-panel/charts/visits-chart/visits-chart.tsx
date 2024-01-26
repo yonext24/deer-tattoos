@@ -8,7 +8,7 @@ import { Tab, Tabs } from '@/components/tabs/tabs'
 import { formatNumber } from '@/lib/utils/formating'
 import { parseVisitsChart } from './parse-visits-chart'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useRouter } from 'next-nprogress-bar'
 import { createUrl } from '@/lib/utils/createUrl'
 import Spinner from '@/components/ui/common/spinner'
@@ -21,24 +21,28 @@ export function VisitsChart({ queryData }: { queryData: KpisData[] }) {
   const params = useSearchParams()
   const router = useRouter()
 
-  const { loading, error, fromRaw, toRaw, kpiRaw } = useDependenciesParams({
+  const {
+    loading,
+    error,
+    kpiOption: rawKpi,
+    date_from,
+    date_to,
+  } = useDependenciesParams({
     initialData: queryData,
     onDataChange: setCurrentData,
-    fn: ({ fromRaw, toRaw }) =>
-      appFetch(`/api/tracking?date_from=${fromRaw}&date_to=${toRaw}`, {}),
+    fn: ({ date_from, date_to }) =>
+      appFetch(`/api/tracking?&date_from=${date_from}&date_to=${date_to}`, {
+        cache: 'no-store',
+      }),
   })
 
   const { data, dates, kpiOption } = useMemo(() => {
-    const date_from = fromRaw ?? undefined
-    const date_to = toRaw ?? undefined
-    const kpi = kpiRaw ?? undefined
-
     return parseVisitsChart({
       queryData: currentData,
       dateParams: { date_from, date_to },
-      kpiParam: { kpi },
+      kpiParam: { kpi: rawKpi ?? '' },
     })
-  }, [kpiRaw, JSON.stringify(currentData), fromRaw, toRaw])
+  }, [JSON.stringify(currentData), date_from, date_to, rawKpi])
 
   const parsedData = (dates ?? []).map((date, index) => {
     const value = Math.max(
@@ -51,6 +55,8 @@ export function VisitsChart({ queryData }: { queryData: KpisData[] }) {
       [kpiOption.label]: value,
     }
   })
+
+  console.log({ currentData, data })
 
   const setKpi = (kpi: KpiOption['value']) => {
     const newParams = new URLSearchParams(params)

@@ -4,7 +4,7 @@ import { Artist } from '@/lib/types/artist'
 import { Dispatch, createContext, useContext, useReducer } from 'react'
 import { AdminArtistAction, AdminArtistReducer } from './admin-artist-reducer'
 
-const AdminActionsContext = createContext<{
+export const AdminActionsContext = createContext<{
   state: Artist[]
   dispatch: Dispatch<AdminArtistAction>
 }>({ state: [], dispatch: () => {} })
