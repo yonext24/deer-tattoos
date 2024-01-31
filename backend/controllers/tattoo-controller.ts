@@ -22,9 +22,10 @@ export const tattooController = {
     const style = query.get('style') ?? undefined
     const page = query.get('page') ?? undefined
     const size = query.get('size') ?? undefined
+    const artist = query.get('artist') ?? undefined
 
     const { data, total } = await filterAndPaginateTattoos(
-      { search, style },
+      { search, style, artist },
       { size, page }
     )
 
@@ -38,7 +39,6 @@ export const tattooController = {
       original,
       styles,
       tags,
-      type,
       card_height,
       card_width,
       title,

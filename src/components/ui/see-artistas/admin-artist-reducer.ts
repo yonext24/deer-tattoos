@@ -11,10 +11,10 @@ export type EditPayload = {
   // instagram?: string
   // website?: string
 }
-type ImagesPayload = {
+export type ImagesPayload = {
   slug: string
-  profile?: File
-  background?: File
+  profile?: Artist['images']['profile']
+  background?: Artist['images']['background']
 }
 export type EditMediasPayload = Artist['medias'] & {
   slug: string
@@ -22,7 +22,7 @@ export type EditMediasPayload = Artist['medias'] & {
 
 export type AdminArtistAction =
   | { type: 'edit-styles'; payload: EditPayload }
-  | { type: 'images-change'; payload: ImagesPayload }
+  | { type: 'change-images'; payload: ImagesPayload }
   | { type: 'delete'; payload: string }
   | { type: 'edit-medias'; payload: EditMediasPayload }
 
@@ -34,7 +34,6 @@ export const AdminArtistReducer = (
     return state.filter((artist) => artist.slug !== action.payload)
   }
 
-  console.log('test', action.payload)
   if (action.type === 'edit-styles') {
     return state.map((artist) => {
       if (artist.slug === action.payload.slug) {
@@ -58,6 +57,21 @@ export const AdminArtistReducer = (
             facebook: action.payload.facebook,
             instagram: action.payload.instagram,
             website: action.payload.website,
+          },
+        }
+      }
+      return artist
+    })
+  }
+
+  if (action.type === 'change-images') {
+    return state.map((artist) => {
+      if (artist.slug === action.payload.slug) {
+        return {
+          ...artist,
+          images: {
+            profile: action.payload.profile || artist.images.profile,
+            background: action.payload.background || artist.images.background,
           },
         }
       }

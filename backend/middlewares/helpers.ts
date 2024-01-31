@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export type NextFunction = () => void
 export type Middleware = (
   request: ParsedRequest,
-  next: NextFunction,
+  next: NextFunction
 ) => Promise<Response | void>
 
 export const handler =
@@ -25,6 +25,11 @@ export const handler =
         if (result) break
       } catch (error) {
         const { code, message } = parseError(error)
+
+        console.log('ERROR EN HANDLER *************')
+        console.log('CODE: ', code)
+        console.log('MESSAGE: ', message)
+        console.log('******************************')
 
         return NextResponse.json({ error: message }, { status: code })
       }
@@ -63,7 +68,7 @@ const parseError = (error: unknown) => {
 export class AppError {
   constructor(
     public code: number,
-    public message: string,
+    public message: string
   ) {
     this.code = code
     this.message = message
@@ -72,6 +77,7 @@ export class AppError {
   static badFormat = () => new AppError(400, 'Formato incorrecto')
 }
 
+// This is probably the most cursed thing i've done
 export class ParsedRequest extends NextRequest {
   private _parsedBody: { [key: string]: any } = {}
 
@@ -87,7 +93,7 @@ export class ParsedRequest extends NextRequest {
   }
 
   async parsedBody(
-    type: 'json' | 'formData' = 'json',
+    type: 'json' | 'formData' = 'json'
   ): Promise<typeof this._parsedBody> {
     if (this._hasBeenParsed) return this._parsedBody
 

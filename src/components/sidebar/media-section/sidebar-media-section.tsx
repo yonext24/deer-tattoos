@@ -1,21 +1,20 @@
+import { MediaButton } from '@/components/media-button/media-button'
+import { Artist } from '@/lib/types/artist'
+
 export async function SidebarMediaSection({
   medias,
 }: {
-  medias: { text: string; url: string }[]
+  medias?: Artist['medias']
 }) {
   return (
-    <div className="flex flex-col mt-auto w-full">
-      {medias.map(({ url, text }) => {
-        return (
-          <a
-            href={url}
-            key={url}
-            className="w-full px-4 py-3 border-t border-border font-extralight hover:bg-green-darker transition-colors capitalize"
-          >
-            {text}
-          </a>
-        )
-      })}
+    <div className="flex mt-auto w-full m-2 gap-2">
+      {medias?.facebook && (
+        <MediaButton type="facebook" href={medias.facebook} />
+      )}
+      {medias?.instagram && (
+        <MediaButton type="instagram" href={medias.instagram} />
+      )}
+      {medias?.website && <MediaButton type="website" href={medias.website} />}
     </div>
   )
 }

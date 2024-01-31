@@ -19,7 +19,7 @@ export const imageTypeValidation = (
     ? customAcceptedTypes
     : acceptedTypes
 
-  if (!typesToUse.includes(image.type)) {
+  if (!typesToUse.includes(image?.type)) {
     return false
   }
 

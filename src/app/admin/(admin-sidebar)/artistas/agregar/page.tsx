@@ -118,6 +118,7 @@ export default function Page() {
     handleSubmit,
     formState: { isSubmitting, isSubmitSuccessful },
     setError,
+    resetField,
   } = form
 
   const profileRef = useRef<any>(null)
@@ -305,6 +306,8 @@ export default function Page() {
           <div className="flex flex-col">
             {(['instagram', 'facebook', 'website'] as MediaTypes).map(
               (media) => {
+                const reset = () => resetField(`media.${media}`)
+
                 return (
                   <FormField
                     key={media}
@@ -316,6 +319,7 @@ export default function Page() {
                           <FormLabel className="capitalize">{media}</FormLabel>
                           <FormControl>
                             <MediaPicker
+                              reset={reset}
                               onAccept={onChange}
                               extValue={value!}
                             />

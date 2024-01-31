@@ -11,6 +11,7 @@ import { generateImageUrl } from '@/lib/utils/generateImageUrl'
 
 export function ImageCropper({
   image,
+  onCancel,
   onCompleted,
   initialCrop,
   minWidth,
@@ -28,6 +29,7 @@ export function ImageCropper({
     width: number
     original?: File
   }) => void
+  onCancel?: () => void
   initialCrop: Crop
   minWidth: number
   minHeight: number
@@ -90,7 +92,7 @@ export function ImageCropper({
           </ReactCrop>
           <div className="grid grid-cols-2 gap-2">
             <SubmitButton text="Guardar" onClick={handleComplete} />
-            <Button>Cancelar</Button>
+            <Button onClick={onCancel}>Cancelar</Button>
           </div>
         </>
       )}

@@ -8,14 +8,24 @@ import React, { useState } from 'react'
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   onAccept: (z: any) => void
   extValue: string
+  reset: () => void
+  allowEmpty?: boolean
 }
 
-export function MediaPicker({ extValue, onAccept, ...props }: Props) {
+export function MediaPicker({
+  extValue,
+  onAccept,
+  reset,
+  allowEmpty = false,
+  ...props
+}: Props) {
   const [localValue, setLocalValue] = useState<string>(extValue ?? '')
-  const [saved, setSaved] = useState<boolean>(Boolean(extValue))
+  const [saved, setSaved] = useState<boolean>(
+    Boolean(extValue) || extValue === ''
+  )
 
   const handleAccept = () => {
-    if (localValue === '') return
+    if (localValue === '' && !allowEmpty) return
 
     const isSaved = !saved
     setSaved(isSaved)
@@ -24,7 +34,7 @@ export function MediaPicker({ extValue, onAccept, ...props }: Props) {
       onAccept(localValue)
     } else {
       setLocalValue(extValue)
-      onAccept('')
+      reset()
     }
   }
 
@@ -45,6 +55,9 @@ export function MediaPicker({ extValue, onAccept, ...props }: Props) {
           setLocalValue(e.target.value)
         }}
         value={localValue}
+        placeholder={
+          allowEmpty && saved && extValue === '' ? '(Vacío)' : undefined
+        }
         className="data-[saved=true]:cursor-not-allowed"
       />
       <Button

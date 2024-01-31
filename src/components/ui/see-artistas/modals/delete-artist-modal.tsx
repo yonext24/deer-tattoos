@@ -1,23 +1,17 @@
 import { modalStyles } from '@/lib/utils/styles'
 import { useState } from 'react'
 import { SubmitModal } from '../../common/submit-modal'
-import { errorParser } from '@/lib/utils/appFetch'
+import { appFetch, errorParser } from '@/lib/utils/appFetch'
 
 export default function DeleteArtistModal({
   slug,
-  name,
   onRemove,
   closeModal,
 }: {
   slug: string
-  name: string
   onRemove: () => void
   closeModal: () => void
 }) {
-  const handleRemove = () => {
-    onRemove()
-    closeModal()
-  }
   const [status, setStatus] = useState<{
     type: 'loading' | 'error' | 'success' | 'idle'
     message?: string
@@ -26,14 +20,16 @@ export default function DeleteArtistModal({
   const handleSubmit = async () => {
     setStatus({ type: 'loading' })
     try {
-      // await appFetch(`/api/tattoos`, {
-      //   body: JSON.stringify({ id }),
-      //   method: 'DELETE',
-      // })
-      await new Promise((res) => {
-        setTimeout(res, 1500)
+      const res = await appFetch(`/api/artists`, {
+        body: JSON.stringify({ slug }),
+        method: 'DELETE',
       })
-      handleRemove()
+      if (res.result) {
+        // El backend devuelve un { result: boolean } indicando si se borró
+        onRemove()
+        closeModal()
+        return
+      }
     } catch (e) {
       setStatus({ type: 'error', message: errorParser(e) })
     }

@@ -20,7 +20,7 @@ export const BackgroundPicker = forwardRef(function BackgroundPicker(
     originalFile,
     croppedUrl,
     onCompleted,
-    setOpen,
+    onCancel,
   } = useControlledPicker({ onChange, ref })
 
   return (
@@ -30,9 +30,10 @@ export const BackgroundPicker = forwardRef(function BackgroundPicker(
           setOriginalFile(e.target.files?.[0])
         }}
       />
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={onCancel}>
         <DialogContent className="max-w-[none] w-auto max-h-screen overflow-y-auto my-1">
           <ImageCropper
+            onCancel={onCancel}
             image={originalFile}
             minHeight={60}
             minWidth={150}

@@ -27,14 +27,18 @@ export function useControlledPicker({
 
   const hasImageBeenInitialized = useRef(false)
 
+  const reset = () => {
+    setOpen(false)
+    setOriginalFile(undefined)
+    hasImageBeenInitialized.current = false
+    setCroppedUrl('')
+  }
+
   useImperativeHandle(ref, () => ({
-    reset: () => {
-      setOpen(false)
-      setOriginalFile(undefined)
-      hasImageBeenInitialized.current = false
-      setCroppedUrl('')
-    },
+    reset,
   }))
+
+  const onCancel = reset
 
   useEffect(() => {
     if (originalFile && !hasImageBeenInitialized.current) {
@@ -58,6 +62,7 @@ export function useControlledPicker({
     originalFile,
     croppedUrl,
     setCroppedUrl,
+    onCancel,
     onCompleted,
   }
 }

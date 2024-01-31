@@ -4,6 +4,7 @@ import { ImageSelectorButton } from '../../common/image-selector-button'
 import { ImageCropper } from '../../common/image-cropper'
 import { useControlledPicker } from '@/hooks/useControlledPicker'
 import { forwardRef } from 'react'
+import { modalStyles } from '@/lib/utils/styles'
 
 export const ProfilePicker = forwardRef(function ProfilePicker(
   {
@@ -20,7 +21,7 @@ export const ProfilePicker = forwardRef(function ProfilePicker(
     originalFile,
     croppedUrl,
     onCompleted,
-    setOpen,
+    onCancel,
   } = useControlledPicker({ onChange, ref })
 
   return (
@@ -30,9 +31,10 @@ export const ProfilePicker = forwardRef(function ProfilePicker(
           setOriginalFile(e.target.files?.[0])
         }}
       />
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-[none] w-auto max-h-screen overflow-y-auto my-1">
+      <Dialog open={open} onOpenChange={onCancel}>
+        <DialogContent className={modalStyles({})}>
           <ImageCropper
+            onCancel={onCancel}
             image={originalFile}
             minHeight={300}
             minWidth={300}

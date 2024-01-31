@@ -6,17 +6,17 @@ import { FacebookIcon } from 'lucide-react'
 const medias = [
   {
     name: 'Instagram',
-    href: 'https://www.instagram.com/inkedbyjavi/',
+    href: 'https://www.instagram.com/',
     icon: InstagramLogoIcon,
   },
   {
     name: 'Facebook',
-    href: 'https://www.facebook.com/inkedbyjavi/',
+    href: 'https://www.facebook.com/',
     icon: FacebookIcon,
   },
   {
     name: 'Twitter',
-    href: 'https://twitter.com/inkedbyjavi/',
+    href: 'https://twitter.com/',
     icon: TwitterLogoIcon,
   },
 ]

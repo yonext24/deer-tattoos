@@ -7,12 +7,42 @@ import { Artist } from '@/components/ui/tatuajes/artist/artist'
 import { getArtistForCard } from '@/lib/backend/utils/artists'
 import { tattooController } from '@backend/controllers/tattoo-controller'
 import { getTattooBySlug, getTattoos } from '@/lib/backend/utils/tattoos'
+import { Metadata } from 'next'
 
 export const dynamicParams = true
 
 export const generateStaticParams = async () => {
   const { data } = await getTattoos({}, { page: 1, size: 1000 })
   return data.map((tattoo) => ({ params: { slug: tattoo.slug } }))
+}
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> => {
+  const tattoo = await getTattooBySlug(params.slug)
+
+  if (!tattoo) return {}
+
+  return {
+    title: tattoo.title,
+    description: `Tatuaje de <MARCA> hecho por ${tattoo.artistSlug}${
+      tattoo.styles.length > 0
+        ? ` manejando los estilos ${tattoo.styles.join(', ')}`
+        : ''
+    }`,
+    openGraph: {
+      images: [
+        {
+          url: tattoo.images.card.src,
+          width: tattoo.images.main.width,
+          height: tattoo.images.main.height,
+          alt: tattoo.title,
+        },
+      ],
+    },
+  }
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {

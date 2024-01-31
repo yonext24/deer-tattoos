@@ -17,8 +17,14 @@ import { addModal } from 'react-modal-observer'
 import DeleteArtistModal from './modals/delete-artist-modal'
 import { Artist } from '@/lib/types/artist'
 import { EditArtistModal } from './modals/edit-artist-modal'
-import { EditMediasPayload, EditPayload } from './admin-artist-reducer'
+import {
+  EditMediasPayload,
+  EditPayload,
+  ImagesPayload,
+} from './admin-artist-reducer'
 import { EditMediasModal } from './modals/edit-medias-modal'
+import { ChangeArtistImagesModal } from './modals/change-artist-images-modal'
+import { useRouter } from 'next-nprogress-bar'
 
 export function AdminArtistCardDropdown({
   name,
@@ -28,14 +34,15 @@ export function AdminArtistCardDropdown({
   medias,
 }: Artist) {
   const { dispatch } = useAdminActions()
+  const router = useRouter()
 
   const handleOpenDelete = useCallback(() => {
     const onRemove = () => {
       dispatch({ type: 'delete', payload: slug })
     }
 
-    addModal(DeleteArtistModal, { slug, name, onRemove })
-  }, [dispatch, name, slug])
+    addModal(DeleteArtistModal, { slug, onRemove })
+  }, [dispatch, slug])
 
   const handleOpenEdit = useCallback(() => {
     const onEdit = (props: EditPayload) => {
@@ -50,6 +57,14 @@ export function AdminArtistCardDropdown({
       styles,
     })
   }, [dispatch, slug, name, description, styles])
+
+  const handleOpenImages = useCallback(() => {
+    const onEdit = (props: ImagesPayload) => {
+      dispatch({ type: 'change-images', payload: props })
+    }
+
+    addModal(ChangeArtistImagesModal, { slug, onChangeData: onEdit })
+  }, [slug, dispatch])
 
   const handleOpenMedias = useCallback(() => {
     const onEdit = (props: EditMediasPayload) => {
@@ -75,10 +90,15 @@ export function AdminArtistCardDropdown({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="*:flex *:pl-1 *:gap-2 *:h-[auto] *:py-2 [&_svg]:h-4 [&_svg]:w-4 min-w-[150px]"
+        className="*:flex *:pl-1 *:gap-2 *:h-[auto] *:py-2 [&_svg]:h-4 [&_svg]:w-4 min-w-[200px]"
       >
         <DropdownMenuLabel>{name}</DropdownMenuLabel>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            router.push(`/admin/tatuajes?artist=${slug}`)
+          }}
+          role="link"
+        >
           <EyeIcon />
           <span>Ver tatuajes</span>
         </DropdownMenuItem>
@@ -90,7 +110,7 @@ export function AdminArtistCardDropdown({
           <Pen />
           <span>Editar Redes</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleOpenImages}>
           <Camera />
           <span>Cambiar imágenes</span>
         </DropdownMenuItem>

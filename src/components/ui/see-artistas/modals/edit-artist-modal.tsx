@@ -12,11 +12,12 @@ import { CategorySelector } from '../../add-tatuajes/category-selector/category-
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { modalStyles } from '@/lib/utils/styles'
-import { errorParser } from '@/lib/utils/appFetch'
+import { appFetch, errorParser } from '@/lib/utils/appFetch'
 import { SubmitModal } from '../../common/submit-modal'
 import { EditPayload } from '../admin-artist-reducer'
 import { Input } from '@/components/shadcn/ui/input'
 import { Textarea } from '@/components/shadcn/ui/textarea'
+import { getDirtyData } from '@/lib/utils/utils'
 
 const formSchema = z.object({
   name: z
@@ -49,11 +50,6 @@ export function EditArtistModal({
       styles: styles ?? [],
       name: name ?? '',
       description: description ?? '',
-      // media: {
-      //   instagram: medias.instagram ?? '',
-      //   facebook: medias.facebook ?? '',
-      //   website: medias.website ?? '',
-      // },
     },
     resolver: zodResolver(formSchema),
   })
@@ -61,17 +57,21 @@ export function EditArtistModal({
     handleSubmit,
     control,
     setError,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, dirtyFields, isDirty },
   } = form
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      // const res = await appFetch(`/api/tattoos`, {
-      //   method: 'PATCH',
-      //   body: JSON.stringify({ id, ...data }),
-      // })
+    if (!isDirty) return closeModal()
 
-      console.log({ data })
-      onChangeData({ ...data, slug })
+    try {
+      // @ts-expect-error
+      const dataToSend = getDirtyData(data, dirtyFields)
+
+      await appFetch(`/api/artists`, {
+        method: 'PATCH',
+        body: JSON.stringify({ slug, ...dataToSend }),
+      })
+
+      onChangeData({ ...dataToSend, slug })
       closeModal()
     } catch (error) {
       setError('root', { message: errorParser(error) })

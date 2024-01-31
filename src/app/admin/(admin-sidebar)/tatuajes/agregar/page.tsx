@@ -25,7 +25,9 @@ export default function Page() {
 
   return (
     <Main withAnalytics={false} className="max-w-[800px] px-3 py-5">
-      <h1 className="text-2xl font-extralight">Agregar tatuaje</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-extralight">Agregar tatuaje</h1>
+      </div>
 
       <Separator className="my-4" />
 

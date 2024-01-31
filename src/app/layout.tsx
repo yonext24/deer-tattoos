@@ -5,6 +5,7 @@ import { Navbar } from '@/components/navbar/navbar'
 import { cn } from '@/lib/utils/utils'
 import { Toaster } from '@/components/shadcn/ui/sonner'
 import { PageProvider } from '@/components/providers/page-provider'
+import { APP_URL, MARCA } from '@/lib/utils/consts'
 
 export const mainKeywords = [
   'tatuajes lanus',
@@ -20,14 +21,31 @@ export const mainKeywords = [
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | DEER Tattoos',
-    default: 'DEER TATTOOS',
+    template: `%s | ${MARCA} Tattoos`,
+    default: `${MARCA} TATTOOS`,
   },
   description:
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-  applicationName: 'DEER TATTOOS',
+  applicationName: `${MARCA} TATTOOS`,
   keywords: mainKeywords,
   category: 'Tatuajes',
+  generator: `${MARCA}`,
+  formatDetection: {
+    address: false,
+    email: false,
+    telephone: false,
+    url: true,
+  },
+  metadataBase: new URL(APP_URL as string),
+  openGraph: {
+    title: `${MARCA} TATTOOS`,
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+    url: APP_URL,
+    siteName: `${MARCA} TATTOOS`,
+    type: 'website',
+    locale: 'es_AR',
+  },
 }
 
 export default function RootLayout({

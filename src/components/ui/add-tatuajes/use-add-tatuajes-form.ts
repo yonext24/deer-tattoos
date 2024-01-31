@@ -43,7 +43,7 @@ const formSchema = zod.object({
   //   'Algo salió mal al subir la imágen, volvé a intenarlo.',
   // ),
   artist: zod.object({
-    slug: zod.string().min(1),
+    slug: zod.string().min(1).nullable(),
   }),
 })
 
@@ -61,7 +61,7 @@ const formDefaultValues = {
     original: undefined,
   },
   artist: {
-    slug: '',
+    slug: null,
   },
 }
 export function useAddTatuajesForm() {
@@ -69,9 +69,6 @@ export function useAddTatuajesForm() {
     resolver: zodResolver(formSchema),
     defaultValues: formDefaultValues,
   })
-
-  const img = form.watch('image')
-  const errors = form.formState.errors
 
   const imageRef = useRef<any>(null)
 

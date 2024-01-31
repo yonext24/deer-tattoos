@@ -13,6 +13,7 @@ import {
 } from '@/hooks/useControlledPicker'
 import { ImageCropper } from '../../common/image-cropper'
 import { forwardRef } from 'react'
+import { modalStyles } from '@/lib/utils/styles'
 
 const initialCrop: Crop = {
   height: 80,
@@ -41,6 +42,7 @@ export const ImageSelector = forwardRef(function ImageSelector(
     originalFile,
     setOriginalFile,
     hasImageBeenInitialized,
+    onCancel,
   } = useControlledPicker({ onChange: handleChange, ref })
 
   const onCompleted = ({
@@ -69,9 +71,10 @@ export const ImageSelector = forwardRef(function ImageSelector(
         }}
       />
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+      <Dialog open={open} onOpenChange={onCancel}>
+        <DialogContent className={modalStyles({})}>
           <ImageCropper
+            onCancel={onCancel}
             image={originalFile}
             minHeight={80}
             minWidth={100}

@@ -133,3 +133,16 @@ export const normalizeDates = ({
     date_to,
   }
 }
+
+export const getDirtyData = (
+  data: any,
+  dirtyFields: { [key: string]: boolean | undefined }
+) => {
+  const dirtyData: any = {}
+  for (const key in dirtyFields) {
+    if (dirtyFields[key]) {
+      dirtyData[key] = data[key]
+    }
+  }
+  return dirtyData
+}

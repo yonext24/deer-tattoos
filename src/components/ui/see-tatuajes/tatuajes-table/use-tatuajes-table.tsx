@@ -7,12 +7,20 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { useEffect, useMemo, useReducer, useState, useTransition } from 'react'
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+  useTransition,
+} from 'react'
 import { TableActionsDropdown } from './table-actions-dropdown'
 import { Tattoo } from '@/lib/types/tattoo'
 import { Artist } from '@/lib/types/artist'
 import { TatuajesReducer } from './tatuajes-reducer'
 import { useSearchParams } from 'next/navigation'
+import { createUrl } from '@/lib/utils/createUrl'
 
 declare module '@tanstack/table-core' {
   interface TableMeta<TData extends RowData> {
@@ -40,6 +48,7 @@ export function useTatuajesTable({
   total: number
 }) {
   const queryParams = useSearchParams()
+  const currentArtist = queryParams.get('artist')
 
   const [artists, setArtists] = useState<Artist[]>([])
 
@@ -58,16 +67,49 @@ export function useTatuajesTable({
     }
   )
 
+  const currentFetch = useRef({
+    page: pageIndex,
+    size: pageSize,
+    artist: currentArtist,
+    hasBeenFetched: true,
+  })
+
   useEffect(() => {
-    appFetch(`/api/tattoos?size=${pageSize}&page=${pageIndex + 1}`).then(
-      (data) => {
-        startTransition(() => {
-          const tats = data.data as Tattoo[]
-          dispatch({ type: 'change-page', payload: tats })
-        })
-      }
+    const current = currentFetch.current
+    console.log(current, currentArtist)
+    console.log(current.artist === currentArtist)
+    console.log(
+      current.hasBeenFetched &&
+        current.page === pageIndex &&
+        current.size === pageSize &&
+        current.artist === currentArtist
     )
-  }, [pageIndex, pageSize])
+    if (
+      current.hasBeenFetched &&
+      current.page === pageIndex &&
+      current.size === pageSize &&
+      current.artist === currentArtist
+    )
+      return
+
+    const newParams = new URLSearchParams()
+    newParams.set('page', (pageIndex + 1).toString())
+    newParams.set('size', pageSize.toString())
+    if (currentArtist) newParams.set('artist', currentArtist)
+
+    appFetch(createUrl(`/api/tattoos`, newParams)).then((data) => {
+      startTransition(() => {
+        const tats = data.data as Tattoo[]
+        dispatch({ type: 'change-page', payload: tats })
+      })
+      currentFetch.current = {
+        page: pageIndex,
+        size: pageSize,
+        artist: currentArtist,
+        hasBeenFetched: true,
+      }
+    })
+  }, [pageIndex, pageSize, currentArtist])
 
   useEffect(() => {
     appFetch('/api/artists').then(setArtists)
@@ -153,8 +195,6 @@ export function useTatuajesTable({
     ],
     [artists]
   )
-
-  console.log(total)
 
   const table = useReactTable({
     data: state,
