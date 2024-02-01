@@ -15,10 +15,6 @@ const formSchema = zod.object({
       required_error:
         'El título es obligatorio y debe tener como mínimo un caracter',
     })
-    .regex(
-      /^[a-zA-Z\s]+$/,
-      'El título solo puede contener letras (sin acentos)'
-    )
     .min(1, 'El título es obligatorio y debe tener como mínimo un caracter')
     .max(70, 'El título no puede tener más de 70 caracteres'),
   styles: zod

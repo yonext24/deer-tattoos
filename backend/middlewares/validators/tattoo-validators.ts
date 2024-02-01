@@ -5,14 +5,7 @@ const badFormatError = AppError.badFormat()
 
 const TattooCreateSchema = z.object({
   card: z.any(),
-  title: z
-    .string()
-    .min(1)
-    .max(80)
-    .regex(
-      /^[a-zA-Z\s]+$/,
-      'El título solo puede contener letras (sin acentos)'
-    ),
+  title: z.string().min(1).max(70),
   card_height: z
     .string()
     .refine((s) => !isNaN(Number(s)))

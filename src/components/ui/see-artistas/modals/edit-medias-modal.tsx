@@ -106,6 +106,7 @@ export function EditMediasModal({
                       <FormLabel className="capitalize">{type}</FormLabel>
                       <FormControl>
                         <MediaPicker
+                          initializeSaved
                           allowEmpty
                           reset={() => {
                             resetField(type)

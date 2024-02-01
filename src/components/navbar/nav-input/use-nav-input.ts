@@ -2,35 +2,58 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SearchResponse } from '@/app/api/search/route'
+import { useClickOutside } from '@/hooks/useClickOutside'
 import { createUrl, matchPathname } from '@/lib/utils/createUrl'
 import debounce from 'just-debounce-it'
 import { useRouter } from 'next-nprogress-bar'
 import { usePathname, useSearchParams } from 'next/navigation'
-import {
-  useCallback,
-  useDeferredValue,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+const resolveArtist = (pathname: string) => {
+  const reg = new RegExp('/tatuador/(.*)/tatuajes')
+  const match = reg.exec(pathname)
+  if (match) return match[1]
+  return null
+}
 
 export function useNavInput() {
-  const [open, setOpen] = useState<boolean>(false)
-  const [value, setValue] = useState<string>('')
-  const [search, setSearch] = useState<SearchResponse>([])
-  const [currentIndex, setCurrentIndex] = useState<number>(-1)
+  const router = useRouter()
+  const params = useSearchParams()
+  const pathname = usePathname()
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [value, setValue] = useState<string>('')
+  const [currentIndex, setCurrentIndex] = useState<number>(-1)
+  // Controls wether the dropdown is open or not
+  const [open, setOpen] = useState<boolean>(false)
+  const [showingCategories, setShowingCategories] = useState<boolean>(false)
+  const [artist, setArtist] = useState<string | null>(() => {
+    return resolveArtist(pathname)
+  })
+
+  useEffect(() => {
+    setArtist(resolveArtist(pathname))
+  }, [pathname])
+
+  const [search, setSearch] = useState<SearchResponse>([])
+  const [styles, setStyles] = useState<string[]>([])
   const formRef = useRef<HTMLFormElement>(null)
+
+  const paramsStyles = params.getAll('style')
+
+  useClickOutside(formRef, () => {
+    setOpen(false)
+    setShowingCategories(false)
+  })
+
+  useEffect(() => {
+    if (paramsStyles.length === 0) return setStyles([])
+    setStyles(paramsStyles)
+  }, [JSON.stringify(paramsStyles)])
 
   useEffect(() => {
     if (open) return
     setCurrentIndex(-1)
   }, [open])
-
-  const router = useRouter()
-  const params = useSearchParams()
-  const pathname = usePathname()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | number) => {
     if (typeof e !== 'number') {
@@ -45,7 +68,12 @@ export function useNavInput() {
     )
       return
 
-    const newParams = new URLSearchParams(params)
+    const newParams = new URLSearchParams()
+    if (styles.length > 0) {
+      styles.forEach((style) => {
+        newParams.append('style', style)
+      })
+    }
 
     const indexToUse = typeof e === 'number' ? e : currentIndex
 
@@ -56,7 +84,7 @@ export function useNavInput() {
       if (item.type === 'search') {
         newParams.set('search', item.content)
       } else if (item.type === 'category') {
-        newParams.set('style', item.content)
+        newParams.append('style', item.content)
       } else if (item.type === 'artist') {
         router.push(item.href)
         return
@@ -65,25 +93,27 @@ export function useNavInput() {
       newParams.set('search', value)
     }
 
+    // setShowingCategories(false)
     setOpen(false)
     setSearch([])
-    inputRef.current?.blur?.()
 
-    const pathToUse = matchPathname(pathname) || '/tatuajes'
+    const pathToUse = artist
+      ? `/tatuador/${artist}/tatuajes`
+      : matchPathname(pathname) || '/tatuajes'
 
     router.push(createUrl(pathToUse, newParams))
   }
 
-  const deferred = useDeferredValue(value)
-
   const debouncedGetSearch = useCallback(
     debounce(
-      async (search: string) => {
+      async (search: string, active: boolean) => {
         fetch('/api/search?q=' + search)
           .then((res) => res.json())
           .then((data: SearchResponse) => {
-            setSearch(data)
-            if (data.length > 0) setOpen(true)
+            if (active) {
+              setSearch(data)
+              if (data.length > 0) setOpen(true)
+            }
           })
       },
       100,
@@ -93,9 +123,14 @@ export function useNavInput() {
   )
 
   useEffect(() => {
-    if (!deferred) return setSearch([])
-    debouncedGetSearch(deferred)
-  }, [deferred, setSearch, debouncedGetSearch])
+    let active = true
+    if (!value) return setSearch([])
+
+    debouncedGetSearch(value, active)
+    return () => {
+      active = false
+    }
+  }, [value, setSearch, debouncedGetSearch])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -123,6 +158,24 @@ export function useNavInput() {
     setCurrentIndex(index)
   }
 
+  const handleBlur = () => {
+    setTimeout(() => {
+      setOpen(false)
+    }, 100)
+  }
+
+  const handleFocus = () => {
+    setShowingCategories(true)
+    if (search.length > 0) setOpen(true)
+  }
+
+  const handleDeleteStyle = (style: string) => {
+    setStyles((prev) => prev.filter((s) => s !== style))
+  }
+  const handleDeleteArtist = () => {
+    setArtist(null)
+  }
+
   return {
     search,
     open,
@@ -132,8 +185,15 @@ export function useNavInput() {
     handleKeyDown,
     currentIndex,
     setOpen,
-    inputRef,
     handleOptionClick,
     formRef,
+    styles,
+    setShowingCategories,
+    showingCategories,
+    handleBlur,
+    handleFocus,
+    handleDeleteStyle,
+    handleDeleteArtist,
+    artist,
   }
 }

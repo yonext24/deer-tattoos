@@ -32,6 +32,7 @@ export function useControlledPicker({
     setOriginalFile(undefined)
     hasImageBeenInitialized.current = false
     setCroppedUrl('')
+    onChange(undefined)
   }
 
   useImperativeHandle(ref, () => ({

@@ -10,6 +10,7 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   extValue: string
   reset: () => void
   allowEmpty?: boolean
+  initializeSaved?: boolean
 }
 
 export function MediaPicker({
@@ -17,11 +18,12 @@ export function MediaPicker({
   onAccept,
   reset,
   allowEmpty = false,
+  initializeSaved = false,
   ...props
 }: Props) {
   const [localValue, setLocalValue] = useState<string>(extValue ?? '')
   const [saved, setSaved] = useState<boolean>(
-    Boolean(extValue) || extValue === ''
+    initializeSaved && (Boolean(extValue) || extValue === '')
   )
 
   const handleAccept = () => {

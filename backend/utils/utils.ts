@@ -3,24 +3,44 @@ import { imageSize } from 'image-size'
 import { removeAccents } from '@/lib/utils/utils'
 import { prisma } from '@backend/prisma'
 
-const extraWords = ['tatuaje', 'tattoo']
+const extraWords = ['tatuaje', 'tattoo', 'ink']
+
+const normalizeValue = (str: string | number) => {
+  return encodeURI(
+    removeAccents(String(str).toLowerCase()).replaceAll(' ', '-')
+  )
+}
 
 export const generateTattooSlug = async (title: string, styles: string[]) => {
   const notTriedExtraWords = [...extraWords]
 
-  let retryNumber = 0
+  let alreadyTriedRaw = false
+  let retryNumber = 1
   let initialSlice = styles.length >= 2 ? 2 : styles.length
 
-  while (true) {
-    const stylesSlug = styles
-      .slice(0, initialSlice)
-      .map((style) => removeAccents(style.replace(' ', '-')))
+  const normalizedTitle = normalizeValue(title)
+  const normalizedStyles = styles
+    .map((style) => normalizeValue(style))
+    .filter((el) => el !== normalizedTitle)
 
-    const slug =
-      removeAccents(title.toLowerCase().replaceAll(' ', '-')) +
-      '-' +
-      [...stylesSlug].join('-') +
-      (retryNumber ? `-${retryNumber}` : '')
+  while (true) {
+    const stylesSlug = normalizedStyles.slice(0, initialSlice)
+
+    let slug = normalizedTitle + '-' + [...stylesSlug].join('-')
+
+    if (alreadyTriedRaw) {
+      const pickedWord = notTriedExtraWords.pop()
+      if (pickedWord) {
+        slug += `-${pickedWord}`
+      } else {
+        slug += `-${retryNumber}`
+        retryNumber++
+      }
+    }
+
+    if (initialSlice === styles.length - 1) {
+      alreadyTriedRaw = true
+    } else initialSlice++
 
     const tattoo = await prisma.tattoo.findUnique({
       where: {
@@ -31,8 +51,6 @@ export const generateTattooSlug = async (title: string, styles: string[]) => {
     if (!tattoo) {
       return slug
     }
-
-    retryNumber++
   }
 }
 

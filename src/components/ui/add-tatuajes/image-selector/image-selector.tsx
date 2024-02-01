@@ -14,6 +14,7 @@ import {
 import { ImageCropper } from '../../common/image-cropper'
 import { forwardRef } from 'react'
 import { modalStyles } from '@/lib/utils/styles'
+import { Button } from '@/components/shadcn/ui/button'
 
 const initialCrop: Crop = {
   height: 80,
@@ -67,6 +68,7 @@ export const ImageSelector = forwardRef(function ImageSelector(
     <>
       <ImageSelectorButton
         onChange={(e) => {
+          onCancel()
           setOriginalFile(e.target.files?.[0])
         }}
       />

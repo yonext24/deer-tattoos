@@ -2,10 +2,10 @@
 'use client'
 
 import { Button } from '@/components/shadcn/ui/button'
-import { Input } from '@/components/shadcn/ui/input'
 import { cn } from '@/lib/utils/utils'
 import { InputPopover } from './input-popover'
 import { useNavInput } from './use-nav-input'
+import { GoldBadge } from '@/components/ui/common/gold-badge'
 
 type NavInputProps = {} & React.InputHTMLAttributes<HTMLInputElement>
 
@@ -19,9 +19,15 @@ export const NavInput = (props: NavInputProps) => {
     handleKeyDown,
     currentIndex,
     setOpen,
-    inputRef,
     handleOptionClick,
     formRef,
+    styles,
+    showingCategories,
+    handleBlur,
+    handleFocus,
+    handleDeleteStyle,
+    handleDeleteArtist,
+    artist,
   } = useNavInput()
 
   return (
@@ -30,24 +36,50 @@ export const NavInput = (props: NavInputProps) => {
       ref={formRef}
       className="flex items-center max-w-[600px] w-full col-span-2 relative"
     >
-      <Input
-        ref={inputRef}
-        {...props}
-        value={value}
-        onFocus={() => {
-          if (search.length > 0) setOpen(true)
-        }}
-        onBlur={() => {
-          setTimeout(() => {
-            setOpen(false)
-          }, 100)
-        }}
-        onKeyDown={handleKeyDown}
-        onChange={(e) => {
-          setValue(e.target.value)
-        }}
-        className={cn(props.className, 'rounded-r-none')}
-      />
+      <div
+        className={cn(
+          'grid grid-cols-1 w-full relative pl-2 bg-black/30 backdrop-blur',
+          showingCategories && 'grid-cols-[auto_1fr]'
+        )}
+      >
+        {showingCategories && (
+          <div className="flex gap-px">
+            {artist && (
+              <GoldBadge onClick={handleDeleteArtist}>De: {artist}</GoldBadge>
+            )}
+            {styles.map((el) => (
+              <GoldBadge
+                onClick={() => {
+                  handleDeleteStyle(el)
+                }}
+                key={el}
+                variant={'outline'}
+              >
+                {el}
+              </GoldBadge>
+            ))}
+          </div>
+        )}
+        <input
+          type="text"
+          {...props}
+          value={value}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => {
+            setValue(e.target.value)
+          }}
+          className={cn(
+            props.className,
+            'rounded-r-none !outline-none bg-transparent h-full py-2 px-2 w-full [&:focus~#input-brother]:ring-ring'
+          )}
+        />
+        <div
+          className="absolute top-0 left-0 w-full h-full pointer-events-none border border-border cursor-text ring-1 ring-transparent"
+          id="input-brother"
+        />
+      </div>
       <Button disabled={props.disabled} className="rounded-l-none">
         Buscar
       </Button>

@@ -23,9 +23,11 @@ export const tattooController = {
     const page = query.get('page') ?? undefined
     const size = query.get('size') ?? undefined
     const artist = query.get('artist') ?? undefined
+    const sortByRanking = query.get('sortByRanking') === 'true'
+    const exclude = query.get('exclude') ?? undefined
 
     const { data, total } = await filterAndPaginateTattoos(
-      { search, style, artist },
+      { search, style, artist, sortByRanking, exclude },
       { size, page }
     )
 

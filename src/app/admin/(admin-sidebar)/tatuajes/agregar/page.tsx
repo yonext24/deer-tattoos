@@ -49,8 +49,10 @@ export default function Page() {
                     />
                   </FormControl>
                   <FormDescription>
-                    Este título se utiliza para formar la url, debería ser algo
-                    descriptivo del tatuaje como {'"mariposa"'}.
+                    Este título es el que aparecerá en la pestaña del navegador
+                    en la página del tatuaje, por ejemplo: {value || '<Título>'}{' '}
+                    | {'<Marca>'} Tattoos, también se utiliza para formar la
+                    url.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

@@ -4,6 +4,7 @@
 import { Badge } from '@/components/shadcn/ui/badge'
 import { Button } from '@/components/shadcn/ui/button'
 import { Separator } from '@/components/shadcn/ui/separator'
+import { GoldBadge } from '@/components/ui/common/gold-badge'
 import { cn } from '@/lib/utils/utils'
 import { HTMLAttributes, forwardRef } from 'react'
 
@@ -36,13 +37,9 @@ export const CategoriesFilterMainButton = forwardRef<HTMLButtonElement, Props>(
             </Badge>
             <div className="hidden space-x-1 lg:flex">
               {selectedValues.map((option) => (
-                <Badge
-                  variant="outline"
-                  key={option}
-                  className="rounded-sm px-1 font-normal text-gold border-gold/20"
-                >
+                <GoldBadge variant="outline" key={option}>
                   {option}
-                </Badge>
+                </GoldBadge>
               ))}
             </div>
           </>

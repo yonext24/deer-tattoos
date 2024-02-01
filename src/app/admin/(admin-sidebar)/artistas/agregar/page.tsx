@@ -322,6 +322,8 @@ export default function Page() {
                               reset={reset}
                               onAccept={onChange}
                               extValue={value!}
+                              allowEmpty
+                              initializeSaved={false}
                             />
                           </FormControl>
                           <FormMessage />

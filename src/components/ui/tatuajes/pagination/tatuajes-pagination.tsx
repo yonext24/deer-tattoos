@@ -17,16 +17,19 @@ export function TatuajesPagination({
   page: number
   path?: string
 }) {
+  const canPrevious = page > 1
+  const canNext = page < total
+
   return (
     <Pagination>
       <PaginationContent>
         <PaginationPrevious
-          aria-disabled={page <= 1}
-          tabIndex={(page <= 1 && -1) || undefined}
-          data-disabled={page <= 1}
+          aria-disabled={!canPrevious}
+          tabIndex={(!canPrevious && -1) || undefined}
+          data-disabled={!canPrevious}
           className="data-[disabled=true]:pointer-events-none"
           href={`${path}?page=${page - 1}`}
-          isActive={page > 1}
+          isActive={false}
         />
 
         {Array.from({ length: total }).map((el, index) => {
@@ -50,12 +53,12 @@ export function TatuajesPagination({
           <PaginationEllipsis />
         </PaginationItem>
         <PaginationNext
-          aria-disabled={total < page}
-          tabIndex={(total < page && -1) || undefined}
-          data-disabled={total < page}
+          aria-disabled={!canNext}
+          tabIndex={(!canNext && -1) || undefined}
+          data-disabled={!canNext}
           className="data-[disabled=true]:pointer-events-none"
           href={`${path}?page=${page + 1}`}
-          isActive={page < total}
+          isActive={false}
         />
       </PaginationContent>
     </Pagination>

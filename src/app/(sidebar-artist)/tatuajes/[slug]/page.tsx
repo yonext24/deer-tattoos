@@ -9,13 +9,6 @@ import { tattooController } from '@backend/controllers/tattoo-controller'
 import { getTattooBySlug, getTattoos } from '@/lib/backend/utils/tattoos'
 import { Metadata } from 'next'
 
-export const dynamicParams = true
-
-export const generateStaticParams = async () => {
-  const { data } = await getTattoos({}, { page: 1, size: 1000 })
-  return data.map((tattoo) => ({ params: { slug: tattoo.slug } }))
-}
-
 export const generateMetadata = async ({
   params,
 }: {
@@ -54,7 +47,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   tattooController.addRanking({ slug: params.slug })
 
   return (
-    <Main className="ml-auto flex flex-col gap-4 p-4 w-[700px]">
+    <>
       <div className="w-full flex justify-between items-start">
         <Back />
         <Artist artist={artist} />
@@ -68,18 +61,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         blurDataURL={tattoo.images.main.blured}
         className="w-full max-w-auto max-h-auto"
       />
-      <h2 className="font-extralight text-4xl mt-4">Tatuajes Relacionados</h2>
-      <div className="w-full h-[250px] flex gap-4">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="w-full h-full" />
-        ))}
-      </div>
-      <h2 className="font-extralight text-2xl mt-4">Por categoría</h2>
-      <div className="w-full h-[250px] flex gap-4">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="w-full h-full" />
-        ))}
-      </div>
-    </Main>
+    </>
   )
 }
