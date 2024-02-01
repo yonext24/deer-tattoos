@@ -13,7 +13,6 @@ const normalizeValue = (str: string | number) => {
 
 export const generateTattooSlug = async (title: string, styles: string[]) => {
   const notTriedExtraWords = [...extraWords]
-
   let alreadyTriedRaw = false
   let retryNumber = 1
   let initialSlice = styles.length >= 2 ? 2 : styles.length

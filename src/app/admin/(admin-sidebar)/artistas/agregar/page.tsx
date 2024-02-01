@@ -20,6 +20,7 @@ import { CategorySelector } from '@/components/ui/add-tatuajes/category-selector
 import { Main } from '@/components/ui/common/main'
 import { SubmitButton } from '@/components/ui/common/submit-button'
 import { errorParser } from '@/lib/utils/appFetch'
+import { MARCA } from '@/lib/utils/consts'
 import { imageTypeValidation, imageValidation } from '@/lib/utils/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useRef } from 'react'
@@ -223,8 +224,8 @@ export default function Page() {
                   </FormControl>
                   <FormDescription>
                     El usuario del artista, esto es lo que va a aparecer en la
-                    url, por ejemplo: deer.com/artista/ejemplo. Por defecto la
-                    url del artista se va a generar a partir de el nombre, si
+                    url, por ejemplo: {MARCA}.com/artista/ejemplo. Por defecto
+                    la url del artista se va a generar a partir de el nombre, si
                     querés modificar ese comportamiento podés hacerlo poniendo
                     algo acá. Esto puede ser útil si el artista tiene un
                     pseudónimo famoso, para aparecer más alto en las búsquedas

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { NavInput } from './nav-input/nav-input'
 import { Suspense } from 'react'
+import { MARCA } from '@/lib/utils/consts'
 
 const navEntrys = [
   { text: 'Inicio', href: '/' },
@@ -19,7 +20,7 @@ export function Navbar() {
           href="/"
           className="font-title text-gold text-2xl h-full flex flex-grod-[.5]"
         >
-          <div className="h-full flex items-center">DEER</div>
+          <div className="h-full flex items-center">{MARCA}</div>
         </Link>
         <div className="flex-grow flex w-full justify-center">
           <Suspense>

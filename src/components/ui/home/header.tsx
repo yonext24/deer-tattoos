@@ -1,6 +1,7 @@
 import { StylizedText } from '@/components/stylized-text/stylized-text'
 import { Section } from '../common/section'
 import Image from 'next/image'
+import { MARCA } from '@/lib/utils/consts'
 
 export function HomeHeader() {
   return (
@@ -27,7 +28,7 @@ export function HomeHeader() {
           </div>
         </div>
         <div className="grid-col-[2] text-end flex flex-col items-end">
-          <StylizedText as="h1" text="DEER TATTOOS" />
+          <StylizedText as="h1" text={`${MARCA} TATTOOS`} />
           <h2 className="text-2xl text-white font-light">Local de Tatuajes</h2>
         </div>
       </Section>

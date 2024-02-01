@@ -76,14 +76,6 @@ export function useTatuajesTable({
 
   useEffect(() => {
     const current = currentFetch.current
-    console.log(current, currentArtist)
-    console.log(current.artist === currentArtist)
-    console.log(
-      current.hasBeenFetched &&
-        current.page === pageIndex &&
-        current.size === pageSize &&
-        current.artist === currentArtist
-    )
     if (
       current.hasBeenFetched &&
       current.page === pageIndex &&

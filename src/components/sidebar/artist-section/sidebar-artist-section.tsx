@@ -1,6 +1,7 @@
 import { StylizedText } from '@/components/stylized-text/stylized-text'
 import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 import { Artist } from '@/lib/types/artist'
+import { MARCA } from '@/lib/utils/consts'
 
 export function SidebarArtistSection({
   images,
@@ -37,7 +38,7 @@ export function SidebarArtistSection({
           </div>
         ) : (
           <div className="bg-green-dark shadow-lg w-full h-full flex items-center justify-center flex-col font-bold font-title text-gold text-2xl">
-            <StylizedText text="DEER" size={28} />
+            <StylizedText text={MARCA} size={28} />
             <StylizedText text="TATTOOS" size={25} />
           </div>
         )}
