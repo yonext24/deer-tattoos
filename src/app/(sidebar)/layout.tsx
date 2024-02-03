@@ -2,6 +2,7 @@ import { TattoosFooter } from '@/components/footers/tattoos-footer'
 import { Sidebar } from '@/components/sidebar/sidebar'
 import { getStyles } from '@/lib/backend/utils/styles'
 import { Metadata } from 'next'
+import { SidebarContainer } from '../../components/sidebar/sidebar'
 
 export const revalidate = 0
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,12 +22,12 @@ export default function SidebarLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="w-full grid grid-cols-[300px_1fr]">
+    <SidebarContainer>
       <Sidebar artist={null} />
       <div className="flex flex-col gap-4">
         {children}
         <TattoosFooter />
       </div>
-    </div>
+    </SidebarContainer>
   )
 }

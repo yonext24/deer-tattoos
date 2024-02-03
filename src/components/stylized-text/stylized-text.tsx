@@ -5,19 +5,21 @@ type StylizedTextProps = {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span'
   propsForElement?: any
   size?: number | string
+  lineHeight?: number | string
 }
 
 export function StylizedText({
   text,
   as = 'h2',
   size = '3.75rem',
+  lineHeight = '4.5rem',
   propsForElement,
 }: StylizedTextProps) {
   const Element = as as keyof JSX.IntrinsicElements
 
   return (
     <div
-      style={{ fontSize: size }}
+      style={{ fontSize: size, lineHeight }}
       className={cn('relative flex w-max h-max font-title')}
     >
       <span

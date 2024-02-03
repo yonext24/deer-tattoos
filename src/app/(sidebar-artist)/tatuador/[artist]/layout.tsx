@@ -1,4 +1,5 @@
 import { TattoosFooter } from '@/components/footers/tattoos-footer'
+import { SidebarContainer } from '@/components/sidebar/sidebar'
 import { SidebarSkeleton } from '@/components/sidebar/sidebar-skeleton'
 import { SidebarWithArtist } from '@/components/sidebar/sidebar-with-artist'
 import { Suspense } from 'react'
@@ -11,7 +12,7 @@ export default async function Layout({
   params: { artist: string }
 }) {
   return (
-    <div className="w-full grid grid-cols-[300px_1fr]">
+    <SidebarContainer>
       <Suspense key={params.artist} fallback={<SidebarSkeleton />}>
         <SidebarWithArtist slug={params.artist} />
       </Suspense>
@@ -19,6 +20,6 @@ export default async function Layout({
         {children}
         <TattoosFooter />
       </div>
-    </div>
+    </SidebarContainer>
   )
 }

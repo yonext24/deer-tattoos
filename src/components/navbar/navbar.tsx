@@ -27,7 +27,7 @@ export function Navbar() {
             <NavInput />
           </Suspense>
         </div>
-        <div className="flex flex-grow-[.5] gap-2 col-span-3 row-span-1 h-full">
+        <div className="hidden sm:flex flex-grow-[.5] gap-2 col-span-3 row-span-1 h-full">
           {navEntrys.map(({ text, href }) => (
             <Link
               key={href}

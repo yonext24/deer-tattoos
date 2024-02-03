@@ -16,7 +16,12 @@ export function Artists({ artists }: { artists: Artist[] }) {
       id="artistas"
     >
       <h2 className="text-6xl font-light mb-4">Artistas</h2>
-      <div className={cn('flex gap-4', artists.length >= 5 && 'flex-wrap')}>
+      <div
+        className={cn(
+          'grid grid-cols-[repeat(auto-fit,minmax(265px,max-content))] place-content-center gap-4',
+          artists.length >= 5 && ''
+        )}
+      >
         {artists.map((artist, index) => (
           <ArtistCard
             key={index}

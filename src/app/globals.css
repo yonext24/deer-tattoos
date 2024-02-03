@@ -48,6 +48,7 @@ html {
 @layer base {
   * {
     @apply border-border;
+    text-wrap: balance;
   }
   body {
     @apply bg-background text-foreground;

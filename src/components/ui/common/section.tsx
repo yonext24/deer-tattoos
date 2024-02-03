@@ -9,12 +9,12 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
     <section
       ref={ref}
       className={cn(
-        'min-h-[var(--section-min-height)] max-w-[var(--content-max-width)] mx-auto',
-        className,
+        'min-h-[var(--section-min-height)] max-w-[var(--content-max-width)] mx-auto px-2',
+        className
       )}
       {...props}
     >
       {props.children}
     </section>
-  ),
+  )
 )

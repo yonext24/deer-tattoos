@@ -3,11 +3,11 @@ import { Section } from '../../common/section'
 
 export async function Tattoos({ children }: { children: React.ReactNode }) {
   return (
-    <Section className="flex [&>*]:flex-1 gap-4 relative overflow-hidden py-0 max-h-[510px] min-h-[auto]">
-      <div className="flex flex-col justify-center">
+    <Section className="grid min-[800px]:grid-cols-[60%_1fr] grid-cols-[100%_1fr] gap-4 relative overflow-hidden py-0 max-h-[510px] min-h-[auto]">
+      <div className="flex flex-col justify-center text-center items-center md:items-start md:text-start">
         <h3
           className="bg-gradient-to-bl from-white from-[69%] to-neutral-600 bg-clip-text bg-right-bottom
-        text-6xl supports-[background-clip:text]:text-transparent"
+        text-6xl supports-[background-clip:text]:text-transparent relative z-10"
         >
           Los mejores tatuajes de Lanús
         </h3>
@@ -26,7 +26,12 @@ export async function Tattoos({ children }: { children: React.ReactNode }) {
           className="absolute right-[32%] -top-[90%] flex-1 [transform:rotate3d(-3,4,-2,320deg)_translateZ(-50px)]
         [transform-origin:bottom] [transform-style:preserve-3d] [perspective:200px]"
         >
-          <div id="carousel">{children}</div>
+          <div
+            id="carousel"
+            className="opacity-30 min-[770px]:opacity-50 min-[900px]:opacity-100"
+          >
+            {children}
+          </div>
         </div>
       </div>
     </Section>
