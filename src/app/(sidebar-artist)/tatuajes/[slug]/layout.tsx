@@ -30,6 +30,7 @@ export default async function Layout({
       <Suspense key={tattoo?.artistSlug} fallback={<SidebarSkeleton />}>
         <SidebarWithArtist slug={tattoo?.artistSlug} />
       </Suspense>
+
       <div className="flex flex-col gap-4">
         <Main className="ml-auto flex flex-col gap-4 p-4 w-full max-w-[700px]">
           {children}

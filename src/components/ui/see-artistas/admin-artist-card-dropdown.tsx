@@ -65,7 +65,6 @@ export function AdminArtistCardDropdown({
 
     addModal(ChangeArtistImagesModal, { slug, onChangeData: onEdit })
   }, [slug, dispatch])
-
   const handleOpenMedias = useCallback(() => {
     const onEdit = (props: EditMediasPayload) => {
       dispatch({ type: 'edit-medias', payload: props })

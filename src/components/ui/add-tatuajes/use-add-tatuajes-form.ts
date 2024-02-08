@@ -34,6 +34,21 @@ const formSchema = zod.object({
     .refine(({ original }) => original?.size <= MAX_FILE_SIZE, {
       message: `El tamaño máximo permitido es 15MB`,
     }),
+  extra_images: zod
+    .object({
+      card: zod.any(),
+      original: zod.any(),
+      card_height: zod.number(),
+      card_width: zod.number(),
+    })
+    .refine(({ card, original }) => Boolean(card) && Boolean(original), {
+      message: 'Tenés que elegir una imágen para el tatuaje',
+    })
+    .refine(({ original }) => original?.size <= MAX_FILE_SIZE, {
+      message: `El tamaño máximo permitido es 15MB`,
+    })
+    .array(),
+
   // .refine(
   //   ({ card }) => card?.type,
   //   'Algo salió mal al subir la imágen, volvé a intenarlo.',
@@ -56,6 +71,7 @@ const formDefaultValues = {
     card_width: undefined,
     original: undefined,
   },
+  extra_images: [],
   artist: {
     slug: null,
   },

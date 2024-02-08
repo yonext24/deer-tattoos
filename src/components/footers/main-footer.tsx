@@ -4,12 +4,12 @@ import { PageLinks } from './page-links'
 
 export function MainFooter() {
   return (
-    <footer className="pt-4 border-t border-border w-full flex flex-col *:max-w-[var(--content-max-width)] *:mx-auto *:w-full">
-      <div className="grid grid-cols-3 place-content-center mb-6">
+    <footer className="pt-4 border-t border-border w-full flex flex-col px-2 *:max-w-[var(--content-max-width)] *:mx-auto *:w-full">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-y-2 place-content-center mb-6">
         <LogoWithMedia />
-        <div className="flex flex-col gap-2">
-          <h5 className="text-center text-xl">Quienes sómos?</h5>
-          <p className="text-balance text-center text-sm text-muted-foreground">
+        <div className="flex flex-col col-[1] row-span-2 md:col-[2] md:row-span-1 gap-2">
+          <h5 className="text-start md:text-center text-xl">Quienes sómos?</h5>
+          <p className="text-balance text-start md:text-center text-sm text-muted-foreground">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
             laboriosam fugit fugiat. Quod, voluptate quidem unde tempora officia
             excepturi soluta est vel

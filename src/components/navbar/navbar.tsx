@@ -2,8 +2,9 @@ import Link from 'next/link'
 import { NavInput } from './nav-input/nav-input'
 import { Suspense } from 'react'
 import { MARCA } from '@/lib/utils/consts'
+import { MobileNavbarButton } from '../mobile-navbar/mobile-navbar-button/mobile-navbar-button'
 
-const navEntrys = [
+export const navEntrys = [
   { text: 'Inicio', href: '/' },
   { text: 'Tatuajes', href: '/tatuajes' },
   { text: 'Artistas', href: '/#artistas' },
@@ -16,9 +17,10 @@ export function Navbar() {
     flex justify-center"
     >
       <div className="w-full max-w-[var(--content-max-width)] mx-[var(--content-margin)] flex justify-between items-center gap-4">
+        <MobileNavbarButton />
         <Link
           href="/"
-          className="font-title text-gold text-2xl h-full flex flex-grod-[.5]"
+          className="font-title text-gold text-2xl h-full hidden sm:flex flex-grod-[.5]"
         >
           <div className="h-full flex items-center">{MARCA}</div>
         </Link>

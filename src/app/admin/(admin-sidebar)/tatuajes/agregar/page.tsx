@@ -18,6 +18,7 @@ import { ImageSelector } from '@/components/ui/add-tatuajes/image-selector/image
 import { Input } from '@/components/shadcn/ui/input'
 import { ArtistSelector } from '@/components/ui/add-tatuajes/artist-selector/artist-selector'
 import { SubmitButton } from '@/components/ui/common/submit-button'
+import { ExtraImagesSelector } from '@/components/ui/add-tatuajes/extra-images-selector/extra-images-selector'
 
 export default function Page() {
   const { form, onSubmit, imageRef } = useAddTatuajesForm()
@@ -129,7 +130,7 @@ export default function Page() {
             render={({ field: { onChange, value } }) => {
               return (
                 <FormItem className="flex flex-col items-start">
-                  <FormLabel>Imágen del tatuaje</FormLabel>
+                  <FormLabel>Imágen principal del tatuaje</FormLabel>
                   <FormControl>
                     <ImageSelector
                       ref={imageRef}
@@ -138,8 +139,27 @@ export default function Page() {
                     />
                   </FormControl>
                   <FormDescription>
-                    La imágen del tatuaje, al subirla, se crearán dos versiones
-                    de ella, la recortada y la original.
+                    La imágen del tatuaje que aparecerá primero, y la que
+                    aparecerá en la galería.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
+          <FormField
+            control={control}
+            name="extra_images"
+            render={({ field: { value, onChange } }) => {
+              return (
+                <FormItem className="flex flex-col items-start">
+                  <FormLabel>Imágen principal del tatuaje</FormLabel>
+                  <FormControl>
+                    <ExtraImagesSelector value={value} onChange={onChange} />
+                  </FormControl>
+                  <FormDescription>
+                    La imágen del tatuaje que aparecerá primero, y la que
+                    aparecerá en la galería.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
