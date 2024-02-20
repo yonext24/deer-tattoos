@@ -38,7 +38,8 @@ const transformTattoosToCarousel = (tattoos: Tattoo[]): Tattoo[] => {
     const randomIndex = Math.floor(Math.random() * copy.length)
     const randomTattoo = copy[randomIndex]
 
-    const isAcceptable = isAcceptableToPick(pickedIds, randomTattoo.id)
+    const isAcceptable =
+      tattoos.length <= 1 || isAcceptableToPick(pickedIds, randomTattoo.id)
     if (!isAcceptable) continue
 
     pickedIds.push(randomTattoo.id)

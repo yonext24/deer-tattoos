@@ -2,8 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @font-face {
+  src: url('../../public/fonts/FiraSans-Medium.ttf') format('ttf');
+  font-family: 'Fira Sans';
+  font-weight: 500;
+}
+
+@font-face {
+  src: url('/fonts/Inter-Bold.ttf') format('ttf');
+  font-family: 'Inter';
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-SemiBold.ttf') format('ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Regular.ttf') format('ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-ExtraLight.ttf') format('ttf');
+  font-weight: 200;
+} */
+
 @layer base {
   :root {
+    --font-title: 'Fira Sans';
+    --font-sans: 'Inter';
+
     --navbar-height: 60px;
     --section-min-height: calc(100vh - var(--navbar-height));
     --content-max-width: 1300px;

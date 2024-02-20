@@ -1,20 +1,17 @@
+export type TattooImage = {
+  height: number
+  width: number
+  src: string
+  blured: string
+}
+
 export type Tattoo = {
   id: string
   slug: string
   title: string
   images: {
-    main: {
-      height: number
-      width: number
-      src: string
-      blured: string
-    }
-    card: {
-      height: number
-      width: number
-      src: string
-      blured: string
-    }
+    images: TattooImage[]
+    card: TattooImage
   }
   type: 'single' | 'double' | 'quad'
   styles: string[]

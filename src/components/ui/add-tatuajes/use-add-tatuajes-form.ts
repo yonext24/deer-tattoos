@@ -34,20 +34,7 @@ const formSchema = zod.object({
     .refine(({ original }) => original?.size <= MAX_FILE_SIZE, {
       message: `El tamaño máximo permitido es 15MB`,
     }),
-  extra_images: zod
-    .object({
-      card: zod.any(),
-      original: zod.any(),
-      card_height: zod.number(),
-      card_width: zod.number(),
-    })
-    .refine(({ card, original }) => Boolean(card) && Boolean(original), {
-      message: 'Tenés que elegir una imágen para el tatuaje',
-    })
-    .refine(({ original }) => original?.size <= MAX_FILE_SIZE, {
-      message: `El tamaño máximo permitido es 15MB`,
-    })
-    .array(),
+  extra_images: zod.instanceof(File).array(),
 
   // .refine(
   //   ({ card }) => card?.type,
@@ -83,15 +70,19 @@ export function useAddTatuajesForm() {
   })
 
   const imageRef = useRef<any>(null)
+  const extraImagesRef = useRef<any>(null)
 
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
       imageRef?.current?.reset()
+      extraImagesRef?.current?.reset()
       form.reset(formDefaultValues)
     }
   }, [form.formState.isSubmitSuccessful])
 
   const onSubmit = async (data: zod.infer<typeof formSchema>) => {
+    console.log(data)
+    // return
     const formData = new FormData()
 
     formData.append('card', data.image.card as Blob)
@@ -103,6 +94,10 @@ export function useAddTatuajesForm() {
     formData.append('tags', JSON.stringify(data.tags))
     formData.append('artist', JSON.stringify(data.artist))
     formData.append('title', data.title)
+
+    data.extra_images.forEach((image, index) => {
+      formData.append(`extra_images-${index}`, image)
+    })
 
     const toastId = 'add-tatuaje-loading-toast'
     toast.loading('El tatuaje se está creando', { id: toastId })
@@ -118,5 +113,5 @@ export function useAddTatuajesForm() {
     }
   }
 
-  return { form, onSubmit, imageRef }
+  return { form, onSubmit, imageRef, extraImagesRef }
 }

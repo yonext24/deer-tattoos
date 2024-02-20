@@ -1,13 +1,29 @@
-import { Fira_Sans, Inter } from 'next/font/google'
+import Local from 'next/font/local'
 
-export const FontSans = Inter({
-  subsets: ['latin'],
-  weight: ['200', '400', '600', '700'],
+export const FontSans = Local({
+  src: [
+    {
+      path: '../../public/fonts/Inter-Medium.ttf',
+      weight: '400',
+    },
+    {
+      path: '../../public/fonts/Inter-Bold.ttf',
+      weight: '700',
+    },
+    {
+      path: '../../public/fonts/Inter-SemiBold.ttf',
+      weight: '600',
+    },
+    {
+      path: '../../public/fonts/Inter-ExtraLight.ttf',
+      weight: '200',
+    },
+  ],
   variable: '--font-sans',
 })
 
-export const FontTitle = Fira_Sans({
-  subsets: ['latin'],
-  weight: ['500'],
+export const FontTitle = Local({
+  src: '../../public/fonts/FiraSans-Medium.ttf',
+  weight: '500',
   variable: '--font-title',
 })

@@ -83,13 +83,21 @@ export function SingleTatuajeRecommendedSection({
         Otros tatuajes de {tattoo.artistSlug ?? 'la galería'}
       </h2>
       <TatsContainer
-        length={recommended.status === 'loading' ? 3 : recommended.data.length}
+        length={
+          recommended.status === 'loading' || recommended.status === 'idle'
+            ? 3
+            : recommended.data.length
+        }
       >
         <RecommendationCardRender {...recommended} />
       </TatsContainer>
       <h2 className="font-extralight text-2xl mt-4">Tatuajes Relacionados</h2>
       <TatsContainer
-        length={related.status === 'loading' ? 3 : related.data.length}
+        length={
+          related.status === 'loading' || related.status === 'idle'
+            ? 3
+            : related.data.length
+        }
       >
         <RecommendationCardRender {...related} />
       </TatsContainer>

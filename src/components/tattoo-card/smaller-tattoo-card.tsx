@@ -27,7 +27,7 @@ export function SmallerTattooCard({
         alt="image"
         className="h-full object-cover"
         loading="lazy"
-        quality={16}
+        quality={75}
         height={tattoo.images.card.height}
         width={tattoo.images.card.width}
       />

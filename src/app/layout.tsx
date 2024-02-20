@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { FontSans, FontTitle } from '@/lib/fonts'
+import { FontTitle, FontSans } from '@/lib/fonts'
 import { Navbar } from '@/components/navbar/navbar'
 import { cn } from '@/lib/utils/utils'
 import { Toaster } from '@/components/shadcn/ui/sonner'

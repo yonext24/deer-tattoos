@@ -4,8 +4,10 @@ import { useId } from 'react'
 
 export function ImageSelectorButton({
   onChange,
+  className,
 }: {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  className?: string
 }) {
   const id = useId()
 
@@ -21,6 +23,7 @@ export function ImageSelectorButton({
       className={cn(
         buttonVariants({ variant: 'outline', size: 'sm' }),
         'cursor-pointer',
+        className
       )}
       htmlFor={id}
     >

@@ -95,12 +95,7 @@ export const ImageSelector = forwardRef(function ImageSelector(
             id={''}
             slug=""
             images={{
-              main: {
-                src: '',
-                height: 400,
-                width: 500,
-                blured: '',
-              },
+              images: [],
               card: {
                 src: croppedUrl,
                 height: 400,

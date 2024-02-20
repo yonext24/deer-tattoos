@@ -21,7 +21,7 @@ import { SubmitButton } from '@/components/ui/common/submit-button'
 import { ExtraImagesSelector } from '@/components/ui/add-tatuajes/extra-images-selector/extra-images-selector'
 
 export default function Page() {
-  const { form, onSubmit, imageRef } = useAddTatuajesForm()
+  const { form, onSubmit, imageRef, extraImagesRef } = useAddTatuajesForm()
   const { handleSubmit, control } = form
 
   return (
@@ -155,7 +155,11 @@ export default function Page() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Imágen principal del tatuaje</FormLabel>
                   <FormControl>
-                    <ExtraImagesSelector value={value} onChange={onChange} />
+                    <ExtraImagesSelector
+                      ref={extraImagesRef}
+                      value={value}
+                      onChange={onChange}
+                    />
                   </FormControl>
                   <FormDescription>
                     La imágen del tatuaje que aparecerá primero, y la que

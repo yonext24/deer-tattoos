@@ -1,38 +1,56 @@
+/* eslint-disable react/display-name */
 import { Button } from '@/components/shadcn/ui/button'
 import { AddTatuajesFormValues } from '../use-add-tatuajes-form'
-import { useState } from 'react'
-import {
-  DialogHeader,
-  Dialog,
-  DialogContent,
-} from '@/components/shadcn/ui/dialog'
+import { forwardRef } from 'react'
+import { Dialog } from '@/components/shadcn/ui/dialog'
+import { ExtraImagesModal } from './extra-images-modal'
+import { useExtraImagesSelector } from './use-extra-images-selector'
+import { GoldBadge } from '../../common/gold-badge'
 
-export function ExtraImagesSelector({
-  value,
-  onChange,
-}: {
-  value: AddTatuajesFormValues['extra_images']
-  onChange: (data: any) => void
-}) {
-  const [modalOpen, setModalOpen] = useState<boolean>(false)
+export const ExtraImagesSelector = forwardRef(
+  (
+    {
+      onChange,
+    }: {
+      value: AddTatuajesFormValues['extra_images']
+      onChange: (data: any) => void
+    },
+    ref
+  ) => {
+    const {
+      moveToLeft,
+      moveToRight,
+      deleteImage,
+      handleImageAdd,
+      modalOpen,
+      setModalOpen,
+      images,
+    } = useExtraImagesSelector({ onChange, ref })
 
-  return (
-    <>
-      <Button
-        type="button"
-        variant={'outline'}
-        onClick={() => {
-          setModalOpen(true)
-        }}
-      >
-        Ver tatuajes
-      </Button>
+    return (
+      <>
+        <Button
+          type="button"
+          variant={'outline'}
+          className="flex gap-2"
+          onClick={() => {
+            setModalOpen(true)
+          }}
+        >
+          <label>Imágenes extra</label>
+          {images.length > 0 && <GoldBadge>+{images.length}</GoldBadge>}
+        </Button>
 
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent>
-          <DialogHeader>Imágenes extra</DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </>
-  )
-}
+        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+          <ExtraImagesModal
+            deleteImage={deleteImage}
+            handleImageAdd={handleImageAdd}
+            images={images}
+            moveToLeft={moveToLeft}
+            moveToRight={moveToRight}
+          />
+        </Dialog>
+      </>
+    )
+  }
+)

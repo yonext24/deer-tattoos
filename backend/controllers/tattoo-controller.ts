@@ -13,6 +13,7 @@ import {
   getImageDimensions,
 } from '@backend/utils/utils'
 import { filterAndPaginateTattoos } from '@backend/utils/tattoos-utils'
+import { Tattoo } from '@prisma/client'
 
 export const tattooController = {
   async getTattoos(req: ParsedRequest) {
@@ -44,6 +45,7 @@ export const tattooController = {
       card_height,
       card_width,
       title,
+      extra_images,
     } = (await request.parsedBody()) as TattooCreateBodyType
 
     const { width: main_width, height: main_height } =
@@ -64,6 +66,34 @@ export const tattooController = {
     const base64Card = (await getBase64(card)) as string
     const base64Original = (await getBase64(original)) as string
 
+    const images = [
+      {
+        src: originalUrl,
+        blured: base64Original,
+        width: main_width,
+        height: main_height,
+      },
+    ] as Tattoo['images']['images']
+
+    if (extra_images) {
+      for (let i = 0; i < extra_images.length; i++) {
+        const image = extra_images[i]
+
+        const { width, height } = await getImageDimensions(image)
+        if (!width || !height) {
+          throw new AppError(500, 'Algo salió mal al subir las imágenes. (dim)')
+        }
+        const url = (await uploadImage(
+          image,
+          `/tattoos/${slug}/extra-${i + 1}.${
+            (image as File).type.split('/')[1]
+          }`
+        )) as string
+        const base64 = (await getBase64(image)) as string
+        images.push({ src: url, blured: base64, width, height })
+      }
+    }
+
     const nuevoTatuaje = await prisma.tattoo.create({
       data: {
         title,
@@ -73,12 +103,7 @@ export const tattooController = {
         styles,
         tags,
         images: {
-          main: {
-            src: originalUrl,
-            blured: base64Original,
-            width: main_width,
-            height: main_height,
-          },
+          images,
           card: {
             src: cardUrl,
             blured: base64Card,
