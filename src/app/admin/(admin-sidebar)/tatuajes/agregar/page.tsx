@@ -153,7 +153,7 @@ export default function Page() {
             render={({ field: { value, onChange } }) => {
               return (
                 <FormItem className="flex flex-col items-start">
-                  <FormLabel>Imágen principal del tatuaje</FormLabel>
+                  <FormLabel>Imágenes extra del tatuaje</FormLabel>
                   <FormControl>
                     <ExtraImagesSelector
                       ref={extraImagesRef}
@@ -162,8 +162,7 @@ export default function Page() {
                     />
                   </FormControl>
                   <FormDescription>
-                    La imágen del tatuaje que aparecerá primero, y la que
-                    aparecerá en la galería.
+                    Las imágenes secundarias del tatuaje.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

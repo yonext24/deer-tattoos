@@ -7,6 +7,7 @@ import { Artist } from '@/lib/types/artist'
 import { MARCA } from '@/lib/utils/consts'
 import { useRef, useState } from 'react'
 import { useClickOutside } from '@/hooks/useClickOutside'
+import { useSwipe } from '@/hooks/useSwipe'
 
 export function Sidebar({ artist }: { artist: Artist | null }) {
   const [isSmall, setIsSmall] = useState<boolean>(true)
@@ -19,6 +20,14 @@ export function Sidebar({ artist }: { artist: Artist | null }) {
 
   useClickOutside(sidebarRef, () => {
     setIsSmall(true)
+  })
+  useSwipe({
+    onSwipeLeft: () => {
+      setIsSmall(true)
+    },
+    onSwipeRight() {
+      setIsSmall(false)
+    },
   })
 
   return (

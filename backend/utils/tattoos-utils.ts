@@ -92,7 +92,7 @@ export const filterAndPaginateTattoos: FilterFuncType = async (
   if (artist) {
     where.AND.push({
       artistSlug: {
-        equals: artist,
+        equals: artist === 'null' ? null : artist,
       },
     })
   }

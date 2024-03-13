@@ -9,19 +9,19 @@ const isPrivate = (url: string) => {
 }
 
 export async function middleware(request: NextRequest) {
-  // if (isPrivate(request.nextUrl.pathname)) {
-  //   const token = await getToken({
-  //     req: request,
-  //   })
+  if (isPrivate(request.nextUrl.pathname)) {
+    const token = await getToken({
+      req: request,
+    })
 
-  //   if (token?.role === 'admin') {
-  //     return NextResponse.next()
-  //   }
+    if (token?.role === 'admin') {
+      return NextResponse.next()
+    }
 
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/api/auth/signin'
-  //   return NextResponse.redirect(url)
-  // }
+    const url = request.nextUrl.clone()
+    url.pathname = '/api/auth/signin'
+    return NextResponse.redirect(url)
+  }
 
   return NextResponse.next()
 }

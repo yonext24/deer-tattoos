@@ -14,14 +14,16 @@ import { SelectGroup } from '@radix-ui/react-select'
 import { useEffect, useMemo, useState } from 'react'
 
 // Fuck it, shadcn doesn't let me use null
-const NONE_VALUE = '1892371987381283901829381290381029839012830120913'
+const NONE_VALUE = 'Ninguno'
 
 export function ArtistSelector({
   value,
   onChange,
+  withAll,
 }: {
-  value: string | null
+  value: string | null | undefined
   onChange: any
+  withAll?: boolean
 }) {
   const [artists, setArtists] = useState<Artist[]>([])
   const [status, setStatus] = useState<'loading' | 'error' | 'success'>(
@@ -42,14 +44,13 @@ export function ArtistSelector({
       .catch(() => setStatus('error'))
   }, [])
 
-  console.log({ value })
-
   const selectedName = useMemo(() => {
     if (status === 'loading') return 'Cargando...'
     if (status === 'error') return 'Algo salió mal'
 
     if (value === NONE_VALUE || value === null || value === undefined)
       return 'Ninguno'
+    if (value === 'all') return 'Todos'
     const artist = artists.find((artist) => artist.slug === value)
     return artist?.name ?? NONE_VALUE
   }, [value, artists, status])
@@ -77,8 +78,8 @@ export function ArtistSelector({
           </SelectLabel>
           {status === 'success' && (
             <>
+              {withAll && <SelectItem value={'all'}>Todos</SelectItem>}
               <SelectItem value={NONE_VALUE}>Ninguno</SelectItem>
-
               {artists.map((artist) => {
                 return (
                   <SelectItem key={artist.slug} value={artist.slug}>
