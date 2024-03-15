@@ -24,11 +24,6 @@ export function TattooImages({ tattoo }: { tattoo: Tattoo }) {
 
   return (
     <>
-      <ExtraImages
-        slug={tattoo.slug}
-        images={tattoo.images.images}
-        selectedIndex={selectedIndex}
-      />
 
       <ImageWithBlur
         pictureClassName="w-full"
@@ -38,6 +33,11 @@ export function TattooImages({ tattoo }: { tattoo: Tattoo }) {
         width={image.width}
         blurDataURL={image.blured}
         className="w-full max-w-auto max-h-auto"
+      />
+      <ExtraImages
+        slug={tattoo.slug}
+        images={tattoo.images.images}
+        selectedIndex={selectedIndex}
       />
     </>
   )

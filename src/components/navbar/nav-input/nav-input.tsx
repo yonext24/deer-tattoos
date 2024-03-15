@@ -61,6 +61,7 @@ export const NavInput = (props: NavInputProps) => {
           </div>
         )}
         <input
+          spellCheck={false}
           type="text"
           {...props}
           value={value}

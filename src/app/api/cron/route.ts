@@ -31,8 +31,10 @@ const deleteImage = async (url: string) => {
 }
 
 export const GET = async (req: Request) => {
+  console.log('STARTING TATTOO CLEANUP')
   const auth = req.headers.get('authorization')
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+    console.error('CLEANUP INTERRUPTED DUE TO UNAUTHORIZED REQUEST')
     return Response.json({success: false, error: 'Unauthorized'}, { status: 401 })
   }
   

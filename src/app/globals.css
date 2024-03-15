@@ -135,10 +135,6 @@ html {
     }
   }
 
-  /* 
-    height: (15 * 250px + 90) = 3840
-  */
-
   #carousel {
     height: calc(
       (

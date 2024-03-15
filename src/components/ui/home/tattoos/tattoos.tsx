@@ -23,12 +23,12 @@ export async function Tattoos({ children }: { children: React.ReactNode }) {
       </div>
       <div className="h-[510px] w-full overflow-hidden" id="carousel_wrapper">
         <div
-          className="absolute right-[32%] -top-[90%] flex-1 [transform:rotate3d(-3,4,-2,320deg)_translateZ(-50px)]
+          className="absolute pointer-events-none md:pointer-events-auto right-[70%] md:right-[32%] -top-[90%] flex-1 [transform:rotate3d(-3,4,-2,320deg)_translateZ(-50px)]
         [transform-origin:bottom] [transform-style:preserve-3d] [perspective:200px]"
         >
           <div
             id="carousel"
-            className="opacity-30 min-[770px]:opacity-50 min-[900px]:opacity-100"
+            className="opacity-20 min-[770px]:opacity-50 min-[900px]:opacity-100"
           >
             {children}
           </div>

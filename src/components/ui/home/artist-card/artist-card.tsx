@@ -56,9 +56,9 @@ export function ArtistCard({
           </p>
         </CardContent>
         <CardFooter className="flex flex-col-reverse gap-y-4 sm:flex-row justify-between">
-          <div className="flex text-green-light items-center gap-2">
-            <div className="max-w-[0] overflow-hidden group-hover:max-w-4 transition-[max-width] duration-300">
-              <DoubleLeftIcon className="h-4 w-4" />
+          <div className="flex text-green-light group-hover:text-gold transition-colors items-center gap-2">
+            <div className="max-w-[0] overflow-hidden group-hover:max-w-4 transition-[max-width,color] duration-300">
+              <DoubleLeftIcon className="h-4 w-4 text-gold" />
             </div>
             <span className="hover:underline">Ver Tatuajes</span>
           </div>

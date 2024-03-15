@@ -7,7 +7,14 @@ import { createUrl, matchPathname } from '@/lib/utils/createUrl'
 import debounce from 'just-debounce-it'
 import { useRouter } from 'next-nprogress-bar'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  startTransition,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+} from 'react'
 
 const resolveArtist = (pathname: string) => {
   const reg = new RegExp('/tatuador/(.*)/tatuajes')
@@ -29,6 +36,7 @@ export function useNavInput() {
   const [artist, setArtist] = useState<string | null>(() => {
     return resolveArtist(pathname)
   })
+  // const [, startTransition] = useTransition()
 
   useEffect(() => {
     setArtist(resolveArtist(pathname))
@@ -105,20 +113,18 @@ export function useNavInput() {
   }
 
   const debouncedGetSearch = useCallback(
-    debounce(
-      async (search: string, active: boolean) => {
-        fetch('/api/search?q=' + search)
-          .then((res) => res.json())
-          .then((data: SearchResponse) => {
-            if (active) {
+    debounce(async (search: string, active: boolean) => {
+      fetch('/api/search?q=' + search)
+        .then((res) => res.json())
+        .then((data: SearchResponse) => {
+          if (active) {
+            startTransition(() => {
               setSearch(data)
-              if (data.length > 0) setOpen(true)
-            }
-          })
-      },
-      100,
-      true
-    ),
+            })
+            if (data.length > 0) setOpen(true)
+          }
+        })
+    }, 100),
     []
   )
 

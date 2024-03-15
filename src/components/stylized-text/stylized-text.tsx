@@ -6,6 +6,8 @@ type StylizedTextProps = {
   propsForElement?: any
   size?: number | string
   lineHeight?: number | string
+  offSetRight?: `${number}px`
+  offSetBottom?: `${number}px`
 }
 
 export function StylizedText({
@@ -14,6 +16,8 @@ export function StylizedText({
   size = '3.75rem',
   lineHeight = '4.5rem',
   propsForElement,
+  offSetRight = '-6px',
+  offSetBottom = '-4px',
 }: StylizedTextProps) {
   const Element = as as keyof JSX.IntrinsicElements
 
@@ -24,8 +28,8 @@ export function StylizedText({
     >
       <span
         style={{
-          right: '-6px',
-          bottom: '-4px',
+          right: offSetRight,
+          bottom: offSetBottom,
         }}
         className="absolute text-rblack h-full w-full select-none"
       >

@@ -56,8 +56,8 @@ export const GET = async (request: Request) => {
       arr.push(
         matchesWithTags.map((el) => ({
           content: el,
-          type: 'category',
-          href: `/category/${el}`,
+          type: 'search',
+          href: `/search/${el}`,
         }))
       )
 

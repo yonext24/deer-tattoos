@@ -37,9 +37,6 @@ const Children = async ({
   })
 
   const { data: tattoos } = await getTattoos(filterParams, paginationParams)
-  // await new Promise((res) => {
-  //   setTimeout(res, 3000)
-  // })
 
   return (
     <ColumnLayout>

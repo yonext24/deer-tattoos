@@ -25,10 +25,12 @@ export function MobileNavbarLink({
           propsForElement={{
             id: 'item',
           }}
+          offSetBottom='-2px'
+          offSetRight='-3px'
           as="span"
           text={text}
-          size="2.5rem"
-          lineHeight={'2.5rem'}
+          size="2rem"
+          lineHeight={'2rem'}
         ></StylizedText>
       </Link>
     </li>

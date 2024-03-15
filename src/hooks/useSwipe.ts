@@ -5,6 +5,8 @@ interface SwipeHandlers {
   onSwipeRight?: () => void
   onSwipeUp?: () => void
   onSwipeDown?: () => void
+  offsetXTreshhold?: number
+  offsetYTreshhold?: number
 }
 
 export function useSwipe({
@@ -12,6 +14,8 @@ export function useSwipe({
   onSwipeRight,
   onSwipeUp,
   onSwipeDown,
+  offsetXTreshhold = 100,
+  offsetYTreshhold = 100,
 }: SwipeHandlers): void {
   const initialX = useRef<number | null>(null)
   const initialY = useRef<number | null>(null)
@@ -32,20 +36,28 @@ export function useSwipe({
       let diffX = initialX.current - finalX
       let diffY = initialY.current - finalY
 
-      if (diffX > 0) {
-        // Swipe left detected
-        onSwipeLeft?.()
-      } else if (diffX < 0) {
-        // Swipe right detected
-        onSwipeRight?.()
+      const isMainlyHorizontal = Math.abs(diffX) > Math.abs(diffY)
+
+      console.log({ isMainlyHorizontal, diffX, diffY })
+
+      if (isMainlyHorizontal) {
+        if (diffX > 10) {
+          // Swipe left detected
+          onSwipeLeft?.()
+        } else if (diffX < offsetXTreshhold) {
+          // Swipe right detected
+          onSwipeRight?.()
+        }
       }
 
-      if (diffY > 0) {
-        // Swipe up detected
-        onSwipeUp?.()
-      } else if (diffY < 0) {
-        // Swipe down detected
-        onSwipeDown?.()
+      if (!isMainlyHorizontal) {
+        if (diffY > 10) {
+          // Swipe up detected
+          onSwipeUp?.()
+        } else if (diffY < offsetYTreshhold) {
+          // Swipe down detected
+          onSwipeDown?.()
+        }
       }
 
       initialX.current = null
@@ -59,5 +71,12 @@ export function useSwipe({
       document.removeEventListener('touchstart', touchStart)
       document.removeEventListener('touchend', touchEnd)
     }
-  }, [onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown])
+  }, [
+    onSwipeLeft,
+    onSwipeRight,
+    onSwipeUp,
+    onSwipeDown,
+    offsetXTreshhold,
+    offsetYTreshhold,
+  ])
 }
