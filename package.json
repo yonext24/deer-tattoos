@@ -26,6 +26,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@sanity/client": "^6.15.11",
     "@tanstack/react-table": "^8.11.3",
     "@tremor/react": "^3.13.2",
     "class-variance-authority": "^0.7.0",
@@ -53,7 +54,8 @@
     "swr": "^2.2.4",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20",

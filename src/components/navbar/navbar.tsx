@@ -3,9 +3,11 @@ import { NavInput } from './nav-input/nav-input'
 import { Suspense } from 'react'
 import { MARCA } from '@/lib/utils/consts'
 import { MobileNavbarButton } from '../mobile-navbar/mobile-navbar-button/mobile-navbar-button'
+import { NavCartButton } from './nav-cart-button/nav-cart-button'
 
 export const navEntrys = [
   { text: 'Inicio', href: '/' },
+  { text: 'Tienda', href: '/shop' },
   { text: 'Tatuajes', href: '/tatuajes' },
   { text: 'Artistas', href: '/#artistas' },
 ]
@@ -40,6 +42,7 @@ export function Navbar() {
             </Link>
           ))}
         </div>
+        <NavCartButton />
       </div>
     </nav>
   )

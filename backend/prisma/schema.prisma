@@ -36,6 +36,22 @@ type TattooImagesNested {
   blured String
 }
 
+type CartItem {
+  productId String
+  name      String
+  price     Float
+  variation String
+  quantity  Int
+}
+
+model UserCart {
+  id     String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId String     @unique
+  cart   CartItem[]
+
+  @@map("carts")
+}
+
 model Artist {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   slug        String   @unique

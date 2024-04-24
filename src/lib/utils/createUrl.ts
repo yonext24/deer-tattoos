@@ -2,9 +2,20 @@ import { ReadonlyURLSearchParams } from 'next/navigation'
 
 export const createUrl = (
   pathname: string,
-  params: URLSearchParams | ReadonlyURLSearchParams
+  params: URLSearchParams | ReadonlyURLSearchParams | { [key: string]: string }
 ) => {
-  const paramsString = params.toString()
+  const paramsString = (() => {
+    if (params instanceof ReadonlyURLSearchParams) {
+      return params.toString()
+    }
+
+    if (params instanceof URLSearchParams) {
+      return params.toString()
+    }
+
+    return new URLSearchParams(params).toString()
+  })()
+
   const queryString = `${paramsString.length ? '?' : ''}${paramsString}`
 
   return `${pathname}${queryString}`
@@ -14,8 +25,8 @@ export const generateParams = (
   params?:
     | ReadonlyURLSearchParams
     | {
-        [key: string]: string | string[] | undefined
-      }
+      [key: string]: string | string[] | undefined
+    }
 ) => {
   const urlParams = new URLSearchParams()
 

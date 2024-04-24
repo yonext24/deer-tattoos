@@ -36,7 +36,8 @@ export const StylizedButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          'rounded-xl text-lg px-6 py-2 w-max relative outline-1 outline outline-gold/90 hover:outline-transparent overflow-hidden group',
+          'rounded-xl text-lg px-6 py-2 w-max relative outline-1 outline outline-gold/90 disabled:outline-neutral-600 disabled:cursor-not-allowed hover:outline-transparent disabled:hover:!outline-neutral-700',
+          'overflow-hidden group',
           'hover:[box-shadow:_0px_0px_50px_-12px_rgb(255_255_255_/_0.5);] transition-[box-shadow,outline-color] ml-px',
           'before:absolute before:top-px before:left-px before:w-[calc(100%-2px)] before:h-[calc(100%-2px)] before:z-[2] before:bg-black before:rounded-[inherit]',
           className
@@ -49,10 +50,11 @@ export const StylizedButton = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         <div
           id="button_border"
+          data-disabled={props.disabled}
           style={{
             backgroundImage: `radial-gradient(${circleRadius} at ${coords.x}px ${coords.y}px, rgb(195 151 3 / 0.9) 45%, rgba(255,255,255,.2), transparent)`,
           }}
-          className="absolute left-0 top-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute left-0 top-0 w-full h-full opacity-0 data-[disabled=true]:group-hover:!opacity-0 group-hover:opacity-100 transition-opacity"
         ></div>
         <span className="z-10 relative pointer-events-none">{children}</span>
       </button>

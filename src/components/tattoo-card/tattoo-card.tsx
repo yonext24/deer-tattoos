@@ -49,7 +49,7 @@ export function TattooCard({
         transition-opacity opacity-0 group-hover:opacity-100"
         >
           {styles.map((style, index) => (
-            <span key={index} className="text-white text-2xl fonst-thin">
+            <span key={index} className="text-white text-2xl font-thin">
               {style}
             </span>
           ))}

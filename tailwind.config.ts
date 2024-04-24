@@ -167,6 +167,9 @@ const config = {
         'tremor-title': ['1.125rem', { lineHeight: '1.75rem' }],
         'tremor-metric': ['1.875rem', { lineHeight: '2.25rem' }],
       },
+      minHeight: {
+        'screen-n': 'var(--section-min-height)',
+      },
 
       keyframes: {
         'accordion-down': {
