@@ -14,20 +14,21 @@ export const NavInput = (props: NavInputProps) => {
     search,
     open,
     value,
+    isMobile,
+    currentIndex,
+    formRef,
+    styles,
+    artist,
+    showingCategories,
     setValue,
     handleSubmit,
     handleKeyDown,
-    currentIndex,
-    setOpen,
     handleOptionClick,
-    formRef,
-    styles,
-    showingCategories,
+    handleClose,
     handleBlur,
     handleFocus,
     handleDeleteStyle,
     handleDeleteArtist,
-    artist,
   } = useNavInput()
 
   return (
@@ -42,7 +43,7 @@ export const NavInput = (props: NavInputProps) => {
           showingCategories && 'grid-cols-[auto_1fr]'
         )}
       >
-        {showingCategories && (
+        {showingCategories && !isMobile && (
           <div className="flex gap-px">
             {artist && (
               <GoldBadge onClick={handleDeleteArtist}>De: {artist}</GoldBadge>
@@ -61,6 +62,7 @@ export const NavInput = (props: NavInputProps) => {
           </div>
         )}
         <input
+          id="my-input"
           spellCheck={false}
           type="text"
           {...props}
@@ -86,13 +88,16 @@ export const NavInput = (props: NavInputProps) => {
       </Button>
       {search.length > 0 && open && (
         <InputPopover
+          styles={styles}
+          artist={artist}
+          handleDeleteArtist={handleDeleteArtist}
+          handleDeleteStyle={handleDeleteStyle}
+          isMobile={isMobile}
           handleOptionClick={handleOptionClick}
           formRef={formRef}
           open={open}
           items={search}
-          closeSelf={() => {
-            setOpen(false)
-          }}
+          handleClose={handleClose}
           currentIndex={currentIndex}
         />
       )}

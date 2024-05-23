@@ -2,9 +2,8 @@ import Link from 'next/link'
 
 const pages = [
   { text: 'Tatuajes', href: '/tatuajes' },
-  { text: 'Artistas', href: '/artistas' },
-  { text: 'Contacto', href: '/contacto' },
-  { text: 'Sobre nosotros', href: '/about' },
+  { text: 'Artistas', href: '#artistas' },
+  { text: 'Tienda', href: '/shop' },
 ]
 
 export function PageLinks() {

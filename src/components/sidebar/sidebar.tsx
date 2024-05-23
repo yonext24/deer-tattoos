@@ -33,7 +33,7 @@ export function Sidebar({ artist }: { artist: Artist | null }) {
   return (
     <aside
       ref={sidebarRef}
-      className="flex flex-col transition-[max-width] duration-300 w-[60px] md:w-[300px] relative"
+      className="flex flex-col transition-[max-width] duration-300 w-[60px] md:w-[300px] relative z-10"
       data-small={isSmall}
       onClick={handleClick}
     >

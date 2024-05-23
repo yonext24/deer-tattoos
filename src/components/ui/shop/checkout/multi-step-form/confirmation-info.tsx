@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { UseFormReturn } from 'react-hook-form'
 import { CheckoutFormType } from './multi-step-form'
-import React from 'react'
-import { Button } from '@/components/shadcn/ui/button'
+import React, { useEffect } from 'react'
 import { useCheckoutStore } from '@/store/checkout-store'
 import { cn } from '@/lib/utils/utils'
 import { methodMapper } from './payment-info'
+import { useCartStore } from '@/store/shop-store'
+import { Wallet, initMercadoPago } from '@mercadopago/sdk-react'
 
 export function ConfirmationInfo({
   form,
@@ -14,6 +16,13 @@ export function ConfirmationInfo({
   showing: boolean
 }) {
   const setStage = useCheckoutStore((s) => s.setStage)
+  const setPreference = useCheckoutStore(
+    (s) => s.setCurrentMercadoPagoPreferenceId
+  )
+  const mercadoPagoPreferenceId = useCheckoutStore(
+    (s) => s.currentMercadoPagoPreferenceId
+  )
+  const cart = useCartStore((s) => s.cart)
 
   const onSubmit = async () => {
     form.trigger(['paymentType']).then((isValid) => {
@@ -22,6 +31,30 @@ export function ConfirmationInfo({
       }
     })
   }
+
+  useEffect(() => {
+    if (form.getValues('paymentType') === 'mp') {
+      initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY ?? '')
+
+      const parsedCart = cart.map((el) => {
+        return {
+          id: el.id,
+          unit_price: el.price,
+          variation: el.variation,
+          quantity: el.quantity,
+          title: el.name,
+        }
+      })
+      fetch('http://localhost:3000/api/shop/checkout', {
+        method: 'POST',
+        body: JSON.stringify(parsedCart),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.preferenceId) setPreference(res.preferenceId)
+        })
+    }
+  }, [form.getValues('paymentType')])
 
   const { getValues } = form
 
@@ -40,6 +73,12 @@ export function ConfirmationInfo({
     streetNumber,
     floor,
   } = getValues()
+
+  const renderCheckoutButton = (preferenceId: string | null) => {
+    if (!preferenceId) return null
+
+    return <Wallet initialization={{ preferenceId: preferenceId }} />
+  }
 
   return (
     <div
@@ -89,16 +128,8 @@ export function ConfirmationInfo({
           {/* @ts-ignore */}
           <span className="">{methodMapper[paymentType].name}</span>
         </div>
-
-        <Button
-          type="button"
-          variant={'default'}
-          className="self-end"
-          onClick={() => onSubmit()}
-        >
-          Continuar con el pago
-        </Button>
       </div>
+      {renderCheckoutButton(mercadoPagoPreferenceId)}
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SearchResponse } from '@/app/api/search/route'
-import { useClickOutside } from '@/hooks/useClickOutside'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { createUrl, matchPathname } from '@/lib/utils/createUrl'
 import debounce from 'just-debounce-it'
 import { useRouter } from 'next-nprogress-bar'
@@ -13,7 +13,6 @@ import {
   useEffect,
   useRef,
   useState,
-  useTransition,
 } from 'react'
 
 const resolveArtist = (pathname: string) => {
@@ -30,13 +29,12 @@ export function useNavInput() {
 
   const [value, setValue] = useState<string>('')
   const [currentIndex, setCurrentIndex] = useState<number>(-1)
-  // Controls wether the dropdown is open or not
   const [open, setOpen] = useState<boolean>(false)
   const [showingCategories, setShowingCategories] = useState<boolean>(false)
   const [artist, setArtist] = useState<string | null>(() => {
     return resolveArtist(pathname)
   })
-  // const [, startTransition] = useTransition()
+  const alreadyMadeSearchs = useRef<{ [key: string]: SearchResponse }>({})
 
   useEffect(() => {
     setArtist(resolveArtist(pathname))
@@ -44,14 +42,13 @@ export function useNavInput() {
 
   const [search, setSearch] = useState<SearchResponse>([])
   const [styles, setStyles] = useState<string[]>([])
+
+  const isFirstFocus = useRef<boolean>(true)
   const formRef = useRef<HTMLFormElement>(null)
 
-  const paramsStyles = params.getAll('style')
+  const isMobile = useMediaQuery('(max-width:600px)')
 
-  useClickOutside(formRef, () => {
-    setOpen(false)
-    setShowingCategories(false)
-  })
+  const paramsStyles = params.getAll('style')
 
   useEffect(() => {
     if (paramsStyles.length === 0) return setStyles([])
@@ -114,9 +111,15 @@ export function useNavInput() {
 
   const debouncedGetSearch = useCallback(
     debounce(async (search: string, active: boolean) => {
+      if (alreadyMadeSearchs.current[search]) {
+        setSearch(alreadyMadeSearchs.current[search])
+        if (alreadyMadeSearchs.current[search].length > 0) setOpen(true)
+        return
+      }
       fetch('/api/search?q=' + search)
         .then((res) => res.json())
         .then((data: SearchResponse) => {
+          alreadyMadeSearchs.current[search] = data
           if (active) {
             startTransition(() => {
               setSearch(data)
@@ -159,20 +162,30 @@ export function useNavInput() {
     [search.length]
   )
 
+  const handleClose = () => {
+    setOpen(false)
+    setShowingCategories(false)
+  }
+
   const handleOptionClick = (index: number) => {
     handleSubmit(index)
     setCurrentIndex(index)
   }
 
   const handleBlur = () => {
-    setTimeout(() => {
-      setOpen(false)
-    }, 100)
+    // setTimeout(() => {
+    //   setOpen(false)
+    // }, 100)
   }
 
   const handleFocus = () => {
     setShowingCategories(true)
-    if (search.length > 0) setOpen(true)
+    if (!isFirstFocus.current) return
+
+    isFirstFocus.current = false
+    debouncedGetSearch('', true)
+
+    // if (search.length > 0) setOpen(true)
   }
 
   const handleDeleteStyle = (style: string) => {
@@ -186,20 +199,22 @@ export function useNavInput() {
     search,
     open,
     value,
+    currentIndex,
+    formRef,
+    styles,
+    showingCategories,
+    artist,
+    isMobile,
     setValue,
     handleSubmit,
     handleKeyDown,
-    currentIndex,
     setOpen,
     handleOptionClick,
-    formRef,
-    styles,
     setShowingCategories,
-    showingCategories,
     handleBlur,
     handleFocus,
     handleDeleteStyle,
     handleDeleteArtist,
-    artist,
+    handleClose,
   }
 }

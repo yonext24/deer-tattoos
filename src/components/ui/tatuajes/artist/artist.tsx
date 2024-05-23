@@ -1,4 +1,4 @@
-import { Artist } from '@/lib/types/artist'
+import { type Artist } from '@/lib/types/artist'
 import { ArtistDropdown } from './artist-dropdown'
 import { ImageWithBlur } from '@/components/tattoo-card/image-with-blur'
 

@@ -2,10 +2,11 @@ import { SmallerTattooCard } from '@/components/tattoo-card/smaller-tattoo-card'
 import { Tattoos } from '@/components/ui/home/tattoos/tattoos'
 import { getRankedTattoos } from '@/lib/backend/utils/tattoos'
 import { Tattoo } from '@/lib/types/tattoo'
+import tattoos from '../../../../public/ranked-tattoos.json'
 
 export const revalidate = 3600
 
-const NECESARY_AMOUNT_OF_TATTOOS = 18
+export const NECESARY_AMOUNT_OF_TATTOOS = 18
 const NECESARY_AMOUNT_OF_TATTOOS_TO_DUPLICATE = 9
 
 // Funcion para calcular el promedio de aparición del tatuaje y ver si es aceptable
@@ -23,13 +24,12 @@ const isAcceptableToPick = (arr: string[], element: string) => {
   return inverseProportion > normalRatio
 }
 
+// Esta función se encarga de generar la cantidad de tatuajes que necesita el carousel para verse bien
+// Si no hay suficientes tatuajes, duplica los que hay
 // Es necesario duplicar los ultimos 9 tatuajes de la lista, para que la transición de la animación
 // sea fluida.
 // en total se necesitan 27 tatuajes, pero en la animación de css se especifican que se necesitan 24
 // para que nunca se vea el borde del carousel
-
-// Esta función se encarga de generar la cantidad de tatuajes que necesita el carousel para verse bien
-// Si no hay suficientes tatuajes, duplica los que hay
 const transformTattoosToCarousel = (tattoos: Tattoo[]): Tattoo[] => {
   const copy = [...tattoos]
   const pickedIds: string[] = []
@@ -55,8 +55,7 @@ const transformTattoosToCarousel = (tattoos: Tattoo[]): Tattoo[] => {
 }
 
 export default async function Page() {
-  const tattoos = await getRankedTattoos()
-  const parsed = transformTattoosToCarousel(tattoos)
+  const parsed = transformTattoosToCarousel(tattoos.tattoos as Tattoo[])
 
   return (
     <Tattoos>

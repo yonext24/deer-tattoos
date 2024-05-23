@@ -11,6 +11,7 @@ export type ShopProduct = {
   }[]
   price: string,
   _id: string
+  category: ShopCategory
 }
 
 export type ShopCategory = {

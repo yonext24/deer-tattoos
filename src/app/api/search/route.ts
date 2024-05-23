@@ -1,20 +1,23 @@
+import { getTattoos } from '@/lib/backend/utils/tattoos'
 import { prisma } from '@backend/prisma'
+import { NextResponse } from 'next/server'
+import ranked from '../../../../public/ranked-tattoos.json'
 
 export type SearchResponse = {
   content: string
   type: 'search' | 'category' | 'artist'
   href: string
   image?: string
+  id: number
 }[]
 
 export const GET = async (request: Request) => {
+
   const url = request.url
   const params = new URLSearchParams(url.split('?')[1])
   const query = params.get('q')
 
-  if (!query) {
-    return Response.json([] as SearchResponse)
-  }
+  if (query === '' || !query) return getFeaturedSearch()
 
   // @ts-ignore
   const search = (await prisma.tattoo.findRaw({
@@ -100,5 +103,11 @@ export const GET = async (request: Request) => {
     href: `/artist/${artist.slug}`,
   }))
 
-  return Response.json([...parsedSearch, ...parsedArtists])
+  return Response.json([...parsedSearch, ...parsedArtists].map((el, id) => ({ ...el, id })))
+}
+
+async function getFeaturedSearch() {
+  const { styles } = ranked
+
+  return Response.json([...styles].slice(0, 4).map((el, id) => ({ content: el, type: 'category', href: `/category/${el}`, id })))
 }

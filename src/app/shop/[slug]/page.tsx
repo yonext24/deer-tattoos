@@ -1,5 +1,4 @@
 import { Separator } from '@/components/shadcn/ui/separator'
-import { Main } from '@/components/ui/common/main'
 import { ProductImages } from '@/components/ui/shop/product-images/product-images'
 import { ProductShoppingSection } from '@/components/ui/shop/product-shopping-section/product-shopping-section'
 import { client } from '@/lib/shop/client'
@@ -26,19 +25,17 @@ export default async function Page({
     {}
   )
   return (
-    <Main className="max-w-[1200px] min-h-[var(--section-min-height)] flex flex-col justify-center items-start py-12 mx-auto">
-      <div className="w-full flex flex-col lg:grid lg:grid-cols-2 h-max">
-        <section>
-          <ProductImages {...product} />
-        </section>
-        <section className="w-full flex flex-col items-center gap-2 px-16">
-          <h1 className="font-title text-6xl capitalize">{product.name}</h1>
-          <Separator className="w-full" />
-          <p className="text-center my-12">{product.description}</p>
-          <Separator className="w-[60%]" />
-          <ProductShoppingSection {...product} />
-        </section>
-      </div>
-    </Main>
+    <div className="w-full flex flex-col lg:grid lg:grid-cols-2 h-max">
+      <section>
+        <ProductImages {...product} />
+      </section>
+      <section className="w-full flex flex-col items-center gap-2 px-16">
+        <h1 className="font-title text-6xl capitalize">{product.name}</h1>
+        <Separator className="w-full" />
+        <p className="text-center my-12">{product.description}</p>
+        <Separator className="w-[60%]" />
+        <ProductShoppingSection {...product} />
+      </section>
+    </div>
   )
 }

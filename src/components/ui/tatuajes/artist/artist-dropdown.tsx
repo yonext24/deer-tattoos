@@ -45,9 +45,15 @@ export function ArtistDropdown({
           <DropdownMenuLabel>Redes</DropdownMenuLabel>
           {parsedMedias.map((el) => {
             return (
-              <DropdownMenuItem key={el.href}>
-                <span className="capitalize">{el.text}</span>
-              </DropdownMenuItem>
+              <a
+                target="_blank"
+                key={el.href}
+                href={el.href ?? ''}
+                rel="noreferrer"
+                className="capitalize"
+              >
+                <DropdownMenuItem>{el.text}</DropdownMenuItem>
+              </a>
             )
           })}
         </DropdownMenuGroup>

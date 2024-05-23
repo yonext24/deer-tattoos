@@ -1,0 +1,159 @@
+{
+  "tattoos": [
+    {
+      "images": {
+        "images": [
+          {
+            "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fbotanico-blackwork-ilustrativo%2Foriginal.jpeg",
+            "width": 1440,
+            "height": 1440,
+            "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAACXBIWXMAAAsTAAALEwEAmpwYAAACvUlEQVR4nAGyAk39AKt/YbqIZq5+W5RjRV01HSkPADkzJm1pXYqGd6Ofkbu5rcfIvsrKvszLv9TPwwC0m4y7im3Cj3HAk3KNXkZEIQ8rGQNfXlKHhXafnY60sqXIyLzNzcDNzb7W08YA8/L0qpSIoXZcqHxfkmJQSSUbMxcBVEw8g4J1npuLs7CgxcW20NDE0dHE09PHAPv6/La0tFVHPXlWQKlxXXJGPUgkGEY0I3d4aJuYibCtn8LAstHRxdTUyNTUyQDt6evV0NB5d3UyJRufb1nqrJSpdmQlDwBiXU6XlYapp5fAvq/OzcHZ2c/d3dQA7unq5N7fp6CfCQAARTAkyZSBnHFnSSgiVUQ2iol8paGSvryszcu92tnO5OTcAOnl6N3b3bOur0lFPi0gFJ9vXptxZoZcUEYtIHd1ZpqVh7WzpM3Iu9bTx+Tk2gDm5Ofb2tzX1NeclpQnIxmDXUqzfm2meW1LLCNxZlaPjn+mo5PDvrHQzcDd3dIA7u3v6ebr7uzxqqenEhACTz4wiF9Tn3NoYD01WEg7kI+Ako6Asq2gx8S21tPFAP77/vHw9ePj6aenqjUzLSckGnRXS4xfWINZUlg6LIqFdoaEdpqVibSyo8jHtgDv7/Tb3+TT2N2+wcR5eXkbGRFmUkORYFWjcWhmPzRyZlh8eW6EgHOfnY64tqUA6O334ujx2d/k0NbakpOUHh0YLy4jh11Sk2Jdm2xdeWBOW1xVaWhdgH5ymJiLAOru/ejt+N7k6tfd46yvsTMyLw8SCFA+NZRmW86fi66DbURBOEhKQVtbVHd4bQDn7Png5vLW2+PR19zIztFAQD0AAAAsLCWXblv1vqLir5R9YlEmKCE7OjNVVUwA3OHu0NXg0dbd1NrcvcLHAQcPAAAAIiMdlGpa7bWb8L2j05+JNCkgJCYeQEA3VL9ygakEpawAAAAASUVORK5CYII="
+          },
+          {
+            "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fbotanico-blackwork-ilustrativo%2Fextra-1.jpeg",
+            "width": 1440,
+            "height": 1440,
+            "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAACXBIWXMAAAsTAAALEwEAmpwYAAACvUlEQVR4nAGyAk39AF1dVFhYUFJSSExMREJCOTQ0KiUlHxsaGAkEAFU6KKp5aLSDdeK1oNyxm5FtXQBkZFtiYlpeXlVXV05JSUA5OTEqKiMaGxc6KR2yiHC3iXetgG/VqpPSqJKDYlQAbGxjamtiZmZdX19WT09HPTw0LjAmNCwjnndizaaL2a+W+NC69My5rIFwdmRhAHNzam9vZWZmXV9fVk9PR0BANzAxKW1QQ4trYrSMfuy9r9Goo9WonJaAeJibnQB5eXBzc2pqa2JdXVRPT0dHSEBLQDWMZlt9ZWK2jYijgYSxhYCjg3yam52bm50AeXlwdnZtamtiXFxSVlZMSkxFVT40n3dss42Gx56WmHd2fl9bkImKkpCUo6GkAHV1bHJyaGhoXl9eVWFiWlRKQ2VGPKaAeq+Lh7uWlI1sZ11WVX1+gZeUl7OytQBtbWRqa2JiYlpiYlpdXlZeRTqkeG2xjI2niIitiINWSUdlaGuVk5ezsrXPzdEAZmZdZGRbX15VYGJZVk9Fd09Gto2Jz6iksouGWkc/VFVUqaerzcnN5ePn//7/AFpaUFhYUFxcUlJUS2lNQLiGe5p9fZh2cl9PSQ8QAk5OTbu6vdTU1+Xm6fb5/QBNTURNTURNTUZRS0Cdc2W9ko2UdG5WS0JFRz0SEgMcHBmanaLDyM3i6O74//8AQUE4QUA4Oz01ZVdK6cKyzaeaVEk/Oj01QkI5Dw4AKSkmpaitztXa7fP49fv/ADMzKTc3LS0uJZZ9cvfIwIFiWTs7Mz4+NTg4LhMTByoqJ6ClqdTa3u7z+PT6/wArLCQsLSU8Ny3XtqrutrSvfXdLQzo0NSs0MykdHRUDAQBucXOzub7V2+Dt8/gAJyggICMaYVJH5Laqk2JZjWBZOTUsKSojKywkIiIcAAAAT1BRtLnAxMrO4ubrbAEs33/6gAsAAAAASUVORK5CYII="
+          }
+        ],
+        "card": {
+          "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fbotanico-blackwork-ilustrativo%2Fcard.webp",
+          "width": 450,
+          "height": 360,
+          "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAIAAAAyIHCzAAAACXBIWXMAAAPoAAAD6AG1e1JrAAACM0lEQVR4nAEoAtf9AOjg4LCRfrGBZa+DZqZxWUQhFjAXAVdSRYWBcp+cjba0pMjIu9TSxdPRxNrWyQD8+P2yrapvWkeOZEyKXEtSLiY+IBNOOyl+e2ydm4uysKLGw7TU08jX18nX18kA7+zwz8nKaGNgRjQmsn1ixI54lWNQIw4AbWhal5SErqqbxMCx09HE2tnQ397SAPPt79/a3KSdmgoAAFtBNt2jjKN1aTgeF11QQI2KfKeml8C+rtLOwt/e0uXk2wDx7O7j4OCnoqI2Myo1JBmfb16OZ11xS0NJMSOBfm6dm4u6tqnPy77c2Mvn59wA6+jr3tvez8nKh4N/IRsSmW1bn29jp3ptRykfeHFhj4x+ramZxsO01NDE5OPXAO/s8Ofl6Orn6qqloxsVDGdOQJ1uX6J2aVk7MmFSRYmHd5yai7m1qMvJud3azQD//f/59fnv7vKjo6MlIRs2MSRjRz+MYld6VElQNymNinyKhHmjn5O9uarQzb0A+ff75ujt0tfcs7a8b29vGhMKbVhIgFZOr3pvTiwjeXFlgXxwjIZ6p6aXwL6uAOvv9uLp7tjg5s7S14aIiR0ZEkU/NIxfU51rY45jVW5bSmhlXHFuYo2JfaShlQDu8//r7/re5ezY4OSen6IvLikdHBdkSTybbWStg3WddF5KST9SUUhpaF2BgHUA6/H96O763uXs09reub7CP0A8AAAAOTMrlGta67ee1KOJX01BNDMsQ0I6Xl1TGXct2ZmX3jgAAAAASUVORK5CYII="
+        }
+      },
+      "id": "65d508165ca4142b7627bb0f",
+      "title": "Botánico",
+      "slug": "botanico-blackwork-ilustrativo",
+      "type": "single",
+      "styles": [
+        "blackwork",
+        "ilustrativo"
+      ],
+      "tags": [
+        "flor",
+        "flores"
+      ],
+      "artistSlug": "alan",
+      "ranking": 85
+    },
+    {
+      "images": {
+        "images": [
+          {
+            "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fel-angel-caido-etnico-o-cultural-puntillismo%2Foriginal.jpeg",
+            "width": 1440,
+            "height": 1440,
+            "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAACXBIWXMAAAsTAAALEwEAmpwYAAACq0lEQVR4nGNITkpIiI9JiI+JDA+VkpETFJYQl5AVFZPm5ROYVJr77uDOz8f3/r915v/z2//fPmBISoxPiItOjIu2trbk5RcRFZOSkJTh4RM219e/u2nlx2O7/108/v8pSOn/D88ZEuJjYqIjw0KDJSSl+QXExMSlRcWk2HkEOwuy/l8+9uPsgf83zv1/fvf/u2cg1eFhwVGR4dZW5lzc/ELCEqJiUrwCoopyCldWzf99+tCfs4f+37n0//md/x+e/3/7lCE4yD8kKEBKSoqbh19QWEJYRJKDR7A8NvLb4R3fju79f/7Y/zvn/7968P/zq/93LjIEBPja2lixc3AKCIoJCorz8otKScq0ZGa+27Xl/8WT/6+e+f/k1v+3z/7fvbSmq4XBy9NdVkaGkZlNSFiCT0CUl0/I1cK6NDlzTlvvs507/z8Bu/j6hdWdLS7OLgzmZibsbOxsHNwCwuIcPEIqsgqNKWkbJk77dujQ3gXLd85f8XH3tuXNda6Orp5u7gwyMtKMTEzsXHwCAmIMzBw+lhZ3Fy++u37L+70H/58601veWJaQ4Obs4ubq5uHqxsDJwcHCysbFw8vOycfFybWqper/vSv/r1/5tu/gpXnzi2Nj7WztnB0cXR2dHO0cGJiZmTk4uJhZOXi4eTtS4/6fPfz/8a3/N06/37o2099PT9/A3tbOztbW2trGytqKgZWVjYWVnZebpz015sf+zf+f3vl/4fDbTYt6MhOUlVSsLC3NkQADKys7ExNLpp/Hq63L/5/c82bLynerFywuypGTkTXUNzQxRgBDQ0MGBgZGdTmZlXUlTzYvf7xh2cMlM2bnpslJSqmqq+vo6cCBlpaWpqYmAxcnZ4K748q60tOzJ12YP6U2Noybm1taRkZdTU1VVVUNCaiqqgIAUoIPIDa75SgAAAAASUVORK5CYII="
+          },
+          {
+            "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fel-angel-caido-etnico-o-cultural-puntillismo%2Fextra-1.jpeg",
+            "width": 1308,
+            "height": 1308,
+            "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAACXBIWXMAAAsTAAALEwEAmpwYAAACvUlEQVR4nAGyAk39AKq71lpQVJuerUlCQiUUEGlgYjxDVhMQE4puT6F9XJdzV5h0VkkxHQsAABAAAAB0bm8+NzlWTlIhDAgmDAJHQU84PlMPDBaSclDBnnXatpnZs5GjgFsyHw4QAwAARzQuQDEyPTEvIRENJBcTHhAJGRcbDBkziG1M0at66sio3LSPyKJzi2pCIBIAAEItLDkqKSgbGhwQDBkPCRgLAxsRDC1Fc2lfXOnBjP3asu7IntStf7qUZiUZBQBRODc+KCQkFxUiExIZDQYhDwQcAwA9S2tKW3jIqID/9cL/47bduYjKo3E8KxMAXz03VTIsSC4lVzYoJxMQIw4FFQAAHw0AM1KFjH9v/+yt/+/E6Mmd1bB8TTgaAGdFPVU2KjggHU4sIysXFioZFCERDyARCy1Mh5GFeP/amP/ywvTXqN68hFxCIwBRNTJ9Tj4/IyAoExQsHRs+LyJGMiUkFA8jEgyegl3/3KT/+MX/5rrqx45mTi0AVTk1dko8QSYhKRYWLBoXTkE0bVhCWD4qY0o4tp5x/+Sq//fF//DI8tCcb1QzAEgqKmxHO3RHNSoWFisXFZ+HbaODZlo7J+C5ldW5if/rsv/1wv/yyvPUoIFjPwBsPC9WMChcNCcrEhKIc2Dz0a1WRDc+IBm0hGnhw5P/8Lz/8r//8MD01aaZeVMAQiokbUEuUSseQScf3caqxKOEUC8is4Zyu41q3buI/+u5/+u7/+a699enpINdACsbHkIoJGM1JEouJLygf76Zdb6PcuXEpMuuk86qe/3bp//ru/rdr+/Nm6uIXgBdOy9uRDNQLyIrFRNdPy26m3jkwaDZuZjUupi8lWLvy5b/4q/52arpxI+xjmEAaEAuWTEkPCEZKBMSHQAAZEUzv6SA0rmTtJRpw5ha5L6F88+c9dWj5MCJsoxeMQQfdpMkbkEAAAAASUVORK5CYII="
+          }
+        ],
+        "card": {
+          "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fel-angel-caido-etnico-o-cultural-puntillismo%2Fcard.webp",
+          "width": 343,
+          "height": 274,
+          "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAIAAAAyIHCzAAAACXBIWXMAAAPoAAAD6AG1e1JrAAACE0lEQVR4nGNgYGLh5hdlY+fj5hfl4hVmZObqLcp8vW/L9+O7f53a9//Gyf/3rv5/dvv/26f/P79kYGTm4uIVZmbl4eIV5uIV1lZROTV/+rt9W36e3P/33BGQ6geX/r+6///d8//P7zGwsfPBVXNwCiT7et9dtfjroZ3fj+3/c+bQ/7sX/j+6CjL46d2fJ/czcHAKcHAKMDJzMXPyqSkqxfkHVqRkvd21/f/Z4/+vX/z/5Nb/V0/+P7nz69SBBfU1INVs7Hwg1aw8sZ7eRXHJ/dWNU5s6Ty1b9f/Gpf/PHvy/f+ProZ0L6mvcnF1ALmHm5GNg4lCXk5tZVNiYU/zjwIH/J08cWLRydte0uxs2vt28enZlqZuzi6ujIwMjOw8jMxcDE0esk9PW5tZzy1ZvmT7v7tbt/y9dnNzY1ZBd0JKR5mRn72RnD1bNzMXAwMjMzLyqoeL/wb3/z5z+ffjI/1MnP+3YtbixsTA60sHGxtHWDoIYGJg4GBgYEtwdX2xb9f/2BVDonj11YeGSXd3dsb6+lubmtlbWEGRtbc3AyMAS6+Rwcd6k/5dP/H949f+NU/9PH7izbE6grY2hvoG5sam5ubmlORSATD0ypev/8V3/n9z+f/fS1z3rHyyfXREVpCyvYKhvYIQKGA70t33bt+H/lWP/Lx1/sXb+xamdkzMTpCQl9XR0DHT19PX1DQwM9GEAAFJW/PreMPpnAAAAAElFTkSuQmCC"
+        }
+      },
+      "id": "65d5011b5ca4142b7627bb0b",
+      "title": "El ángel caído",
+      "slug": "el-angel-caido-etnico-o-cultural-puntillismo",
+      "type": "single",
+      "styles": [
+        "etnico o cultural",
+        "puntillismo",
+        "ilustrativo"
+      ],
+      "tags": [
+        "cuadro",
+        "arte",
+        "cabanel",
+        "angel"
+      ],
+      "artistSlug": "alan",
+      "ranking": 44
+    },
+    {
+      "images": {
+        "images": [
+          {
+            "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fmemento-mori-etnico-o-cultural-puntillismo%2Foriginal.jpeg",
+            "width": 1440,
+            "height": 1440,
+            "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAACXBIWXMAAAsTAAALEwEAmpwYAAACvUlEQVR4nAGyAk39AAABAYRnZv/Y0vbIv+S1p9atoaWBeIN6c5qblqOgm6inoquqpK2rp62rqK2rqQABAwU4Kynqt7b/1tLlua/htarktqyigXaJhoGcm5WhoJunpqCop6OnpqOnpqMACw0REQ4PvI+O/+Da/93U78C69si/5LWnlX91jY2KmZiTn56do6Kfo6KfoaCfABISGAMFB3pdW//Qyv/Z1O67t+6+uffGvr6YiYF+eJCQipiXk5uamJybmJuYlgAUFRkJDA8pHh7WpqL+zMf/0cvpubP/0crfraOLfXOEhYONioiRkI2Tko+Qj4sAFBUZFhcbAQMFeV5a/cS+4rSx1aelvqCj6revpIN4gYF/hYSChYSChYWDgYF/ABYXGxgZHgsMDx4dHMWVkPO5t6+Tl5F8hum2tM6YjIN9eIWFg359e3d3dnFxcAAYGR4ZGh8VFRkLDA1lWlSjgYKnk5i/o6nftbnYpKGUeXN8fXx3d3ZubmxmZmUAGhshHR4jGhshDw8SNDYzc2Rh+sfA/+fj/9LP98XDz5+WcGpmcHFuaWllXl5dAB0eIx0eIxwdIhESFyUlJU9QTZR+eP/Z0v/S0OW0tf3Lw6uNg2BgXmJiYFhYVQAcHSIcHSIaGyEWFxsXFxhDQD5NTk2fhoH/0874ycjrv779zsGNenJMTk1QUE4AICEmHR4jHB0iGRofExMXMTEvRkZDS0xKqIuG/+Tf/+Lg/+HW16qhY1lUQ0RBACQlKiAhJiAhJhwdIhITGCAhIkE+PERCQE5NS8ejn//y7v/t6P/OxXVSUCImJwAkJSoiIycgISYdHiMVFhoQERYwMC5AQDxAQT9VUE3kubX/6+aygII2NkNbTk4AIyQoICEmICEmHyAlGBkeDA4SHh4fOTk1Ojk2ODk4WEtIkGdqZmNxv6Op7rSycO44bA7BjTQAAAAASUVORK5CYII="
+          }
+        ],
+        "card": {
+          "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fmemento-mori-etnico-o-cultural-puntillismo%2Fcard.webp",
+          "width": 369,
+          "height": 295,
+          "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAIAAAAyIHCzAAAACXBIWXMAAAPoAAAD6AG1e1JrAAACM0lEQVR4nAEoAtf9AAwKC7SIhf/Sy//m4P/Rye69ufjKv/TIub2ZiIeAepKPipuYk56cm6KfnqWinwAFBQduUVDpubT/29L/2NLyv7vzw772wr3er6OTfXOKh4KSj4qVlJOcmpedm5kACAoLHhYXyJuX98W+/9HL+8vF5rSw/9LK8r+2r4x/goF8ioeEj4yKko+MlZORABARFgICAnBVU9+tp//Qyuy9tt+urt20s+u7tMubj4R7coaEgoaEgoqHhIqIhwARFBkGCAkXFRS9j4rzubXVq6rCmp2LeoThurbiqp+We3OJhYOFg4CBf35/fXsAExYaDg8UAwMDV05J2KKe3a+um4eQpYqRwJqf8beyuYmAhYB8hYOAfH15dnZzABQXHBMWGgUHCC8sKoJuaYlucr2jp8qvsfnLy9qytMWWjo14cH58eXZ2c3FybgAaGyAXGB0ODxQZGRlQTk2PdnL8ysX/6OL9zs3/0c39x76+k4tzbmpvb21ra2cAGhsgGBkeExYaDQwPRkNCWFVTtJWP/+DW/+Dc6ru588DA9se9m351aGViYmJgABgZHhgZHhQXHAkLDTMxL0xKSF5ZVcSjnP/Qzf/T0ee5uvnNxe3AtYt2b1paWAAaGyAXGB0XGB0RExgfHx9CPzxNS0lgXFvDn5r/19T/3Nrqvr7/2s3VrZ9dV1QAGx0jGx0jGBkeExYaEhQXNTEwQj88TEpIY1xY1q+n/+ro//Xv/+vj88S3p4F7t24Vth8r3kkAAAAASUVORK5CYII="
+        }
+      },
+      "id": "65d501dc5ca4142b7627bb0c",
+      "title": "Memento mori",
+      "slug": "memento-mori-etnico-o-cultural-puntillismo",
+      "type": "single",
+      "styles": [
+        "etnico o cultural",
+        "puntillismo",
+        "hiperrealismo"
+      ],
+      "tags": [
+        "cuadro",
+        "arte"
+      ],
+      "artistSlug": "alan",
+      "ranking": 24
+    },
+    {
+      "images": {
+        "images": [
+          {
+            "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fcharly-blackwork%2Foriginal.jpeg",
+            "width": 1440,
+            "height": 1440,
+            "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAIAAAC0tAIdAAAACXBIWXMAAAsTAAALEwEAmpwYAAACrElEQVR4nDXMX0gTcQDA8R8YUaFSROnSTbfd/rntdlvbbm7etru53W63f+5u1+Y2N2e6/DNSwUTBEuslTRAqCpII6UGEMbXSeigyDEfYwJ4iqQeforIIeu4iqc/zly8YGRlNpzOBQCiRSHk8JMfFY/Ek5sDVGq2ksQ7Rym0ojNtRP+kI0jhgGC4WaycIVyLZEQgxmUxXd2fn5NBAB+uXSoSwGrKadYQT9VOOtpAL9PXlk8mUy9UaCQaL83O7G8Wf5af7W4Untyd1aqhJIbaatYQTDfjwaNgN8vmLg4NDsXi8nQn9/vCK/7XL75W+l5Z3Cnf9OApBwmaz2omZ/717e/tzPblUKuUlW7eW7vGf3/FfdvhPm99eLg53hCFIaDGqMZuB8thDARzkchey2WwikWi22cb6Mvz71+t3ZiZymc356wtTeaVC3GzStlj0bsIa8OGgq+t8Op3hOI70Um5ny8xwv0gkavO6r/ZmZwfSdlRz1tBkNcNOzOx1Y4DjzsUPxGIxwkXo1CqxSPRx5cGb+3OEXu3DDIheZTQ02Sw63I4ChmGi0Sh7gKZp1GQEoCIdovjyMy+qxw0qPaxAtDKjXtVi0QOGiUYiEY7jWJalKMpgMECNQkFt7fbCzeK1S5eTPqNGplJKYLXUqFcBHMdpmg4fYFkWJwijTrs8PcrvPObfFtenh3pCeGPDGaWsQaOUApPJ5HQ6KcoXDoej0ShFUXK5fO3WFb68wpcKixO5sRQtqq+RNgjkUuHf2uFwUBQVDAZpmvaSpASSZVlq/8VDvvxor3h7qpsR1Z+qOX28TnASyGQyBEEwDPN4PCRJulwuGIarq6oKs+P89ipfWl2bHVOIaw9VgBPVhwEEQQiCWCwW238IDB+trLQhqq/PF39sLK3cGNdIBACAY0fAH59c5vGrj8eeAAAAAElFTkSuQmCC"
+          }
+        ],
+        "card": {
+          "src": "https://storage.googleapis.com/deer-dev-3384f.appspot.com/%2Ftattoos%2Fcharly-blackwork%2Fcard.webp",
+          "width": 409,
+          "height": 327,
+          "blured": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAIAAAAyIHCzAAAACXBIWXMAAAPoAAAD6AG1e1JrAAACLElEQVR4nGOIi0u0sbEJ9vN6cGzT/7dX/7++8Ovq3ltb5pYkBclKCWmpypoaaNpZGni4Wvt72zNkZGSEhoYG+7j/uXnk/5c7/99e+X/rwMsjaxa0FstJCamryBjqqtlY6Lk7Wfp42jIkJiaGhITY2lpf2LAYZPab6//vHXl/bP3xJX16GopaqrIGOqqWZjrODuaebtYMMTExgYGBdnZ2Jelxvy4cuLt1+eTKoo3dDeeXT/R3NNdWlzPQUbUw1nWwNXF3smSIiooKDAx0dnLW19XaOq1bVlLK1tw4xsdjQW1uQYQ7RLWpgaaNhZ6TnRlDaGhoUFCQn5+ftbW1u40lAwPDgpbql9tWOpgYRDqaqqvJamsr6WopmRlp21kaMAQGBvr7+/v5+bm6umppqPNwcmmrqf0/v/PKwgn6SpLG2oo6mooQG8yMtBn8/f2DwMDLy0tXV1dOWpKBgaGrMHP3pFYXIw1vCx1VZUlVJQmIdxk8PT29vLzc3NycnZxNTU2lpKQiPe32TW39f2Pvw5X9bamB2iqyynISynIS6ioyDG5ubn5+foGBgSEhIR4eHkpKCpMqMr8fXvb//oGH6yYsqkz1tzeSkRCSkRBSlBVjsLa2dnBwcHNz8/LycnZyVlVVzQj3fb5z/v/b+z7snjspOzLG00xMhE9ShFNaXIDBxsbG1dXVw8PDzc3Nzs5OV1dXWID3wNz238fX/T+/5cnGGQWhLny8jKyMDFxsDACm9by7CS4LaAAAAABJRU5ErkJggg=="
+        }
+      },
+      "id": "65d505db5ca4142b7627bb0e",
+      "title": "Charly",
+      "slug": "charly-blackwork",
+      "type": "single",
+      "styles": [
+        "blackwork"
+      ],
+      "tags": [
+        "rock nacional",
+        "rock",
+        "charly"
+      ],
+      "artistSlug": null,
+      "ranking": 20
+    }
+  ],
+  "styles": [
+    "blackwork",
+    "ilustrativo",
+    "etnico o cultural",
+    "puntillismo",
+    "ilustrativo",
+    "etnico o cultural",
+    "puntillismo",
+    "hiperrealismo",
+    "blackwork"
+  ]
+}
