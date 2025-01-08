@@ -62,6 +62,7 @@ export const NavInput = (props: NavInputProps) => {
           </div>
         )}
         <input
+          autoComplete="off"
           id="my-input"
           spellCheck={false}
           type="text"

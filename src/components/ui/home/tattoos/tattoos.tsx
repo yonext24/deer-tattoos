@@ -1,22 +1,19 @@
 import { StylizedLink } from '@/components/stylized-button/stylized-button'
 import { Section } from '../../common/section'
+import { getAllPageData } from '@/lib/backend/utils/data'
+import { TextWithLineJumps } from '@/components/text-with-linejumps/text-with-linejumps'
+import { DecoratedTitle } from '@/components/decorated-title/decorated-title'
 
 export async function Tattoos({ children }: { children: React.ReactNode }) {
+  const data = await getAllPageData().then((res) => res.main_data)
+  console.log({ data })
   return (
-    <Section className="grid min-[800px]:grid-cols-[60%_1fr] grid-cols-[100%_1fr] gap-4 relative overflow-hidden py-0 max-h-[510px] min-h-[auto]">
+    <Section className="grid min-[800px]:grid-cols-[60%_1fr] grid-cols-[100%_1fr] gap-4 relative overflow-hidden py-0 max-h-[510px] min-h-[auto] w-full">
       <div className="flex flex-col justify-center text-center items-center md:items-start md:text-start">
-        <h3
-          className="bg-gradient-to-bl from-white from-[69%] to-neutral-600 bg-clip-text bg-right-bottom
-        text-6xl supports-[background-clip:text]:text-transparent relative z-10"
-        >
+        <DecoratedTitle className="text-6xl w-auto">
           Los mejores tatuajes de Lanús
-        </h3>
-        <span className="mt-4 relative z-10">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-          incidunt ratione id labore fuga dignissimos ducimus sed eaque in
-          laborum minima, at nulla impedit fugiat? Vitae quam magnam atque
-          totam?
-        </span>
+        </DecoratedTitle>
+        <TextWithLineJumps className="mt-4 relative z-10" text={data} />
         <StylizedLink href="/tatuajes" className="mt-2" circleRadius="70px">
           Ver más
         </StylizedLink>

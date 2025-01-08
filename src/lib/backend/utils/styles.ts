@@ -1,11 +1,8 @@
 import { Style } from '@/lib/types/style'
-import styles from '../../../../public/categories.json'
-import { cache } from 'react'
+import { appFetch } from '@/lib/utils/appFetch'
 
-export const getStyles = cache(async (search?: string) => {
-  await new Promise((res) => {
-    setTimeout(res, 1000)
-  })
+export const getStylesClient = async () => {
+  const styles = await appFetch('/api/categories')
 
   return styles as Style[]
-})
+}

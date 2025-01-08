@@ -9,10 +9,12 @@ import { cn } from '@/lib/utils/utils'
 
 const entrys = [
   { text: 'Panel de administración', href: '/admin' },
+  { text: 'Datos de la página', href: '/admin/data' },
   { text: 'Agregar Tatuaje', href: '/admin/tatuajes/agregar' },
   { text: 'Ver Tatuajes', href: '/admin/tatuajes' },
   { text: 'Agregar Artista', href: '/admin/artistas/agregar' },
   { text: 'Ver Artistas', href: '/admin/artistas' },
+  { text: 'Categorias', href: '/admin/categorias' },
 ]
 
 export async function AdminSidebar() {

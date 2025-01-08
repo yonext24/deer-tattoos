@@ -4,21 +4,23 @@ import { Input } from '@/components/shadcn/ui/input'
 import { cn } from '@/lib/utils/utils'
 import { useState } from 'react'
 
-export function TagsSelector({
+// This is a terrible name i know
+export function ScalonatedInput({
   selectedValues,
   onChange,
   defaultValue = '',
+  placeholder,
 }: {
   selectedValues: string[]
   onChange: (values: string[]) => void
   defaultValue?: string
+  placeholder: string
 }) {
   const [value, setValue] = useState<string>(defaultValue)
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && value !== '') {
       e.preventDefault()
-      if (value === '') return
       const isValueIncluded = selectedValues.includes(value)
       if (isValueIncluded) return
 
@@ -30,6 +32,7 @@ export function TagsSelector({
   }
 
   const handleDelete = (removed: string) => {
+    console.log('delete')
     const newValue = selectedValues.filter((el) => el !== removed)
     onChange(newValue)
   }
@@ -44,6 +47,7 @@ export function TagsSelector({
             variant="outline"
             size="sm"
             className="px-2 h-auto py-1 bg-primary-foreground"
+            type="button"
           >
             {value}
           </Button>
@@ -57,9 +61,9 @@ export function TagsSelector({
           onKeyDown={handleKeyDown}
           className={cn(
             'w-auto py-1',
-            selectedValues.length > 0 && 'border-border',
+            selectedValues.length > 0 && 'border-border'
           )}
-          placeholder="Ingresa los estilos"
+          placeholder={placeholder}
         />
       </FormControl>
     </div>

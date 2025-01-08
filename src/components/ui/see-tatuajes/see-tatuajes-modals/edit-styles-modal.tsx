@@ -11,10 +11,10 @@ import { useForm } from 'react-hook-form'
 import { CategorySelector } from '../../add-tatuajes/category-selector/category-selector'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { TagsSelector } from '../../add-tatuajes/tags-selector/tags-selector'
 import { modalStyles } from '@/lib/utils/styles'
 import { appFetch, errorParser } from '@/lib/utils/appFetch'
 import { SubmitModal } from '../../common/submit-modal'
+import { ScalonatedInput } from '@/components/scalonated-input/scalonated-input'
 
 const formSchema = z.object({
   styles: z.array(z.string().min(1)),
@@ -95,7 +95,11 @@ export function EditStylesModal({
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Tags del tatuaje</FormLabel>
                   <FormControl>
-                    <TagsSelector onChange={onChange} selectedValues={value} />
+                    <ScalonatedInput
+                      placeholder="Ingresa el tag"
+                      onChange={onChange}
+                      selectedValues={value}
+                    />
                   </FormControl>
 
                   <FormDescription>
