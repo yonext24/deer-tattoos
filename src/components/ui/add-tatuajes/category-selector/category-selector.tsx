@@ -14,7 +14,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from '@/components/shadcn/ui/popover'
-import { getStyles } from '@/lib/backend/utils/styles'
+import { getStylesClient } from '@/lib/backend/utils/styles'
 import { Style } from '@/lib/types/style'
 import { cn } from '@/lib/utils/utils'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
@@ -30,7 +30,7 @@ export function CategorySelector({
   const [allCategories, setAllCategories] = useState<Style[]>([])
 
   useEffect(() => {
-    getStyles().then(setAllCategories)
+    getStylesClient().then(setAllCategories)
   }, [])
 
   const handleSelect = useCallback(

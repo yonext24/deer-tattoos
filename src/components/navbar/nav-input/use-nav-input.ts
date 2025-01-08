@@ -21,6 +21,12 @@ const resolveArtist = (pathname: string) => {
   if (match) return match[1]
   return null
 }
+const resolveIsShop = (pathname: string) => {
+  const reg = new RegExp('/shop/*')
+  const match = reg.exec(pathname)
+  if (match) return true
+  return false
+}
 
 export function useNavInput() {
   const router = useRouter()
@@ -34,11 +40,21 @@ export function useNavInput() {
   const [artist, setArtist] = useState<string | null>(() => {
     return resolveArtist(pathname)
   })
+  const [isShop, setIsShop] = useState<boolean>(resolveIsShop(pathname))
   const alreadyMadeSearchs = useRef<{ [key: string]: SearchResponse }>({})
 
   useEffect(() => {
     setArtist(resolveArtist(pathname))
+    const isShop = resolveIsShop(pathname)
+    if (isShop) {
+      setOpen(false)
+      setIsShop(true)
+    } else {
+      setIsShop(false)
+    }
   }, [pathname])
+
+  console.log({ isShop })
 
   const [search, setSearch] = useState<SearchResponse>([])
   const [styles, setStyles] = useState<string[]>([])
@@ -63,6 +79,12 @@ export function useNavInput() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | number) => {
     if (typeof e !== 'number') {
       e.preventDefault?.()
+    }
+
+    if (isShop && value) {
+      router.push(`/shop?search=${value}`)
+      setOpen(false)
+      return
     }
 
     if (
@@ -132,6 +154,7 @@ export function useNavInput() {
   )
 
   useEffect(() => {
+    if (isShop) return
     let active = true
     if (!value) return setSearch([])
 
@@ -139,11 +162,12 @@ export function useNavInput() {
     return () => {
       active = false
     }
-  }, [value, setSearch, debouncedGetSearch])
+  }, [value, setSearch, debouncedGetSearch, isShop])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (['Escape', 'ArrowDown', 'ArrowUp'].includes(e.key)) e.preventDefault()
+      if (isShop) return
 
       if (e.key === 'Escape') {
         setOpen(false)
@@ -159,7 +183,7 @@ export function useNavInput() {
         })
       }
     },
-    [search.length]
+    [search.length, isShop]
   )
 
   const handleClose = () => {
@@ -179,6 +203,7 @@ export function useNavInput() {
   }
 
   const handleFocus = () => {
+    if (isShop) return
     setShowingCategories(true)
     if (!isFirstFocus.current) return
 

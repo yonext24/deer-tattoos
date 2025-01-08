@@ -13,12 +13,12 @@ import {
 import { useAddTatuajesForm } from '@/components/ui/add-tatuajes/use-add-tatuajes-form'
 import { CategorySelector } from '@/components/ui/add-tatuajes/category-selector/category-selector'
 import { Separator } from '@/components/shadcn/ui/separator'
-import { TagsSelector } from '@/components/ui/add-tatuajes/tags-selector/tags-selector'
 import { ImageSelector } from '@/components/ui/add-tatuajes/image-selector/image-selector'
 import { Input } from '@/components/shadcn/ui/input'
 import { ArtistSelector } from '@/components/ui/add-tatuajes/artist-selector/artist-selector'
 import { SubmitButton } from '@/components/ui/common/submit-button'
 import { ExtraImagesSelector } from '@/components/ui/add-tatuajes/extra-images-selector/extra-images-selector'
+import { ScalonatedInput } from '@/components/scalonated-input/scalonated-input'
 
 export default function Page() {
   const { form, onSubmit, imageRef, extraImagesRef } = useAddTatuajesForm()
@@ -110,7 +110,11 @@ export default function Page() {
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Tags del tatuaje</FormLabel>
                   <FormControl>
-                    <TagsSelector onChange={onChange} selectedValues={value} />
+                    <ScalonatedInput
+                      placeholder="Ingresa el tag"
+                      onChange={onChange}
+                      selectedValues={value}
+                    />
                   </FormControl>
 
                   <FormDescription>

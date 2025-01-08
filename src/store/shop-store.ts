@@ -16,9 +16,9 @@ export type CartStore = {
   closeCart: () => void
   setCart: (cart: CartItemType[]) => void
   addToCart: (item: CartItemType) => void
-  quantityDown: (id: string) => void
-  quantityUp: (id: string) => void
-  removeFromCart: (id: string) => void
+  quantityDown: (id: string, variation: string) => void
+  quantityUp: (id: string, variation: string) => void
+  removeFromCart: (id: string, variation: string) => void
   clearCart: () => void
 }
 
@@ -32,7 +32,7 @@ export const useCartStore = create<CartStore>(set => ({
 
   setCart: (cart) => set({ cart }),
   addToCart: (item) => set((state) => {
-    const itemIndex = state.cart.findIndex((cartItem) => cartItem.id === item.id)
+    const itemIndex = state.cart.findIndex((cartItem) => compareUniqueIds(cartItem, item))
     if (itemIndex === -1) {
       const updatedCart = [...state.cart, item]
       return server({ cart: updatedCart })
@@ -43,8 +43,8 @@ export const useCartStore = create<CartStore>(set => ({
     return server({ cart: updatedCart })
   }
   ),
-  quantityDown: (id) => set((state) => {
-    const itemIndex = state.cart.findIndex((cartItem) => cartItem.id === id)
+  quantityDown: (id, variation) => set((state) => {
+    const itemIndex = state.cart.findIndex((cartItem) => getUniqueId(cartItem) === generateUniqueId(id, variation))
     if (itemIndex === -1) {
       return { cart: state.cart }
     }
@@ -58,8 +58,8 @@ export const useCartStore = create<CartStore>(set => ({
     return server({ cart: updatedCart })
   }
   ),
-  quantityUp: (id) => set((state) => {
-    const itemIndex = state.cart.findIndex((cartItem) => cartItem.id === id)
+  quantityUp: (id, variation) => set((state) => {
+    const itemIndex = state.cart.findIndex((cartItem) => getUniqueId(cartItem) === generateUniqueId(id, variation))
     if (itemIndex === -1) {
       return { cart: state.cart }
     }
@@ -70,8 +70,8 @@ export const useCartStore = create<CartStore>(set => ({
     return server({ cart: updatedCart })
   }
   ),
-  removeFromCart: (id) => set((state) => {
-    const updatedCart = { cart: state.cart.filter((item) => item.id !== id) }
+  removeFromCart: (id, variation) => set((state) => {
+    const updatedCart = { cart: state.cart.filter((cartItem) => getUniqueId(cartItem) !== generateUniqueId(id, variation)) }
 
     return server(updatedCart)
   })
@@ -89,4 +89,14 @@ function server(state: CartStore | Partial<CartStore>) {
   })
 
   return state
+}
+
+const generateUniqueId = (id: string, variation: string) => {
+  return `${id}-${variation}`
+}
+const getUniqueId = (item: CartItemType) => {
+  return generateUniqueId(item.id, item.variation)
+}
+const compareUniqueIds = (item1: CartItemType, item2: CartItemType): boolean => {
+  return getUniqueId(item1) === getUniqueId(item2)
 }

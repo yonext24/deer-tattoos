@@ -18,7 +18,7 @@ import {
 
 import { Style } from '@/lib/types/style'
 import { useCallback, useEffect, useState } from 'react'
-import { getStyles } from '@/lib/backend/utils/styles'
+import { getStylesClient } from '@/lib/backend/utils/styles'
 import { cn } from '@/lib/utils/utils'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -41,7 +41,19 @@ export function CategoriesFilter() {
   })
 
   useEffect(() => {
-    getStyles().then(setStyles)
+    getStylesClient().then((styles) =>
+      setStyles(
+        styles.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1
+          }
+          if (a.name > b.name) {
+            return 1
+          }
+          return 0
+        })
+      )
+    )
   }, [])
 
   const router = useRouter()

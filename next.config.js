@@ -4,11 +4,14 @@ const nextConfig = {
     remotePatterns: [
       { hostname: 'lh3.googleusercontent.com' },
       { hostname: 'storage.googleapis.com' },
-      { hostname: 'cdn.sanity.io' }
+      { hostname: 'cdn.sanity.io' },
     ],
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,
+  },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname,
   },
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { KpiOption, KpisData } from '@/lib/tracking/types'
+import { KpiOption, KpisData, QueryStatus } from '@/lib/tracking/types'
 import Widget from '../helpers'
 import { AreaChart } from '@tremor/react'
 import { Tab, Tabs } from '@/components/tabs/tabs'
@@ -15,8 +15,8 @@ import Spinner from '@/components/ui/common/spinner'
 import { useDependenciesParams } from '../../use-dependencies-params'
 import { appFetch } from '@/lib/utils/appFetch'
 
-export function VisitsChart({ queryData }: { queryData: KpisData[] }) {
-  const [currentData, setCurrentData] = useState<KpisData[]>(queryData)
+export function VisitsChart() {
+  const [currentData, setCurrentData] = useState<KpisData[]>([])
 
   const params = useSearchParams()
   const router = useRouter()
@@ -28,7 +28,8 @@ export function VisitsChart({ queryData }: { queryData: KpisData[] }) {
     date_from,
     date_to,
   } = useDependenciesParams({
-    initialData: queryData,
+    initialData: [],
+    permitFirstFetch: true,
     onDataChange: setCurrentData,
     fn: ({ date_from, date_to }) =>
       appFetch(`/api/tracking?&date_from=${date_from}&date_to=${date_to}`, {
@@ -56,10 +57,8 @@ export function VisitsChart({ queryData }: { queryData: KpisData[] }) {
     }
   })
 
-  console.log({ currentData, data })
-
   const setKpi = (kpi: KpiOption['value']) => {
-    const newParams = new URLSearchParams(params)
+    const newParams = new URLSearchParams(params as any)
     newParams.set('kpi', kpi)
     router.replace(createUrl('/admin', newParams))
   }
@@ -87,7 +86,10 @@ export function VisitsChart({ queryData }: { queryData: KpisData[] }) {
       <Widget className="h-auto">
         <Widget.Title isVisuallyHidden>KPIs</Widget.Title>
         <Widget.Content
-          noData={!parsedData?.length}
+          status={(() => {
+            if (loading) return 'loading'
+            if (error) return 'error'
+          })()}
           className="pt-2 mt-4 [&_text]:!text-white"
         >
           <AreaChart
@@ -103,11 +105,6 @@ export function VisitsChart({ queryData }: { queryData: KpisData[] }) {
         </Widget.Content>
       </Widget>
 
-      {loading && (
-        <div className="absolute bottom-2 right-2">
-          <Spinner />
-        </div>
-      )}
       {error && (
         <div className="absolute bottom-1 right-1/2 translate-x-1/2 text-destructive">
           {'Ocurrió un error al recuperar los datos.'}

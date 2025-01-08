@@ -7,34 +7,26 @@ import { ShopProduct } from '@/lib/shop/types'
 import { SearchParamsType } from '@/lib/types/common'
 import { LOGO } from '@/lib/utils/consts'
 
-const generateQuery = (category?: string) => {
-  if (!category)
+const generateQuery = (category?: string, search?: string) => {
+  const fields = `
+  "images": images[]{
+      ...,
+      "url": asset->url,
+    },
+    description,
+    name,
+    "slug": slug.current,
+    _id,
+    price
+    `
+  if (!category && !search)
     return `
-  *[_type == 'product']{
-    "images": images[]{
-      ...,
-      "url": asset->url,
-    },
-    description,
-    name,
-    "slug": slug.current,
-    _id,
-    price
-  }
-  `
+  *[_type == 'product']{${fields}}`
+  if (search)
+    return `
+  *[_type == 'product' && name match "${search}*"]{${fields}}`
   return `
-  *[_type == 'product' && references(*[_type == 'category' && slug.current == '${category}']._id)]{
-    "images": images[]{
-      ...,
-      "url": asset->url,
-    },
-    description,
-    name,
-    "slug": slug.current,
-    _id,
-    price
-  }
-  `
+  *[_type == 'product' && references(*[_type == 'category' && slug.current == '${category}']._id)]{${fields}}`
 }
 
 export default async function Page({
@@ -43,7 +35,10 @@ export default async function Page({
   searchParams: SearchParamsType
 }) {
   const products = await client.fetch<ShopProduct[]>(
-    generateQuery(searchParams?.category as string),
+    generateQuery(
+      searchParams?.category as string,
+      searchParams?.search as string
+    ),
     {},
     { cache: 'no-cache' }
   )

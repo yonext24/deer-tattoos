@@ -1,12 +1,12 @@
 import { TattoosFooter } from '@/components/footers/tattoos-footer'
 import { Sidebar } from '@/components/sidebar/sidebar'
-import { getStyles } from '@/lib/backend/utils/styles'
 import { Metadata } from 'next'
 import { SidebarContainer } from '../../components/sidebar/sidebar'
+import { getAllCategories } from '@/lib/backend/utils/categories'
 
 export const revalidate = 0
 export async function generateMetadata(): Promise<Metadata> {
-  const styles = (await getStyles()).slice(0, 10)
+  const styles = (await getAllCategories()).slice(0, 10)
 
   return {
     title: 'Tatuajes',

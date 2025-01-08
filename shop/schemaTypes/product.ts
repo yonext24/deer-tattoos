@@ -66,7 +66,7 @@ export default defineType({
           defineField({
             name: 'stock',
             type: 'number',
-          })
+          }),
         ]
       }]
     }),

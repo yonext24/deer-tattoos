@@ -1,90 +1,135 @@
 [
   {
     "name": "Realismo",
-    "variants": ["realism"]
+    "variants": [
+      "realism"
+    ]
   },
   {
     "name": "Neo-tradicional",
-    "variants": ["neo-traditional"]
+    "variants": [
+      "neo-traditional"
+    ]
   },
   {
     "name": "Tribal",
-    "variants": ["tribal"]
+    "variants": [
+      "tribal"
+    ]
   },
   {
     "name": "Acuarela",
-    "variants": ["watercolor"]
+    "variants": [
+      "watercolor"
+    ]
   },
   {
     "name": "Geométrico",
-    "variants": ["geometric"]
+    "variants": [
+      "geometric"
+    ]
   },
   {
     "name": "Ilustrativo",
-    "variants": ["illustrative"]
+    "variants": [
+      "illustrative"
+    ]
   },
   {
     "name": "Maorí",
-    "variants": ["maori"]
+    "variants": [
+      "maori"
+    ]
   },
   {
     "name": "Trash Polka",
-    "variants": ["trash-polka"]
+    "variants": [
+      "trash-polka"
+    ]
   },
   {
     "name": "Old School",
-    "variants": ["old-school"]
+    "variants": [
+      "old-school"
+    ]
   },
   {
     "name": "Lettering o caligrafía",
-    "variants": ["lettering"]
+    "variants": [
+      "lettering"
+    ]
   },
   {
     "name": "Blackwork",
-    "variants": ["blackwork"]
+    "variants": [
+      "blackwork"
+    ]
   },
   {
     "name": "Biomecánico",
-    "variants": ["biomechanical"]
+    "variants": [
+      "biomechanical"
+    ]
   },
   {
     "name": "Minimalista",
-    "variants": ["minimalist"]
+    "variants": [
+      "minimalist"
+    ]
   },
   {
     "name": "Puntillismo",
-    "variants": ["pointillism"]
+    "variants": [
+      "pointillism"
+    ]
   },
   {
     "name": "Escritura a mano",
-    "variants": ["handwriting"]
+    "variants": [
+      "handwriting"
+    ]
   },
   {
     "name": "Etnico o cultural",
-    "variants": ["ethnic-cultural"]
+    "variants": [
+      "ethnic-cultural"
+    ]
   },
   {
     "name": "Hiperrealismo",
-    "variants": ["hyperrealism"]
+    "variants": [
+      "hyperrealism"
+    ]
   },
   {
     "name": "Silueta",
-    "variants": ["silhouette"]
+    "variants": [
+      "silhouette"
+    ]
   },
   {
     "name": "Graffiti",
-    "variants": ["graffiti"]
+    "variants": [
+      "graffiti"
+    ]
   },
   {
     "name": "Fantasía",
-    "variants": ["fantasy"]
+    "variants": [
+      "fantasy"
+    ]
   },
   {
     "name": "Jj",
-    "variants": ["jj"]
+    "variants": [
+      "jj"
+    ]
   },
   {
     "name": "Japones",
-    "variants": ["japones"]
+    "variants": [
+      "japanese",
+      "ponja"
+    ]
   }
 ]

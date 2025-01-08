@@ -16,9 +16,9 @@ export function CartItem({
   const down = useCartStore((s) => s.quantityDown)
   const up = useCartStore((s) => s.quantityUp)
 
-  const onDel = () => del(id)
-  const onIncrease = () => up(id)
-  const onDecrease = () => down(id)
+  const onDel = () => del(id, variation)
+  const onIncrease = () => up(id, variation)
+  const onDecrease = () => down(id, variation)
 
   const total = quantity * Number(price)
 

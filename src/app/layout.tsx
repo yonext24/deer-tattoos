@@ -63,8 +63,8 @@ export default function RootLayout({
         )}
       >
         <Navbar />
-        <PageProvider>{children}</PageProvider>
-        <Toaster />
+        {/* <PageProvider>{children}</PageProvider>
+        <Toaster /> */}
       </body>
     </html>
   )
