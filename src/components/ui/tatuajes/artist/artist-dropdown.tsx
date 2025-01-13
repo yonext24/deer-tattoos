@@ -9,7 +9,7 @@ import {
   DropdownMenu,
 } from '@/components/shadcn/ui/dropdown-menu'
 import { Artist } from '@/lib/types/artist'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 
 export function ArtistDropdown({
   children,

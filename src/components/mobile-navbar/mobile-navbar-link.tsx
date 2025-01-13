@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { StylizedText } from '../stylized-text/stylized-text'
 
 export function MobileNavbarLink({
@@ -25,8 +25,8 @@ export function MobileNavbarLink({
           propsForElement={{
             id: 'item',
           }}
-          offSetBottom='-2px'
-          offSetRight='-3px'
+          offSetBottom="-2px"
+          offSetRight="-3px"
           as="span"
           text={text}
           size="2rem"

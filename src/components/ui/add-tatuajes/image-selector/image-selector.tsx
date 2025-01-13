@@ -14,7 +14,6 @@ import {
 import { ImageCropper } from '../../common/image-cropper'
 import { forwardRef } from 'react'
 import { modalStyles } from '@/lib/utils/styles'
-import { Button } from '@/components/shadcn/ui/button'
 
 const initialCrop: Crop = {
   height: 80,
@@ -94,6 +93,8 @@ export const ImageSelector = forwardRef(function ImageSelector(
             title=""
             id={''}
             slug=""
+            createdAt={new Date()}
+            updatedAt={new Date()}
             images={{
               images: [],
               card: {

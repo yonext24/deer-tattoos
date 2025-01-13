@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 export const dynamicParams = true
 
 export const generateStaticParams = async () => {
-  const { data } = await getTattoos({}, { page: 1, size: 1000 })
+  const { data } = await getTattoos({}, { page: 1, size: 9999 })
   return data.map((tattoo) => ({ params: { slug: tattoo.slug } }))
 }
 

@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss'
 import colors from 'tailwindcss/colors'
 import { fontFamily } from 'tailwindcss/defaultTheme'
 
-const goldShades = {
+export const goldShades = {
   lighter: '#e6d78c',
   light: '#d4b642',
   DEFAULT: '#c39703',

@@ -6,6 +6,7 @@ import { tattooController } from '@backend/controllers/tattoo-controller'
 import { getTattooBySlug } from '@/lib/backend/utils/tattoos'
 import { Metadata } from 'next'
 import { TattooImages } from '@/components/ui/see-single-tatuaje/tattoo-images/tattoo-images'
+import { APP_URL, MARCA } from '@/lib/utils/consts'
 
 export const generateMetadata = async ({
   params,
@@ -45,8 +46,30 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const artist = await getArtistForCard(tattoo.artistSlug).catch(() => null)
   tattooController.addRanking({ slug: params.slug })
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: tattoo.title,
+    image: tattoo.images.images.map((el) => el.src),
+    datePublished: tattoo.createdAt,
+    dateModified: tattoo.updatedAt,
+    author: tattoo.artistSlug
+      ? [
+          {
+            type: 'Person',
+            name: artist?.name,
+            url: `${APP_URL}/tatuador/${tattoo.artistSlug}/tatuajes`,
+          },
+        ]
+      : [{ type: 'Organization', name: MARCA, url: APP_URL }],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: articleJsonLd }}
+      />
       <div className="w-full flex justify-between items-start">
         <Back />
         <Artist artist={artist} />

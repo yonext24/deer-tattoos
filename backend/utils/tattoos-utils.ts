@@ -130,10 +130,10 @@ export const filterAndPaginateTattoos: FilterFuncType = async (
       where,
       ...(sortByRanking
         ? {
-            orderBy: {
-              ranking: 'desc',
-            },
-          }
+          orderBy: {
+            ranking: 'desc',
+          },
+        }
         : {}),
       take: size,
       skip: offset,

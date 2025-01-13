@@ -1,29 +1,50 @@
+import { Cart, CartItem, Product, ProductVariant } from '@/lib/shopify/types'
 import { create } from 'zustand'
 
-export type CartItemType = {
-  id: string
-  name: string
-  price: string
-  variation: string
-  quantity: number
-  image: string
-}
-
 export type CartStore = {
-  cart: CartItemType[]
+  cart: Cart
   open: boolean
   openCart: () => void
   closeCart: () => void
-  setCart: (cart: CartItemType[]) => void
-  addToCart: (item: CartItemType) => void
-  quantityDown: (id: string, variation: string) => void
-  quantityUp: (id: string, variation: string) => void
-  removeFromCart: (id: string, variation: string) => void
+  setCart: (cart: Cart) => void
+  addToCart: (item: Product, variant: ProductVariant) => void
+  quantityDown: (variant: string) => void
+  quantityUp: (variant: string) => void
+  removeFromCart: (variant: string) => void
   clearCart: () => void
 }
 
+function calculateItemCost(quantity: number, price: string | number): string {
+  return (Number(price) * quantity).toString();
+}
+
+function generateItemFromProduct(product: Product, variant: ProductVariant, amount: string): CartItem {
+  return {
+    id: product?.id,
+    quantity: 1,
+    cost: {
+      totalAmount: {
+        amount,
+        currencyCode: variant.price.currencyCode
+      }
+    },
+    merchandise: {
+      id: variant.id,
+      title: variant.title,
+      selectedOptions: variant.selectedOptions,
+      quantityAvailable: variant.quantityAvailable,
+      product: {
+        id: product.id,
+        handle: product.handle,
+        title: product.title,
+        featuredImage: product.featuredImage
+      }
+    }
+  }
+}
+
 export const useCartStore = create<CartStore>(set => ({
-  cart: [],
+  cart: createEmptyCart(),
   open: false,
 
   openCart: () => set({ open: true }),
@@ -31,72 +52,140 @@ export const useCartStore = create<CartStore>(set => ({
 
 
   setCart: (cart) => set({ cart }),
-  addToCart: (item) => set((state) => {
-    const itemIndex = state.cart.findIndex((cartItem) => compareUniqueIds(cartItem, item))
-    if (itemIndex === -1) {
-      const updatedCart = [...state.cart, item]
-      return server({ cart: updatedCart })
-    }
-    const updatedCart = [...state.cart]
-    updatedCart[itemIndex].quantity += 1
 
-    return server({ cart: updatedCart })
+  addToCart: (product, variant) => set((state) => {
+    const existingProductIndex = state.cart.lines.findIndex(el => el.merchandise.id === variant.id)
+
+    if (existingProductIndex === -1) {
+      const newProduct = generateItemFromProduct(product, variant, calculateItemCost(1, variant.price.amount));
+      const updatedCartLines = [newProduct, ...state.cart?.lines]
+
+      return generateCartFromNewLines(state, updatedCartLines)
+    }
+
+    const updatedCartLines = [...state.cart.lines]
+    updatedCartLines[existingProductIndex].quantity++
+
+    return generateCartFromNewLines(state, updatedCartLines)
   }
   ),
-  quantityDown: (id, variation) => set((state) => {
-    const itemIndex = state.cart.findIndex((cartItem) => getUniqueId(cartItem) === generateUniqueId(id, variation))
+  quantityDown: (variantId) => set((state) => {
+    const itemIndex = state.cart.lines.findIndex((item) => item.merchandise.id === variantId)
     if (itemIndex === -1) {
-      return { cart: state.cart }
+      return state
     }
-    if (state.cart[itemIndex].quantity <= 1) {
-      return { cart: state.cart }
+    const item = state.cart.lines[itemIndex]
+
+    if (item.quantity <= 1) {
+      return state
     }
-    const updatedCart = [...state.cart]
-    updatedCart[itemIndex].quantity -= 1
+    const originalItemPrice = Number(item.cost.totalAmount.amount) / item.quantity
 
+    const updatedCartLines = [...state.cart.lines]
+    updatedCartLines[itemIndex].quantity--
+    const newItemPrice = originalItemPrice * updatedCartLines[itemIndex].quantity
+    updatedCartLines[itemIndex].cost.totalAmount = {
+      ...updatedCartLines[itemIndex].cost.totalAmount,
+      amount: generateNewAmountString(String(newItemPrice))
+    }
 
-    return server({ cart: updatedCart })
+    return generateCartFromNewLines(state, updatedCartLines)
   }
   ),
-  quantityUp: (id, variation) => set((state) => {
-    const itemIndex = state.cart.findIndex((cartItem) => getUniqueId(cartItem) === generateUniqueId(id, variation))
+  quantityUp: (variantId) => set((state) => {
+    const itemIndex = state.cart.lines.findIndex((item) => item.merchandise.id === variantId)
     if (itemIndex === -1) {
-      return { cart: state.cart }
+      return state
     }
-    const updatedCart = [...state.cart]
-    updatedCart[itemIndex].quantity += 1
+    const item = state.cart.lines[itemIndex]
 
+    const originalItemPrice = Number(item.cost.totalAmount.amount) / item.quantity
 
-    return server({ cart: updatedCart })
+    const updatedCartLines = [...state.cart.lines]
+    updatedCartLines[itemIndex].quantity++
+    const newItemPrice = originalItemPrice * updatedCartLines[itemIndex].quantity
+    updatedCartLines[itemIndex].cost.totalAmount = {
+      ...updatedCartLines[itemIndex].cost.totalAmount,
+      amount: generateNewAmountString(String(newItemPrice))
+    }
+
+    return generateCartFromNewLines(state, updatedCartLines)
   }
   ),
-  removeFromCart: (id, variation) => set((state) => {
-    const updatedCart = { cart: state.cart.filter((cartItem) => getUniqueId(cartItem) !== generateUniqueId(id, variation)) }
+  removeFromCart: (variantId) => set((state) => {
+    const updatedCartLines = state.cart.lines.filter((item) => item.merchandise.id !== variantId)
 
-    return server(updatedCart)
+    return generateCartFromNewLines(state, updatedCartLines)
   })
   ,
   clearCart: () => {
-    return set(server({ cart: [] }))
+    return set(s => server({ cart: createEmptyCart(s.cart.id) }))
   },
 }))
 
 function server(state: CartStore | Partial<CartStore>) {
-  fetch('/api/shop/cart', {
-    method: 'POST',
-    credentials: 'same-origin',
-    body: JSON.stringify({ cart: state.cart?.map(({ image, ...rest }) => rest) })
-  })
 
   return state
 }
 
-const generateUniqueId = (id: string, variation: string) => {
-  return `${id}-${variation}`
+
+function updateCartTotals(lines: CartItem[]): Pick<Cart, 'totalQuantity' | 'cost'> {
+  const totalQuantity = lines.reduce((sum, item) => sum + item.quantity, 0);
+  const totalAmount = lines.reduce((sum, item) => sum + Number(item.cost.totalAmount.amount), 0);
+  const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? 'ARS';
+
+  return {
+    totalQuantity,
+    cost: {
+      isLoading: true,
+      subtotalAmount: { amount: totalAmount.toString(), currencyCode },
+      totalAmount: { amount: totalAmount.toString(), currencyCode },
+      totalTaxAmount: { amount: '0', currencyCode }
+    }
+  };
 }
-const getUniqueId = (item: CartItemType) => {
-  return generateUniqueId(item.id, item.variation)
+
+function generateCartFromNewLines(state: CartStore, newLines: CartItem[]): CartStore {
+  const cart = state.cart
+
+  if (newLines.length === 0) {
+    return {
+      ...state,
+      cart: {
+        ...state.cart,
+        lines: [],
+        totalQuantity: 0,
+        cost: {
+          ...cart.cost,
+          totalAmount: { ...cart.cost.totalAmount, amount: '0' }
+        },
+      }
+
+    };
+  }
+
+
+  return { ...state, cart: { ...state.cart, lines: newLines, ...updateCartTotals(newLines) } }
 }
-const compareUniqueIds = (item1: CartItemType, item2: CartItemType): boolean => {
-  return getUniqueId(item1) === getUniqueId(item2)
+
+function createEmptyCart(id?: string): Cart {
+  return {
+    id: id,
+    checkoutUrl: '',
+    totalQuantity: 0,
+    lines: [],
+    cost: {
+      subtotalAmount: { amount: '0', currencyCode: 'ARS' },
+      totalAmount: { amount: '0', currencyCode: 'ARS' },
+      totalTaxAmount: { amount: '0', currencyCode: 'ARS' }
+    }
+  };
+}
+
+function generateNewAmountString(price: string) {
+  const hasDecimals = price.split('.').length > 1
+
+  return hasDecimals ?
+    price
+    : price + '.0'
 }

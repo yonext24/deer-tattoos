@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { NavInput } from './nav-input/nav-input'
 import { Suspense } from 'react'
 import { MARCA } from '@/lib/utils/consts'

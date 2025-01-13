@@ -1,57 +1,50 @@
-import { CartItemType, useCartStore } from '@/store/shop-store'
+import { useCartStore } from '@/store/shop-store'
 import Image from 'next/image'
-import { Button } from '../shadcn/ui/button'
-import { TrashIcon } from 'lucide-react'
 import { CartItemButtons } from './cart-item-buttons'
+import * as types from '@/lib/shopify/types'
+import { CartDeleteItem } from './cart-delete-item'
 
-export function CartItem({
-  image,
-  name,
-  price,
-  variation,
-  id,
-  quantity,
-}: CartItemType) {
+export function CartItem({ merchandise, cost, quantity }: types.CartItem) {
+  const { product, quantityAvailable } = merchandise
+  const { title, featuredImage: image } = product
+
   const del = useCartStore((s) => s.removeFromCart)
   const down = useCartStore((s) => s.quantityDown)
   const up = useCartStore((s) => s.quantityUp)
 
-  const onDel = () => del(id, variation)
-  const onIncrease = () => up(id, variation)
-  const onDecrease = () => down(id, variation)
+  const onDel = () => del(merchandise.id)
+  const onIncrease = () => up(merchandise.id)
+  const onDecrease = () => down(merchandise.id)
 
-  const total = quantity * Number(price)
+  const total = cost.totalAmount.amount
+  const hasDefaultVariation =
+    merchandise.selectedOptions[0].value === 'Default Title'
 
   return (
     <div className="flex border-b border-border py-3">
       <Image
-        className="object-contain"
-        height={80}
-        width={80}
-        src={image}
-        alt={name}
+        className="object-contain h-auto w-20 max-h-[70px] object-left"
+        height={image.height}
+        width={image.width}
+        src={image.url}
+        alt={image.altText}
       />
-      <div className="flex flex-col flex-1 px-4">
+      <div className="flex flex-col flex-1 gap-2 sm:gap-px px-4">
         <div className="flex w-full">
-          <span className="text-lg text-center flex-1">{name}</span>
-          <Button
-            variant="destructive-ghost"
-            className="p-0 h-[28px] w-[38px]"
-            onClick={onDel}
-          >
-            <TrashIcon className="w-3 h-3" />
-          </Button>
+          <span className="text-lg [line-height:1.4rem] flex-1">{title}</span>
+          <CartDeleteItem onDel={onDel} merchandiseId={merchandise.id} />
         </div>
-        <div className="flex self-start">
-          <span className="text-xs font-thin text-start">
-            Variante: {variation}
-          </span>
+        <div className="flex self-start text-sm">
+          {hasDefaultVariation
+            ? ''
+            : merchandise.selectedOptions.map((el) => el.value).join(' / ')}
         </div>
         <div className="flex justify-between">
           <span className="font-thin text-sm">${total}</span>
           <CartItemButtons
+            quantityAvailable={quantityAvailable}
+            merchandiseId={merchandise.id}
             quantity={quantity}
-            id={id}
             onIncrease={onIncrease}
             onDecrease={onDecrease}
           />

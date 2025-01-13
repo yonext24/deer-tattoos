@@ -5,6 +5,8 @@ const nextConfig = {
       { hostname: 'lh3.googleusercontent.com' },
       { hostname: 'storage.googleapis.com' },
       { hostname: 'cdn.sanity.io' },
+      { hostname: 'cdn.shopify.com' },
+      { hostname: 'localhost' },
     ],
   },
   experimental: {

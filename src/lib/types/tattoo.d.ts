@@ -17,6 +17,8 @@ export type Tattoo = {
   styles: string[]
   tags: string[]
   artistSlug: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export type TattooWithIndex = Tattoo & { __number__: number }

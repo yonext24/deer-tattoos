@@ -1,10 +1,36 @@
 import { Skeleton } from '@/components/shadcn/ui/skeleton'
 import { TattooCard } from '@/components/tattoo-card/tattoo-card'
 import { ColumnLayout } from '@/components/ui/tatuajes/column-layout'
+import { getArtistForCard } from '@/lib/backend/utils/artists'
 import { getArtistTattoos } from '@/lib/backend/utils/tattoos'
 import { SearchParamsType } from '@/lib/types/common'
 import { transformSearchParams } from '@/lib/utils/utils'
+import { Metadata } from 'next'
 import { Suspense } from 'react'
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> => {
+  const artist = await getArtistForCard(params.slug)
+
+  if (!artist) return {}
+
+  return {
+    description: `Los tatuajes de nuestro artista ${artist.name}`,
+    openGraph: {
+      images: [
+        {
+          url: artist.images.profile.src,
+          width: 1200,
+          height: 600,
+          alt: artist.name,
+        },
+      ],
+    },
+  }
+}
 
 export default function Page({
   searchParams,

@@ -10,7 +10,7 @@ type Props = {
 
 export const TextWithLineJumps = forwardRef<HTMLParagraphElement, Props>(
   ({ text, linesClassName, ...props }, ref) => {
-    const lines = text.split('\n')
+    const lines = text.split('\\n')
 
     return (
       <p {...props} ref={ref}>

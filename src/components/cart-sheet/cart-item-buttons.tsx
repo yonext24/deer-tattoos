@@ -1,20 +1,56 @@
 import { cn } from '@/lib/utils/utils'
 import { Button, buttonVariants } from '../shadcn/ui/button'
+import { updateItemQuantity } from '@/lib/shopify/actions'
+import { useFormState } from 'react-dom'
+import { useState } from 'react'
 
 export function CartItemButtons({
   quantity,
   onIncrease,
   onDecrease,
-  id,
+  merchandiseId,
+  quantityAvailable,
 }: {
   quantity: number
+  merchandiseId: string
   onIncrease: () => void
   onDecrease: () => void
-  id: string
+  quantityAvailable: number
 }) {
+  const [isDisabled, setIsDisabled] = useState<boolean>(false)
+
+  const handleDebounce = (func: () => void) => {
+    setIsDisabled(true)
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 100)
+    func()
+  }
+  const [message, formAction] = useFormState(updateItemQuantity, null)
+
+  const downActionWithId = formAction.bind(null, {
+    merchandiseId,
+    quantity: quantity - 1,
+  })
+  const upActionWithId = formAction.bind(null, {
+    merchandiseId,
+    quantity: quantity + 1,
+  })
+
   return (
-    <div className="flex gap-2">
-      <Button variant="outline" className="w-6 h-6 p-0" onClick={onDecrease}>
+    <form className="flex gap-2">
+      <Button
+        disabled={quantity <= 1 || isDisabled}
+        type="submit"
+        formAction={async () => {
+          if (quantity > 1) {
+            handleDebounce(onDecrease)
+            await downActionWithId()
+          }
+        }}
+        variant="outline"
+        className="h-8 w-8 sm:w-6 sm:h-6 p-0"
+      >
         -
       </Button>
       <span
@@ -25,9 +61,21 @@ export function CartItemButtons({
       >
         {quantity}
       </span>
-      <Button variant="outline" className="w-6 h-6 p-0" onClick={onIncrease}>
+      <Button
+        disabled={quantity >= quantityAvailable || isDisabled}
+        type="submit"
+        formAction={async () => {
+          handleDebounce(onIncrease)
+          await upActionWithId()
+        }}
+        variant="outline"
+        className="h-8 w-8 sm:w-6 sm:h-6 p-0"
+      >
         +
       </Button>
-    </div>
+      <p aria-live="polite" className="sr-only" role="status">
+        {message}
+      </p>
+    </form>
   )
 }

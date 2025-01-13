@@ -2,8 +2,8 @@ import { storage } from '@backend/firebase/config'
 import { NextResponse } from 'next/server'
 import { prisma } from '@backend/prisma';
 import { filterAndPaginateTattoos } from '@backend/utils/tattoos-utils';
-import { NECESARY_AMOUNT_OF_TATTOOS } from '@/app/(home)/@tattoos/page';
 import fs from 'node:fs'
+import { NECESARY_AMOUNT_OF_TATTOOS_IN_HOMEPAGE } from '@/lib/utils/consts';
 
 const getStorageFiles = () => {
   return storage.bucket().getFiles({ prefix: `/tattoos`, autoPaginate: false }).then(([files]) => files.map(file => file.name))
@@ -34,7 +34,7 @@ const deleteImage = async (url: string) => {
 }
 
 const getRankedTattoosAndStylesAndWriteThem = async () => {
-  const { data: mostRankedTattoos } = await filterAndPaginateTattoos({ sortByRanking: true }, { page: 1, size: NECESARY_AMOUNT_OF_TATTOOS })
+  const { data: mostRankedTattoos } = await filterAndPaginateTattoos({ sortByRanking: true }, { page: 1, size: NECESARY_AMOUNT_OF_TATTOOS_IN_HOMEPAGE })
   const mostRankedStyles = mostRankedTattoos.flatMap(el => {
     return el.styles as string[]
   })

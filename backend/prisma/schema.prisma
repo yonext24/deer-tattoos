@@ -21,6 +21,9 @@ model Tattoo {
 
   images TattooImages
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@map("tattoos")
 }
 

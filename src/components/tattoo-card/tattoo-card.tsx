@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Tattoo } from '@lib/types/tattoo'
 import { cn } from '@/lib/utils/utils'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { ImageWithBlur } from './image-with-blur'
 
 type TattooCardProps = Tattoo & {
@@ -25,7 +25,7 @@ export function TattooCard({
         'overflow-hidden rounded relative border border-border hover:border-gold transition-colors group',
         type === 'double' && 'col-start-1 col-end-3',
         type === 'quad' && 'col-start-1 col-end-3',
-        withAnimation && 'animate-fadeIn',
+        withAnimation && 'animate-fadeIn'
       )}
       style={
         withAnimation

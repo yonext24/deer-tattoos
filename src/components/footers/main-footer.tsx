@@ -12,7 +12,7 @@ export async function MainFooter() {
       <div className="grid grid-cols-2 md:grid-cols-3 gap-y-2 place-content-center mb-6">
         <LogoWithMedia />
         <div className="flex flex-col col-[1] row-span-2 md:col-[2] md:row-span-1 gap-2">
-          <h5 className="text-start md:text-center text-xl">Quienes sómos?</h5>
+          <h5 className="text-start md:text-center text-xl">Quienes somos?</h5>
           <p className="text-balance text-start md:text-center text-sm text-muted-foreground">
             {data}
           </p>

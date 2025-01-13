@@ -4,7 +4,7 @@ import { UserEntry } from './user-entry/user-entry'
 import { BackHomeLink } from './back-home-link'
 import { Separator } from '@/components/shadcn/ui/separator'
 import { buttonVariants } from '@/components/shadcn/ui/button'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { cn } from '@/lib/utils/utils'
 
 const entrys = [
@@ -14,7 +14,7 @@ const entrys = [
   { text: 'Ver Tatuajes', href: '/admin/tatuajes' },
   { text: 'Agregar Artista', href: '/admin/artistas/agregar' },
   { text: 'Ver Artistas', href: '/admin/artistas' },
-  { text: 'Categorias', href: '/admin/categorias' },
+  { text: 'Estilos', href: '/admin/estilos' },
 ]
 
 export async function AdminSidebar() {

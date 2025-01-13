@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/shadcn/ui/card'
 import { ArtistCardMedia } from './artist-card-media'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { DoubleLeftIcon } from '@/components/icons'
 import { Artist } from '@/lib/types/artist'
 import Image from 'next/image'

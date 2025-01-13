@@ -17,7 +17,7 @@ const TattooCreateSchema = z.object({
     .transform((s) => Number(s)),
   original: z.any().refine(imageValidation).refine(imageTypeValidation),
   artist: z.object({
-    slug: z.string().min(1),
+    slug: z.string().min(1).nullable(),
   }),
   styles: z.array(z.string()),
   tags: z.array(z.string()),

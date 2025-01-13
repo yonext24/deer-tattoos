@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { CartItemType, useCartStore } from '@/store/shop-store'
+import { useCartStore } from '@/store/shop-store'
 import {
   Sheet,
   SheetContent,
@@ -10,52 +10,51 @@ import {
 } from '../shadcn/ui/sheet'
 import { Button } from '../shadcn/ui/button'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import { appFetch } from '@/lib/utils/appFetch'
 import { CartItem } from './cart-item'
+import { useEffect } from 'react'
+import { createCartAndSetCookie } from '@/lib/shopify/actions'
+import { Cart } from '@/lib/shopify/types'
+import { CartPrices } from './cart-prices'
+import { cn } from '@/lib/utils/utils'
+import { ShoppingCart } from 'lucide-react'
 
-export function CartSheet() {
+export function CartSheet({ propsCart }: { propsCart: Cart | undefined }) {
   const open = useCartStore((s) => s.open)
   const close = useCartStore((s) => s.closeCart)
   const setCart = useCartStore((s) => s.setCart)
 
   const cart = useCartStore((s) => s.cart)
-  const router = useRouter()
-  const onBuy = () => {
-    router.push('/shop/checkout')
-    close()
-  }
+  console.log(cart)
 
   useEffect(() => {
-    appFetch<CartItemType[]>('/api/shop/cart').then((res) => {
-      setCart(res)
-    })
-  }, [])
+    if (!propsCart) {
+      createCartAndSetCookie()
+    } else {
+      setCart(propsCart)
+    }
+  }, [propsCart])
+
+  const isEmpty = cart.lines.length <= 0
 
   return (
     <Sheet open={open} onOpenChange={close}>
-      <SheetContent className="flex flex-col">
+      <SheetContent className="flex flex-col w-full max-w-full sm:max-w-sm">
         <SheetTitle>Carrito</SheetTitle>
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          {cart.map((item) => (
-            <CartItem key={item.id} {...item} />
-          ))}
+        <div
+          className={cn(
+            'flex flex-col flex-1 overflow-y-auto',
+            isEmpty && 'justify-center items-center'
+          )}
+        >
+          {isEmpty ? (
+            <div>
+              <span>Tu carrito esta vacio</span>
+            </div>
+          ) : (
+            cart.lines.map((item) => <CartItem key={item.id} {...item} />)
+          )}
         </div>
-        <SheetFooter className="border-t border-border !flex !flex-col gap-2">
-          <div className="flex justify-between py-4 w-full">
-            <span className="text-lg">Total</span>
-            <span className="text-lg">
-              $
-              {cart.reduce(
-                (acc, item) => acc + Number(item.price) * item.quantity,
-                0
-              )}
-            </span>
-          </div>
-          <Button role="link" onClick={onBuy} variant="outline">
-            Finalizar Compra
-          </Button>
-        </SheetFooter>
+        <CartPrices />
       </SheetContent>
     </Sheet>
   )

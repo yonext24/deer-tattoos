@@ -23,7 +23,7 @@ const getArtistTattoos = (
 const getRankedTattoos = async (): Promise<Tattoo[]> => {
   const { data } = await getTattoos(
     { sortByRanking: true },
-    { page: 1, size: 6 }
+    { page: 1, size: 18 }
   )
 
   return data

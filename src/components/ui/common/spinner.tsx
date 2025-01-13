@@ -3,8 +3,9 @@ import { cn } from '@/lib/utils/utils'
 import React, { forwardRef, HTMLAttributes, Ref } from 'react'
 
 const Spinner = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref: Ref<HTMLDivElement>) => (
+  ({ className, id, ...props }, ref: Ref<HTMLDivElement>) => (
     <div
+      id={id || 'spinner'}
       ref={ref}
       className={cn(
         'w-4 h-4 border border-solid border-current border-b-transparent rounded-full block box-border animate-rotation',

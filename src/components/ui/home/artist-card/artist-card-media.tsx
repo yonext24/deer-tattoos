@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@components/shadcn/ui/dropdown-menu'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 
 export function ArtistCardMedia({
   children,

@@ -2,6 +2,8 @@
 // import { HomeHeader } from '@/components/ui/home/header'
 // import { LOGO } from '@/lib/utils/consts'
 
+import { TextWithLineJumps } from '@/components/text-with-linejumps/text-with-linejumps'
+
 export default function Home() {
   return null
   // <Section className="min-h-0 py-3 w-full flex flex-col items-center">

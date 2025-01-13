@@ -6,8 +6,9 @@ import { cn } from '@/lib/utils/utils'
 import { Toaster } from '@/components/shadcn/ui/sonner'
 import { PageProvider } from '@/components/providers/page-provider'
 import { APP_URL, MARCA } from '@/lib/utils/consts'
+import { ViewTransitions } from 'next-view-transitions'
 
-export const mainKeywords = [
+const mainKeywords = [
   'tatuajes lanus',
   'tatuajes lomas de zamora',
   'tatuajes buenos aires',
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
   title: {
     template: `%s | ${MARCA} Tattoos`,
     default: `${MARCA} TATTOOS`,
+  },
+  robots: {
+    follow: true,
+    index: true,
   },
   description:
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
@@ -54,18 +59,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className="dark">
-      <body
-        className={cn(
-          'bg-black flex flex-col items-center min-h-screen text-white font-sans',
-          FontSans.variable,
-          FontTitle.variable
-        )}
-      >
-        <Navbar />
-        {/* <PageProvider>{children}</PageProvider>
-        <Toaster /> */}
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="es" className="dark">
+        <body
+          className={cn(
+            'bg-black flex flex-col items-center min-h-screen text-white font-sans',
+            FontSans.variable,
+            FontTitle.variable
+          )}
+        >
+          <Navbar />
+          <PageProvider>{children}</PageProvider>
+          <Toaster />
+        </body>
+      </html>
+    </ViewTransitions>
   )
 }

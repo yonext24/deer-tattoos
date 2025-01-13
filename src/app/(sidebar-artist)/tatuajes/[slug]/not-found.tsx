@@ -2,7 +2,7 @@ import { Button } from '@/components/shadcn/ui/button'
 import { StylizedText } from '@/components/stylized-text/stylized-text'
 import { Main } from '@/components/ui/common/main'
 import { MARCA } from '@/lib/utils/consts'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 
 export default function NotFound() {
   return (

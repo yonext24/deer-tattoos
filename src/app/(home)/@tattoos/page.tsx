@@ -2,11 +2,10 @@ import { SmallerTattooCard } from '@/components/tattoo-card/smaller-tattoo-card'
 import { Tattoos } from '@/components/ui/home/tattoos/tattoos'
 import { getRankedTattoos } from '@/lib/backend/utils/tattoos'
 import { Tattoo } from '@/lib/types/tattoo'
-import tattoos from '../../../../public/ranked-tattoos.json'
+import { NECESARY_AMOUNT_OF_TATTOOS_IN_HOMEPAGE } from '@/lib/utils/consts'
 
 export const revalidate = 3600
 
-export const NECESARY_AMOUNT_OF_TATTOOS = 18
 const NECESARY_AMOUNT_OF_TATTOOS_TO_DUPLICATE = 9
 
 // Funcion para calcular el promedio de aparición del tatuaje y ver si es aceptable
@@ -34,7 +33,7 @@ const transformTattoosToCarousel = (tattoos: Tattoo[]): Tattoo[] => {
   const copy = [...tattoos]
   const pickedIds: string[] = []
 
-  while (copy.length < NECESARY_AMOUNT_OF_TATTOOS) {
+  while (copy.length < NECESARY_AMOUNT_OF_TATTOOS_IN_HOMEPAGE) {
     const randomIndex = Math.floor(Math.random() * copy.length)
     const randomTattoo = copy[randomIndex]
 
@@ -55,7 +54,7 @@ const transformTattoosToCarousel = (tattoos: Tattoo[]): Tattoo[] => {
 }
 
 export default async function Page() {
-  const parsed = transformTattoosToCarousel(tattoos.tattoos as Tattoo[])
+  const parsed = transformTattoosToCarousel(await getRankedTattoos())
 
   return (
     <Tattoos>

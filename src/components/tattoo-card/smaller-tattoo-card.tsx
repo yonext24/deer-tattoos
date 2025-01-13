@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { ImageWithBlur } from './image-with-blur'
 import { Tattoo } from '@/lib/types/tattoo'
 import { cn } from '@/lib/utils/utils'

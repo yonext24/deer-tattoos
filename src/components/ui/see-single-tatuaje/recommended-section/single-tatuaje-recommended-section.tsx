@@ -77,30 +77,29 @@ export function SingleTatuajeRecommendedSection({
 
   if (!tattoo) return null
 
+  console.log({ related, recommended })
+
   return (
     <div className="flex flex-col">
       <h2 className="font-extralight text-2xl mt-4">
         Otros tatuajes de {tattoo.artistSlug ?? 'la galería'}
       </h2>
-      <TatsContainer
-        length={
-          recommended.status === 'loading' || recommended.status === 'idle'
-            ? 3
-            : recommended.data.length
-        }
-      >
+      <TatsContainer length={recommended.data.length}>
         <RecommendationCardRender {...recommended} />
       </TatsContainer>
-      <h2 className="font-extralight text-2xl mt-4">Tatuajes Relacionados</h2>
-      <TatsContainer
-        length={
-          related.status === 'loading' || related.status === 'idle'
-            ? 3
-            : related.data.length
-        }
-      >
-        <RecommendationCardRender {...related} />
-      </TatsContainer>
+      {related.status === 'success' &&
+        !related.data.every((rel) =>
+          recommended.data.some((rec) => rec.slug === rel.slug)
+        ) && ( // Si todos los tatuajes de related son iguales a los de recommended
+          <>
+            <h2 className="font-extralight text-2xl mt-4">
+              Tatuajes Relacionados
+            </h2>
+            <TatsContainer length={related.data.length}>
+              <RecommendationCardRender {...related} />
+            </TatsContainer>
+          </>
+        )}
     </div>
   )
 }
