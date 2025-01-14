@@ -3,15 +3,15 @@
 
 import { DoubleLeftIcon } from '@/components/icons'
 import { cn } from '@/lib/utils/utils'
-import { useRouter } from 'next-nprogress-bar'
 import { HTMLAttributes } from 'react'
 import { useHistoryStore } from '@/store/history-store'
+import { useTransitionRouter } from 'next-view-transitions'
 
 export function Back({
   className,
   ...props
 }: HTMLAttributes<HTMLButtonElement>) {
-  const router = useRouter()
+  const router = useTransitionRouter()
   const { prevPath } = useHistoryStore()
 
   const handleClick = () => {

@@ -11,10 +11,11 @@ const generateConfig = (zoom: number) => ({
 
 type Props = {
   image: ImageType
+  handle: string
   defaultZoom?: number
 }
 
-export function ImageZoomOnHover({ image, defaultZoom = 2 }: Props) {
+export function ImageZoomOnHover({ image, handle, defaultZoom = 2 }: Props) {
   const mergedConfig = generateConfig(defaultZoom)
   const { initialZoom, minZoom, maxZoom, zoomSpeed } = mergedConfig
 
@@ -101,6 +102,7 @@ export function ImageZoomOnHover({ image, defaultZoom = 2 }: Props) {
       <div>
         <Image
           style={{
+            viewTransitionName: handle,
             transform: `scale(${zoomed ? zoom : 1})`,
             ...(zoomed && {
               transformOrigin: `${position.x} ${position.y}`,

@@ -26,7 +26,7 @@ export function ProductImages(product: Product) {
 
   return (
     <div className="flex flex-col gap-2">
-      <ImageZoomOnHover image={selectedImage} defaultZoom={2} />
+      <ImageZoomOnHover handle={handle} image={selectedImage} defaultZoom={2} />
       <div className="flex gap-2">
         {images.length >= 2 &&
           images.map((img, i) => {
@@ -51,6 +51,7 @@ export function ProductImages(product: Product) {
                   src={img.url}
                   alt={img.altText}
                   data-selected={isCurrentImageSelected}
+                  // style={{ viewTransitionName: handle }}
                   className={
                     'rounded-md scale-90 group-hover:scale-100 transition-transform data-[selected=true]:scale-100'
                   }

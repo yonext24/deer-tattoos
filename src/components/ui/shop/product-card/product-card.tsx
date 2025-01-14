@@ -1,7 +1,10 @@
+'use client'
+
 import { Product } from '@/lib/shopify/types'
 import { cn } from '@/lib/utils/utils'
+import { useTransitionRouter } from 'next-view-transitions'
 import Image from 'next/image'
-import { Link } from 'next-view-transitions'
+import React from 'react'
 
 export function ProductCard({
   handle,
@@ -10,8 +13,17 @@ export function ProductCard({
   featuredImage,
   isSmall,
 }: Product & { isSmall?: boolean }) {
+  const router = useTransitionRouter()
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    router.push(`/shop/product/${handle}`, {})
+  }
   return (
-    <Link href={`/shop/product/${handle}`} className="h-full w-full">
+    <a
+      href={`/shop/product/${handle}`}
+      className="h-full w-full"
+      onClick={handleAnchorClick}
+    >
       <article className="flex h-full border border-border hover:border-gold transition-colors relative group rounded-md">
         <Image
           width={featuredImage.width}
@@ -19,6 +31,7 @@ export function ProductCard({
           src={featuredImage.url}
           alt={featuredImage.altText || title}
           className="w-full h-full object-cover"
+          style={{ ...(!isSmall && { viewTransitionName: handle }) }}
         />
         <div
           className="absolute top-0 left-0 w-full h-full bg-green-dark/50 backdrop-blur z-10 flex flex-col items-center justify-center
@@ -42,6 +55,6 @@ export function ProductCard({
           </span>
         </div>
       </article>
-    </Link>
+    </a>
   )
 }
