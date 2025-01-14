@@ -140,16 +140,16 @@ model Category {
   variants String[]
 }
 
-// model PageData {
-//   id                String @id @default(auto()) @map("_id") @db.ObjectId
-//   main_initial_data String
-//   footer_data       String
-//   who_we_are        String
+model PageData {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  main_data   String
+  footer_data String
+  who_we_are  String
 
-//   instagram String
-//   facebook  String
-//   twitter   String
-// }
+  instagram String
+  facebook  String
+  twitter   String
+}
 
 enum TattooType {
   single

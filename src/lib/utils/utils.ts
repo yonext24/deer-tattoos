@@ -157,7 +157,8 @@ type mediaType = {
 }
 
 
-export const transformPageMedias = (data: pageData): Array<Omit<mediaType, 'key_name'>> => {
+export const transformPageMedias = (data: pageData | null): Array<Omit<mediaType, 'key_name'>> => {
+  if (!data) return []
   const medias: Array<Omit<Omit<mediaType, 'name'>, 'href'>> = [
     {
       key_name: 'instagram',

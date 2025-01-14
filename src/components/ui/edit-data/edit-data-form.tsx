@@ -52,9 +52,16 @@ const dataFormSchema = z.object({
     .or(z.literal('')),
 })
 
-export function EditDataForm({ data }: { data: pageData }) {
+export function EditDataForm({ data }: { data: pageData | null }) {
   const form = useForm<z.infer<typeof dataFormSchema>>({
-    defaultValues: data,
+    defaultValues: data || {
+      facebook: '',
+      instagram: '',
+      twitter: '',
+      footer_data: '',
+      who_we_are: '',
+      main_data: '',
+    },
     resolver: zodResolver(dataFormSchema),
   })
 
@@ -75,7 +82,7 @@ export function EditDataForm({ data }: { data: pageData }) {
         reset(data)
       })
       .catch((err) => {
-        toast.error(err)
+        toast.error(err?.message ?? err)
       })
   })
 

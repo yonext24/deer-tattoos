@@ -45,7 +45,9 @@ export const sorting: SortFilterItem[] = [
 export const TAGS = {
   collections: 'collections',
   products: 'products',
-  cart: 'cart'
+  cart: 'cart',
+  data: 'data',
+  tattoos: 'tattoos'
 };
 
 export const HIDDEN_PRODUCT_TAG = 'nextjs-frontend-hidden';

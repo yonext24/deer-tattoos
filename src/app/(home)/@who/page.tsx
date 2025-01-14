@@ -35,7 +35,7 @@ export default async function Page() {
             </h3>
             <div className="">
               <TextWithLineJumps
-                text={data.who_we_are}
+                text={data?.who_we_are || ''}
                 className="text-end mt-4 max-[850px]:text-center"
               ></TextWithLineJumps>
             </div>
