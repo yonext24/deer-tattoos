@@ -1,6 +1,4 @@
-import { getTattoos } from '@/lib/backend/utils/tattoos'
 import { prisma } from '@backend/prisma'
-import { NextResponse } from 'next/server'
 import ranked from '../../../../public/ranked-tattoos.json'
 
 export type SearchResponse = {
@@ -16,6 +14,7 @@ export const GET = async (request: Request) => {
   const url = request.url
   const params = new URLSearchParams(url.split('?')[1])
   const query = params.get('q')
+  const ignore = params.get('ignore')?.split(',')
 
   if (query === '' || !query) return getFeaturedSearch()
 
@@ -37,8 +36,10 @@ export const GET = async (request: Request) => {
   const parsedSearch = search.flatMap((item) => {
     const arr = []
 
-    const matchesWithStyles = item.styles.filter((style) =>
-      new RegExp(query, 'i').test(style)
+    const matchesWithStyles = item.styles.filter((style) => {
+      if (ignore && ignore.includes(style)) return false
+      return new RegExp(query, 'i').test(style)
+    }
     )
 
     if (matchesWithStyles.length > 0) {
@@ -100,7 +101,8 @@ export const GET = async (request: Request) => {
   const parsedArtists = artists.map((artist) => ({
     type: 'artist',
     content: artist.name,
-    href: `/artist/${artist.slug}`,
+    image: artist.images.profile.src,
+    href: `/tatuador/${artist.slug}/tatuajes`,
   }))
 
   return Response.json([...parsedSearch, ...parsedArtists].map((el, id) => ({ ...el, id })))

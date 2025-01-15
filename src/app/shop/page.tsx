@@ -28,7 +28,10 @@ export default async function Page({
   return (
     <Main withMarginOnTop className="mx-auto flex flex-col w-full">
       <Section className="min-h-0 py-12 w-full flex flex-col items-center">
-        <h2 className="text-7xl text-gold font-title">{LOGO} SHOP</h2>
+        <h2 className="text-7xl text-gold font-title">
+          <span className="block ml-4 md:ml-12">{LOGO}</span>
+          <span className="block ml-auto">SHOP</span>
+        </h2>
       </Section>
       <CategoryFilter searchParams={searchParams} />
       <Section className="max-w-[1000px]">

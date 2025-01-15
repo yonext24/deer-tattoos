@@ -24,8 +24,6 @@ export function useClickOutside(
         return
       }
 
-      console.log(elementRef.current)
-
       if (
         elementRef &&
         elementRef.current &&

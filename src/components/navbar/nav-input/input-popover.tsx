@@ -127,7 +127,6 @@ export function InputPopover({
                       quality={40}
                     />
                   )}
-                  <div className="w-10 h-10 rounded-lg bg-white"></div>
                   <span>{art.content}</span>
                   <span className="text-gold/60 text-xs group-hover:text-gold/90 transition-colors">
                     Artista

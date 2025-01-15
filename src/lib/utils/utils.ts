@@ -156,6 +156,27 @@ type mediaType = {
   icon: any
 }
 
+function createWrapper(elementTag: keyof HTMLElementTagNameMap = 'div', id?: string) {
+  const hipoteticElementWrapper = document.createElement(elementTag)
+
+  hipoteticElementWrapper.setAttribute('id', 'hipotetic-element')
+  hipoteticElementWrapper.className = 'absolute left-[-99999px] top-[-999999px] flex'
+  document.body.appendChild(hipoteticElementWrapper)
+
+  return hipoteticElementWrapper
+}
+
+export const measureHipoteticElement = (propElement: keyof HTMLElementTagNameMap, content?: string) => {
+  // not so hipotetic lol
+  const element = createWrapper(propElement, 'measuring-wrapper')
+
+  if (content) element.innerHTML = content
+
+  const elementSizes = element.getBoundingClientRect()
+  element.remove()
+
+  return elementSizes
+}
 
 export const transformPageMedias = (data: pageData | null): Array<Omit<mediaType, 'key_name'>> => {
   if (!data) return []

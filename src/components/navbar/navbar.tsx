@@ -22,7 +22,7 @@ export function Navbar() {
         <MobileNavbarButton />
         <Link
           href="/"
-          className="font-title text-gold text-2xl h-full hidden sm:flex flex-grod-[.5]"
+          className="font-title text-gold text-2xl h-full hidden md:flex flex-grod-[.5]"
         >
           <div className="h-full flex items-center">{MARCA}</div>
         </Link>
@@ -36,7 +36,7 @@ export function Navbar() {
             <Link
               key={href}
               href={href}
-              className="hover:text-green-light transition-colors hover:underline h-full p-2"
+              className="hover:text-green-light transition-colors hover:underline h-full py-2 text-sm px-px md:px-2 md:text-base"
             >
               <div className="flex items-center h-full">{text}</div>
             </Link>

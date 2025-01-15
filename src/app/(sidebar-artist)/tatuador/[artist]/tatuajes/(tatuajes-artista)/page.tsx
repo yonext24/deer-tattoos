@@ -70,16 +70,23 @@ const Children = async ({
   )
 
   return (
-    <ColumnLayout>
-      {tattoos.map((tat, index) => (
-        <TattooCard
-          key={tat.id}
-          {...tat}
-          withAnimation
-          delay={`${index * 80}ms`}
-        />
-      ))}
-    </ColumnLayout>
+    <div className="flex flex-col">
+      {filterParams.search && (
+        <h3 className="mx-4 font-thin text-xl">
+          Buscando por: {filterParams.search}
+        </h3>
+      )}
+      <ColumnLayout>
+        {tattoos.map((tat, index) => (
+          <TattooCard
+            key={tat.id}
+            {...tat}
+            withAnimation
+            delay={`${index * 80}ms`}
+          />
+        ))}
+      </ColumnLayout>
+    </div>
   )
 }
 

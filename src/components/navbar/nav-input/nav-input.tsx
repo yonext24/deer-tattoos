@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils/utils'
 import { InputPopover } from './input-popover'
 import { useNavInput } from './use-nav-input'
 import { GoldBadge } from '@/components/ui/common/gold-badge'
+import { GroupBadge } from './group-badge'
 
 type NavInputProps = {} & React.InputHTMLAttributes<HTMLInputElement>
 
@@ -17,9 +18,11 @@ export const NavInput = (props: NavInputProps) => {
     isMobile,
     currentIndex,
     formRef,
+    stylesContainerRef,
+    inputContainerRef,
     styles,
+    stylesDisplay,
     artist,
-    showingCategories,
     setValue,
     handleSubmit,
     handleKeyDown,
@@ -38,17 +41,19 @@ export const NavInput = (props: NavInputProps) => {
       className="flex items-center max-w-[600px] w-full col-span-2 relative"
     >
       <div
+        ref={inputContainerRef}
         className={cn(
-          'grid grid-cols-1 w-full relative pl-2 bg-black/30 backdrop-blur',
-          showingCategories && 'grid-cols-[auto_1fr]'
+          'grid w-full relative pl-2 bg-black/30 backdrop-blur grid-cols-[auto_1fr]'
         )}
       >
-        {showingCategories && !isMobile && (
-          <div className="flex gap-px">
+        {
+          <div className="flex gap-px" ref={stylesContainerRef}>
             {artist && (
-              <GoldBadge onClick={handleDeleteArtist}>De: {artist}</GoldBadge>
+              <GoldBadge id="artistBadge" onClick={handleDeleteArtist}>
+                De: {artist}
+              </GoldBadge>
             )}
-            {styles.map((el) => (
+            {stylesDisplay.show.map((el) => (
               <GoldBadge
                 onClick={() => {
                   handleDeleteStyle(el)
@@ -59,8 +64,14 @@ export const NavInput = (props: NavInputProps) => {
                 {el}
               </GoldBadge>
             ))}
+            {Boolean(stylesDisplay.group.length) && (
+              <GroupBadge
+                styles={stylesDisplay.group}
+                handleDeleteStyle={handleDeleteStyle}
+              />
+            )}
           </div>
-        )}
+        }
         <input
           autoComplete="off"
           id="my-input"

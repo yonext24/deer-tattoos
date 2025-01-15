@@ -24,7 +24,5 @@ export function useMediaQuery(query: string, initialState: boolean = false) {
     }
   }, [])
 
-  console.log({ isMobile: breakpoint })
-
   return breakpoint
 }

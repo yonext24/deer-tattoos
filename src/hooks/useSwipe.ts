@@ -38,8 +38,6 @@ export function useSwipe({
 
       const isMainlyHorizontal = Math.abs(diffX) > Math.abs(diffY)
 
-      console.log({ isMainlyHorizontal, diffX, diffY })
-
       if (isMainlyHorizontal) {
         if (diffX > 10) {
           // Swipe left detected

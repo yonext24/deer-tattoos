@@ -6,6 +6,7 @@ import { Button } from '@/components/shadcn/ui/button'
 import { Separator } from '@/components/shadcn/ui/separator'
 import { GoldBadge } from '@/components/ui/common/gold-badge'
 import { cn } from '@/lib/utils/utils'
+import { FilterIcon } from 'lucide-react'
 import { HTMLAttributes, forwardRef } from 'react'
 
 type Props = HTMLAttributes<HTMLButtonElement> & {
@@ -19,12 +20,13 @@ export const CategoriesFilterMainButton = forwardRef<HTMLButtonElement, Props>(
         variant="outline"
         size="default"
         className={cn(
-          'h-8 border-border hover:border-gold transition-colors',
+          'h-8 border-border hover:border-gold transition-colors flex gap-2',
           className
         )}
         ref={ref}
         {...props}
       >
+        <FilterIcon height={14} width={14} />
         Estilos
         {selectedValues?.length > 0 && (
           <>

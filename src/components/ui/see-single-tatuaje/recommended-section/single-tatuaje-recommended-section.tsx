@@ -84,7 +84,9 @@ export function SingleTatuajeRecommendedSection({
       <h2 className="font-extralight text-2xl mt-4">
         Otros tatuajes de {tattoo.artistSlug ?? 'la galería'}
       </h2>
-      <TatsContainer length={recommended.data.length}>
+      <TatsContainer
+        length={recommended.status !== 'success' ? 3 : recommended.data.length}
+      >
         <RecommendationCardRender {...recommended} />
       </TatsContainer>
       {related.status === 'success' &&
