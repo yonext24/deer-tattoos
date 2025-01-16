@@ -17,6 +17,7 @@ import { Cart } from '@/lib/shopify/types'
 import { CartPrices } from './cart-prices'
 import { cn } from '@/lib/utils/utils'
 import { ShoppingCart } from 'lucide-react'
+import { useSwipe } from '@/hooks/useSwipe'
 
 export function CartSheet({ propsCart }: { propsCart: Cart | undefined }) {
   const open = useCartStore((s) => s.open)
@@ -35,6 +36,8 @@ export function CartSheet({ propsCart }: { propsCart: Cart | undefined }) {
   }, [propsCart])
 
   const isEmpty = cart.lines.length <= 0
+
+  useSwipe({ onSwipeRight: close })
 
   return (
     <Sheet open={open} onOpenChange={close}>

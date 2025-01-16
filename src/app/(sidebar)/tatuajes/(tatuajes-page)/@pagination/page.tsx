@@ -16,7 +16,7 @@ export default async function Page({
 
   return (
     <Section className="!min-h-[auto] mt-2">
-      <Suspense key={paramsToString}>
+      <Suspense key={paramsToString} fallback={<div></div>}>
         <Children searchParams={searchParams} />
       </Suspense>
     </Section>

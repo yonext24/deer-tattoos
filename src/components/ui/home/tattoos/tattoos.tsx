@@ -9,7 +9,7 @@ export async function Tattoos({ children }: { children: React.ReactNode }) {
   return (
     <Section className="grid min-[800px]:grid-cols-[60%_1fr] grid-cols-[100%_1fr] gap-4 relative overflow-hidden py-0 max-h-[510px] min-h-[auto] w-full">
       <div className="flex flex-col justify-center text-center items-center md:items-start md:text-start">
-        <DecoratedTitle className="text-6xl w-auto">
+        <DecoratedTitle as="h1" className="text-6xl w-auto">
           Los mejores tatuajes de Lanús
         </DecoratedTitle>
         <TextWithLineJumps className="mt-4 relative z-10" text={data ?? ''} />

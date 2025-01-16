@@ -1,5 +1,6 @@
-import { Link } from 'next-view-transitions'
+import { Link, useTransitionRouter } from 'next-view-transitions'
 import { StylizedText } from '../stylized-text/stylized-text'
+import React from 'react'
 
 export function MobileNavbarLink({
   index,
@@ -12,6 +13,14 @@ export function MobileNavbarLink({
   text: string
   closeModal: () => void
 }) {
+  const router = useTransitionRouter()
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    router.push(href)
+    console.log(closeModal)
+    closeModal()
+  }
+
   return (
     <li
       className="animate-fadeFromRight duration-200"
@@ -20,7 +29,7 @@ export function MobileNavbarLink({
         animationDelay: `${index * 50 + 200}ms`,
       }}
     >
-      <Link href={href} onClick={closeModal}>
+      <Link href={href} onClick={handleClick}>
         <StylizedText
           propsForElement={{
             id: 'item',

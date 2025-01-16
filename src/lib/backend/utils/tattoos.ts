@@ -1,5 +1,4 @@
 import { Tattoo } from '@lib/types/tattoo'
-import { cache } from 'react'
 import {
   FilterFuncPropFilterType,
   FilterFuncPropPaginationType,
@@ -9,6 +8,8 @@ import {
   filterAndPaginateTattoos,
   getTattooBySlug,
 } from '@backend/utils/tattoos-utils'
+import { unstable_cache } from 'next/cache'
+import { TAGS } from '@lib/utils/consts'
 
 const getTattoos: FilterFuncType = filterAndPaginateTattoos
 
@@ -29,10 +30,10 @@ const getRankedTattoos = async (): Promise<Tattoo[]> => {
   return data
 }
 
-const cachedGetTattooBySlug = cache(getTattooBySlug)
-const cachedGetTattoos = cache(getTattoos)
-const cachedGetRankedTattoos = cache(getRankedTattoos)
-const cachedGetArtistTattos = cache(getArtistTattoos)
+const cachedGetTattooBySlug = unstable_cache(getTattooBySlug, ['tattoo', 'slug'], { tags: [TAGS.tattoos] })
+const cachedGetTattoos = unstable_cache(getTattoos, ['tattoo'], { tags: [TAGS.tattoos] })
+const cachedGetRankedTattoos = unstable_cache(getRankedTattoos, ['tattoo', 'ranked'], { tags: [TAGS.tattoos] })
+const cachedGetArtistTattos = unstable_cache(getArtistTattoos, ['tattoo', 'artist'], { tags: [TAGS.tattoos] })
 
 export {
   cachedGetTattoos as getTattoos,

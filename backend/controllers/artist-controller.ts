@@ -1,4 +1,5 @@
 import { Artist } from '@/lib/types/artist'
+import { TAGS } from '@/lib/utils/consts'
 import { uploadImage } from '@backend/firebase/utils'
 import { AppError, ParsedRequest } from '@backend/middlewares/helpers'
 import {
@@ -8,6 +9,7 @@ import {
 } from '@backend/middlewares/validators'
 import { prisma } from '@backend/prisma'
 import { generateArtistSlug, getBase64 } from '@backend/utils/utils'
+import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 export const ARTIST_CONTROLLER = {
@@ -76,6 +78,7 @@ export const ARTIST_CONTROLLER = {
         medias,
       },
     })
+    revalidateTag(TAGS.artists)
 
     return NextResponse.json(artist)
   },
@@ -88,6 +91,7 @@ export const ARTIST_CONTROLLER = {
       data: body,
     })
 
+    revalidateTag(TAGS.artists)
     return NextResponse.json(res)
   },
 
@@ -153,6 +157,7 @@ export const ARTIST_CONTROLLER = {
         },
       },
     })
+    revalidateTag(TAGS.artists)
 
     return NextResponse.json(response)
   },
@@ -168,6 +173,7 @@ export const ARTIST_CONTROLLER = {
       where: { slug: body.slug },
     })
 
+    revalidateTag(TAGS.artists)
     return NextResponse.json({ result: true })
   },
 }

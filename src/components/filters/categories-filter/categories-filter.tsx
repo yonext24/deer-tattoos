@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import { createUrl, generateParams } from '@/lib/utils/createUrl'
@@ -25,9 +26,15 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useRouter } from 'next-nprogress-bar'
 import { useNavigation } from '@/hooks/useNavigation'
 import Spinner from '@/components/ui/common/spinner'
+import { useStateWithLoading } from '@/hooks/useStateWithLoading'
 
 export function CategoriesFilter() {
-  const [styles, setStyles] = useState<Style[]>([])
+  const {
+    state: styles,
+    updateState,
+    status,
+    error,
+  } = useStateWithLoading<Style[]>([])
   const [navigating, setNavigating] = useState<false | string>(false)
 
   const searchParams = useSearchParams()
@@ -41,8 +48,8 @@ export function CategoriesFilter() {
   })
 
   useEffect(() => {
-    getStylesClient().then((styles) =>
-      setStyles(
+    updateState(async () =>
+      getStylesClient().then((styles) =>
         styles.sort((a, b) => {
           if (a.name < b.name) {
             return -1
@@ -80,6 +87,8 @@ export function CategoriesFilter() {
   const params = generateParams(searchParams)
   const selectedValues = params.getAll('style')
 
+  console.log({ status })
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -88,37 +97,55 @@ export function CategoriesFilter() {
       <PopoverContent className="w-[200px] p-0" align="start">
         <Command>
           <CommandInput placeholder={'Estilos'} />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
-              {styles.map((el) => {
-                const isSelected = selectedValues.includes(
-                  String(el.name).toLocaleLowerCase()
-                )
-                const isCurrentElementLoading =
-                  (typeof navigating === 'string' &&
-                    navigating.toLowerCase()) === el.name.toLocaleLowerCase()
+          <CommandList
+            className={cn(status === 'loading' && 'overflow-y-hidden')}
+          >
+            {(() => {
+              if (status === 'loading')
+                return <Spinner className="mx-auto my-4" />
+              if (status === 'error')
                 return (
-                  <CommandItem onSelect={handleSelect} key={el.name}>
-                    <div
-                      data-loading={isCurrentElementLoading}
-                      className={cn(
-                        'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                        isSelected
-                          ? 'bg-primary text-primary-foreground'
-                          : 'opacity-50 [&_svg]:invisible'
-                      )}
-                    >
-                      <CheckIcon className={cn('h-4 w-4')} />
-                    </div>
-                    <span>{el.name}</span>
-                    {isCurrentElementLoading && (
-                      <Spinner className="border-2 ml-auto text-white" />
-                    )}
-                  </CommandItem>
+                  <p className="text-red-500">{error ?? 'Algo salió mal'}</p>
                 )
-              })}
-            </CommandGroup>
+              if (status === 'success' && !styles.length)
+                return <CommandEmpty>No se encontraron estilos</CommandEmpty>
+              return (
+                <CommandGroup>
+                  {styles.map((el) => {
+                    const isSelected = selectedValues.includes(
+                      String(el.name).toLocaleLowerCase()
+                    )
+                    const isCurrentElementLoading =
+                      (typeof navigating === 'string' &&
+                        navigating.toLowerCase()) ===
+                      el.name.toLocaleLowerCase()
+                    return (
+                      <CommandItem
+                        onSelect={handleSelect}
+                        key={el.name}
+                        className="py-3 sm:py-1.5"
+                      >
+                        <div
+                          data-loading={isCurrentElementLoading}
+                          className={cn(
+                            'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
+                            isSelected
+                              ? 'bg-primary text-primary-foreground'
+                              : 'opacity-50 [&_svg]:invisible'
+                          )}
+                        >
+                          <CheckIcon className={cn('h-4 w-4')} />
+                        </div>
+                        <span>{el.name}</span>
+                        {isCurrentElementLoading && (
+                          <Spinner className="border-2 ml-auto text-white" />
+                        )}
+                      </CommandItem>
+                    )
+                  })}
+                </CommandGroup>
+              )
+            })()}
           </CommandList>
         </Command>
       </PopoverContent>

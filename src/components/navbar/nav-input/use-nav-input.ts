@@ -141,7 +141,10 @@ export function useNavInput() {
   const paramsStyles = params.getAll('style')
 
   useEffect(() => {
-    if (paramsStyles.length === 0) return setStyles([])
+    if (paramsStyles.length === 0) {
+      setStyles([])
+      setStylesDisplay({ show: [], group: [] })
+    }
     setStyles(paramsStyles)
     setStylesDisplay({ show: paramsStyles, group: [] })
   }, [JSON.stringify(paramsStyles)])

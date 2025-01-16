@@ -14,6 +14,8 @@ import {
 } from '@backend/utils/utils'
 import { filterAndPaginateTattoos } from '@backend/utils/tattoos-utils'
 import { Tattoo } from '@prisma/client'
+import { revalidateTag } from 'next/cache'
+import { TAGS } from '@/lib/utils/consts'
 
 export const tattooController = {
   async getTattoos(req: ParsedRequest) {
@@ -85,8 +87,7 @@ export const tattooController = {
         }
         const url = (await uploadImage(
           image,
-          `/tattoos/${slug}/extra-${i + 1}.${
-            (image as File).type.split('/')[1]
+          `/tattoos/${slug}/extra-${i + 1}.${(image as File).type.split('/')[1]
           }`
         )) as string
         const base64 = (await getBase64(image)) as string
@@ -114,6 +115,8 @@ export const tattooController = {
       },
     })
 
+    revalidateTag(TAGS.tattoos)
+
     return NextResponse.json(nuevoTatuaje)
   },
 
@@ -129,6 +132,7 @@ export const tattooController = {
 
       const deleted = await prisma.tattoo.delete({ where: { id } })
 
+      revalidateTag(TAGS.tattoos)
       return NextResponse.json(deleted)
     } catch (err) {
       console.error(`Error al eliminar el tatuaje: ${err}`)
@@ -158,6 +162,7 @@ export const tattooController = {
         data: toUpdate,
       })
 
+      revalidateTag(TAGS.tattoos)
       return NextResponse.json(updated)
     } catch (err) {
       throw new AppError(500, 'Algo salió mal al actualizar el tatuaje.')
@@ -175,6 +180,8 @@ export const tattooController = {
       where: { slug },
       data: { ranking: { increment: 1 } },
     })
+
+    revalidateTag(TAGS.tattoos)
 
     return NextResponse.json({})
   },

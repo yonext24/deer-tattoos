@@ -2,7 +2,7 @@ import { Link } from 'next-view-transitions'
 import { NavInput } from './nav-input/nav-input'
 import { Suspense } from 'react'
 import { MARCA } from '@/lib/utils/consts'
-import { MobileNavbarButton } from '../mobile-navbar/mobile-navbar-button/mobile-navbar-button'
+import { MobileNavbarButton } from '../mobile-navbar/mobile-navbar-button'
 import { NavCartButton } from './nav-cart-button/nav-cart-button'
 
 export const navEntrys = [
