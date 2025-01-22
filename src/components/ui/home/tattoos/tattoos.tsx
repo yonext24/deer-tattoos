@@ -12,7 +12,11 @@ export async function Tattoos({ children }: { children: React.ReactNode }) {
         <DecoratedTitle as="h1" className="text-6xl w-auto">
           Los mejores tatuajes de Lanús
         </DecoratedTitle>
-        <TextWithLineJumps className="mt-4 relative z-10" text={data ?? ''} />
+        <TextWithLineJumps
+          as="h4"
+          className="mt-4 relative z-10"
+          text={data ?? ''}
+        />
         <StylizedLink href="/tatuajes" className="mt-2" circleRadius="70px">
           Ver más
         </StylizedLink>

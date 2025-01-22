@@ -1,6 +1,5 @@
-import { cache } from "react";
 import { prisma } from '@backend/prisma'
 
-export const getAllCategories = cache(async () => {
+export const getAllCategories = async () => {
   return prisma.category.findMany()
-})
+}

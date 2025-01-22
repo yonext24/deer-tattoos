@@ -6,6 +6,7 @@ import { SearchParamsType } from '../types/common'
 import { InstagramLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
 import { FacebookIcon } from 'lucide-react'
 import { pageData } from '../backend/utils/data'
+import { Product } from '../shopify/types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -228,3 +229,9 @@ export const validateEnvironmentVariables = () => {
     );
   }
 };
+
+export const sortWithoutStockToEnd = (a: Product, b: Product) => {
+  if (!a.availableForSale && b.availableForSale) return 1
+  if (!b.availableForSale && a.availableForSale) return -1
+  return 0
+}

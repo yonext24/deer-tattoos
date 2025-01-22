@@ -25,7 +25,6 @@ export function CartSheet({ propsCart }: { propsCart: Cart | undefined }) {
   const setCart = useCartStore((s) => s.setCart)
 
   const cart = useCartStore((s) => s.cart)
-  console.log(cart)
 
   useEffect(() => {
     if (!propsCart) {

@@ -11,6 +11,7 @@ export function ProductCard({
   title,
   variants,
   featuredImage,
+  availableForSale,
   isSmall,
 }: Product & { isSmall?: boolean }) {
   const router = useTransitionRouter()
@@ -18,40 +19,54 @@ export function ProductCard({
     e.preventDefault()
     router.push(`/shop/product/${handle}`, {})
   }
+  const isOutOfStock = !availableForSale
+  const variantForDisplay = variants[0]
+  const variantHasComparePrice = variantForDisplay.compareAtPrice
+
   return (
     <a
       href={`/shop/product/${handle}`}
-      className="h-full w-full"
+      className="h-full w-full group"
       onClick={handleAnchorClick}
     >
-      <article className="flex h-full border border-border hover:border-gold transition-colors relative group rounded-md">
+      <article className="h-full flex flex-col rounded overflow-hidden">
         <Image
           width={featuredImage.width}
           height={featuredImage.height}
           src={featuredImage.url}
           alt={featuredImage.altText || title}
-          className="w-full h-full object-cover"
           style={{ ...(!isSmall && { viewTransitionName: handle }) }}
+          className="w-full h-full object-cover rounded-[inherit]"
         />
         <div
-          className="absolute top-0 left-0 w-full h-full bg-green-dark/50 backdrop-blur z-10 flex flex-col items-center justify-center
-        transition-opacity opacity-0 group-hover:opacity-100"
+          className={cn(
+            'flex flex-col justify-center',
+            'text-white text-base first:text-xl font-thin',
+            isOutOfStock && '!text-neutral-400'
+          )}
         >
-          <span
-            className={cn(
-              'text-white text-2xl font-thin text-center',
-              isSmall && 'text-xl'
-            )}
-          >
+          <span className="[font-size:1.15rem] group-hover:underline">
             {title}
           </span>
           <span
             className={cn(
-              'text-white text-2xl font-thin text-center',
-              isSmall && 'text-xl'
+              'text-gold flex justify-between',
+              isOutOfStock && 'text-neutral-400'
             )}
           >
-            ${variants[0]?.price.amount}
+            <div className="flex gap-2">
+              ${variants[0]?.price.amount}
+              {variantHasComparePrice && (
+                <span className="line-through text-neutral-500">
+                  ${variantHasComparePrice.amount}
+                </span>
+              )}
+            </div>
+            {isOutOfStock && (
+              <span>
+                {'('}No Stock{')'}
+              </span>
+            )}
           </span>
         </div>
       </article>

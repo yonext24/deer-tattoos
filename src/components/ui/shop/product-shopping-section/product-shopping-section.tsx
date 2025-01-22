@@ -4,7 +4,10 @@
 import { ProductVariantSelector } from './product-variant-selector'
 import React from 'react'
 import { Product } from '@/lib/shopify/types'
-import { ProductShoppingContextProvider } from './product-shopping-context'
+import {
+  ProductShoppingContextProvider,
+  useProductShopping,
+} from './product-shopping-context'
 import { ProductShoppingButton } from './product-shopping-button'
 
 export function ProductShoppingSection({ product }: { product: Product }) {
@@ -21,6 +24,8 @@ export function ProductShoppingSectionWithContext({
   product: Product
 }) {
   const { variants, options } = product
+
+  console.log(product)
 
   return (
     <>

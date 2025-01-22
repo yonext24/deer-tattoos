@@ -32,10 +32,12 @@ export function SmallerTattooCard({
         width={tattoo.images.card.width}
       />
       <div
+        aria-hidden="true"
         className="absolute top-0 left-0 w-full h-full z-10 opacity-0 flex items-center justify-center duration-300
     bg-green-darker/60 backdrop-blur-md transition-opacity group-hover:opacity-100 font-extralight text-gold"
       >
-        <span>Ver más</span>
+        {/* Doing this so it doesnt get indexed by ctrl + f and SEO */}
+        <span className="before:[content:'Ver_más']"></span>
       </div>
     </Link>
   )

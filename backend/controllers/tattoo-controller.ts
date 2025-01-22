@@ -181,8 +181,6 @@ export const tattooController = {
       data: { ranking: { increment: 1 } },
     })
 
-    revalidateTag(TAGS.tattoos)
-
     return NextResponse.json({})
   },
 }

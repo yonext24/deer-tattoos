@@ -149,6 +149,17 @@ model PageData {
   instagram String
   facebook  String
   twitter   String
+
+  email   String
+  address String
+}
+
+model Page {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  slug        String @unique
+  title       String
+  content     String
+  description String
 }
 
 enum TattooType {

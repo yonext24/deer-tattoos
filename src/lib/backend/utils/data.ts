@@ -10,6 +10,9 @@ export type pageData = {
   instagram: string,
   facebook: string,
   twitter: string
+
+  email: string,
+  address: string
 }
 
 const uncachedGetAllPageData = async (): Promise<pageData | null> => {

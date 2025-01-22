@@ -159,9 +159,13 @@ export function useNavInput() {
       e.preventDefault?.()
     }
 
-    if (isShop && value) {
-      router.push(`/shop?search=${value}`)
+    if (isShop) {
       setOpen(false)
+      if (!value) {
+        router.push('/shop')
+        return
+      }
+      router.push(`/shop?search=${value}`)
       return
     }
 

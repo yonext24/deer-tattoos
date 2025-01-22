@@ -122,7 +122,7 @@ export async function shopifyFetch<T>({
     }
 
     throw {
-      error: e,
+      error: JSON.stringify(e),
       query
     };
   }
@@ -419,7 +419,7 @@ export async function getProductRecommendations(productId: string): Promise<Prod
 export async function getProducts({
   query,
   reverse,
-  sortKey
+  sortKey = 'BEST_SELLING'
 }: {
   query?: string;
   reverse?: boolean;
@@ -432,7 +432,7 @@ export async function getProducts({
       query,
       reverse,
       sortKey
-    }, revalidate: 60
+    }
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
@@ -444,9 +444,11 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
   // otherwise it will continue to retry the request.
   const collectionWebhooks = ['collections/create', 'collections/delete', 'collections/update'];
   const productWebhooks = ['products/create', 'products/delete', 'products/update'];
+  const discountWebhooks = ['discounts/update', 'discounts/create', 'discounts/delete']
   const topic = (await headers()).get('x-shopify-topic') || 'unknown';
   const isCollectionUpdate = collectionWebhooks.includes(topic);
   const isProductUpdate = productWebhooks.includes(topic);
+  const isDiscountUpdate = discountWebhooks.includes(topic)
 
   const data = await req.text()
   const hmacHeader = req.headers.get('X-Shopify-Hmac-Sha256');
@@ -463,18 +465,18 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ status: 401 });
   }
 
-  if (!isCollectionUpdate && !isProductUpdate) {
+  if (!isCollectionUpdate && !isProductUpdate && !isDiscountUpdate) {
     // We don't need to revalidate anything for any other topics.
     return NextResponse.json({ status: 200 });
   }
 
-  console.log({ isCollectionUpdate, isProductUpdate, data })
+  console.log({ isCollectionUpdate, isDiscountUpdate, isProductUpdate, data })
 
   if (isCollectionUpdate) {
     revalidateTag(TAGS.collections);
   }
 
-  if (isProductUpdate) {
+  if (isProductUpdate || isDiscountUpdate) {
     revalidateTag(TAGS.products);
   }
 

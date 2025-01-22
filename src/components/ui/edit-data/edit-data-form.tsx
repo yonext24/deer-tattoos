@@ -50,6 +50,11 @@ const dataFormSchema = z.object({
       'Este campo tiene que ser una url válida, por ejemplo: "https://google.com"'
     )
     .or(z.literal('')),
+  email: z
+    .string()
+    .email('Este campo tiene que ser un email válido.')
+    .or(z.literal('')),
+  address: z.string().or(z.literal('')),
 })
 
 export function EditDataForm({ data }: { data: pageData | null }) {
@@ -61,6 +66,8 @@ export function EditDataForm({ data }: { data: pageData | null }) {
       footer_data: '',
       who_we_are: '',
       main_data: '',
+      address: '',
+      email: '',
     },
     resolver: zodResolver(dataFormSchema),
   })
@@ -197,6 +204,60 @@ export function EditDataForm({ data }: { data: pageData | null }) {
                     width={605}
                     alt="imagen"
                   />
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )
+          }}
+        />
+        <FormField
+          control={control}
+          name="email"
+          render={({ field: { onChange, value } }) => {
+            return (
+              <FormItem className="flex flex-col items-start mt-4">
+                <FormLabel>Email de contacto</FormLabel>
+                <FormControl>
+                  <MediaPicker
+                    rows={4}
+                    className={'w-full'}
+                    spellCheck={false}
+                    allowEmpty
+                    onAccept={onChange}
+                    reset={() => resetField('email')}
+                    extValue={value}
+                    initializeSaved
+                  />
+                </FormControl>
+                <FormDescription>
+                  <span>El email de contacto.</span>
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )
+          }}
+        />
+        <FormField
+          control={control}
+          name="address"
+          render={({ field: { onChange, value } }) => {
+            return (
+              <FormItem className="flex flex-col items-start mt-4">
+                <FormLabel>Dirección</FormLabel>
+                <FormControl>
+                  <MediaPicker
+                    rows={4}
+                    className={'w-full'}
+                    spellCheck={false}
+                    allowEmpty
+                    onAccept={onChange}
+                    reset={() => resetField('address')}
+                    extValue={value}
+                    initializeSaved
+                  />
+                </FormControl>
+                <FormDescription>
+                  <span>La dirección que aparece en el pie de página.</span>
                 </FormDescription>
                 <FormMessage />
               </FormItem>

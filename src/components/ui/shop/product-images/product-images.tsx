@@ -25,7 +25,7 @@ export function ProductImages(product: Product) {
   }, [imageParam])
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 sticky top-[calc(var(--navbar-height)+1rem)]">
       <ImageZoomOnHover handle={handle} image={selectedImage} defaultZoom={2} />
       <div className="flex gap-2">
         {images.length >= 2 &&

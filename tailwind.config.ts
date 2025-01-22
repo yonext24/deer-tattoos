@@ -28,6 +28,7 @@ const config = {
     './node_modules/@tremor/**/*.{js,ts,jsx,tsx}',
   ],
   prefix: '',
+
   theme: {
     container: {
       center: true,
@@ -37,6 +38,10 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        xs: '400px',
+        large: '1450px'
+      },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
         title: ['var(--font-title)', ...fontFamily.sans],

@@ -25,25 +25,38 @@ export function ProductShoppingButton({ product }: { product: Product }) {
   const finalVariant = variants.find(
     (variant) => variant.id === selectedVariantId
   )!
+  const finalVariantHasComparePrice = finalVariant?.compareAtPrice
+
+  {
+  }
+  console.log(finalVariant)
 
   return (
-    <form
-      action={async () => {
-        addToCart(product, finalVariant)
-        openCart()
-        await actionWithVariant()
-      }}
-      className="w-full flex mt-6 items-end"
-    >
-      <StylizedButton
-        disabled={!finalVariant || !finalVariant?.availableForSale}
-        className="w-full py-2 font-thin text-lg min-h-[44px] flex justify-center items-center outline-neutral-300"
-      >
-        Añadir al carrito
-      </StylizedButton>
-      <p aria-live="polite" className="sr-only" role="status">
-        {message}
+    <>
+      <p className="font-title text-2xl self-start">
+        {finalVariant?.price?.amount && `$${finalVariant.price.amount} `}
+        {finalVariantHasComparePrice && (
+          <span className="line-through font-thin font-sans">{`$${finalVariantHasComparePrice.amount}`}</span>
+        )}
       </p>
-    </form>
+      <form
+        action={async () => {
+          addToCart(product, finalVariant)
+          openCart()
+          await actionWithVariant()
+        }}
+        className="w-full flex mt-6 items-end"
+      >
+        <StylizedButton
+          disabled={!finalVariant || !finalVariant?.availableForSale}
+          className="w-full py-2 font-thin text-lg min-h-[44px] flex justify-center items-center outline-neutral-300"
+        >
+          Añadir al carrito
+        </StylizedButton>
+        <p aria-live="polite" className="sr-only" role="status">
+          {message}
+        </p>
+      </form>
+    </>
   )
 }

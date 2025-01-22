@@ -1,3 +1,4 @@
+import { Prose } from '@/components/prose/prose'
 import { Separator } from '@/components/shadcn/ui/separator'
 import { ProductImages } from '@/components/ui/shop/product-images/product-images'
 import { ProductShoppingSection } from '@/components/ui/shop/product-shopping-section/product-shopping-section'
@@ -30,6 +31,7 @@ export default async function Page({
       lowPrice: product.priceRange.minVariantPrice.amount,
     },
   }
+  const isOutOfStock = !product.availableForSale
 
   return (
     <div className="w-full flex flex-col">
@@ -44,9 +46,15 @@ export default async function Page({
         <section className="w-full flex flex-col items-center gap-2 px-4 sm:px-16 max-h-">
           <h1 className="font-title text-6xl capitalize">{product.title}</h1>
           <Separator className="w-full mt-1" />
-          <p className="mt-12 mb-6 text-center sm:text-start">
-            {product.description}
-          </p>
+          <Prose
+            html={product.descriptionHtml}
+            className="mt-12 mb-6 text-center sm:text-start"
+          />
+          {isOutOfStock && (
+            <p className="text-neutral-500">
+              Este producto no tiene ningún stock.
+            </p>
+          )}
           {/* <Separator className="w-full" /> */}
           <ProductShoppingSection product={product} />
         </section>

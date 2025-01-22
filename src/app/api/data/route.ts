@@ -12,6 +12,7 @@ export const POST = handler(
   DataChangeValidator,
   async (req) => {
     const data = (await req.parsedBody()) as pageData
+    console.log({ data })
     try {
 
       await saveAllPageData(data)

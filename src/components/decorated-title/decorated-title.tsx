@@ -1,17 +1,6 @@
+import { PolymorphicProps } from '@/lib/types/common'
 import { cn } from '@/lib/utils/utils'
-import type {
-  ComponentPropsWithoutRef,
-  ElementType,
-  PropsWithChildren,
-} from 'react'
-
-type PolymorphicAsProp<E extends ElementType> = {
-  as?: E
-}
-
-type PolymorphicProps<E extends ElementType> = PropsWithChildren<
-  ComponentPropsWithoutRef<E> & PolymorphicAsProp<E>
->
+import type { ElementType } from 'react'
 
 const defaultElement = 'h3'
 

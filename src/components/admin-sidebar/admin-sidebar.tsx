@@ -15,6 +15,7 @@ const entrys = [
   { text: 'Agregar Artista', href: '/admin/artistas/agregar' },
   { text: 'Ver Artistas', href: '/admin/artistas' },
   { text: 'Estilos', href: '/admin/estilos' },
+  { text: 'Páginas dinámicas', href: '/admin/paginas' },
 ]
 
 export async function AdminSidebar() {

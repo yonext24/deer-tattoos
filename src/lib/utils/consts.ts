@@ -48,7 +48,8 @@ export const TAGS = {
   cart: 'cart',
   data: 'data',
   tattoos: 'tattoos',
-  artists: 'artists'
+  artists: 'artists',
+  pages: 'pages',
 };
 
 export const HIDDEN_PRODUCT_TAG = 'nextjs-frontend-hidden';

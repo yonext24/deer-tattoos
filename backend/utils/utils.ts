@@ -5,7 +5,7 @@ import { prisma } from '@backend/prisma'
 
 const extraWords = ['tatuaje', 'tattoo', 'ink']
 
-const normalizeValue = (str: string | number) => {
+export const normalizeValue = (str: string | number) => {
   return encodeURI(
     removeAccents(String(str).toLowerCase()).replaceAll(' ', '-')
   )

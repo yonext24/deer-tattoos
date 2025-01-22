@@ -7,6 +7,7 @@ import { Toaster } from '@/components/shadcn/ui/sonner'
 import { PageProvider } from '@/components/providers/page-provider'
 import { APP_URL, MARCA } from '@/lib/utils/consts'
 import { ViewTransitions } from 'next-view-transitions'
+import { getAllPageData } from '@/lib/backend/utils/data'
 
 const mainKeywords = [
   'tatuajes lanus',
@@ -20,37 +21,42 @@ const mainKeywords = [
   'local de tatuajes',
 ]
 
-export const metadata: Metadata = {
-  title: {
-    template: `%s | ${MARCA} Tattoos`,
-    default: `${MARCA} TATTOOS`,
-  },
-  robots: {
-    follow: true,
-    index: true,
-  },
-  description:
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-  applicationName: `${MARCA} TATTOOS`,
-  keywords: mainKeywords,
-  category: 'Tatuajes',
-  generator: `${MARCA}`,
-  formatDetection: {
-    address: false,
-    email: false,
-    telephone: false,
-    url: true,
-  },
-  metadataBase: new URL(APP_URL as string),
-  openGraph: {
-    title: `${MARCA} TATTOOS`,
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-    url: APP_URL,
-    siteName: `${MARCA} TATTOOS`,
-    type: 'website',
-    locale: 'es_AR',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getAllPageData()
+
+  return {
+    title: {
+      template: `%s | ${MARCA} Tattoos`,
+      default: `${MARCA} TATTOOS`,
+    },
+    robots: {
+      follow: true,
+      index: true,
+    },
+    description: data?.main_data,
+    applicationName: `${MARCA} TATTOOS`,
+    keywords: mainKeywords,
+    category: 'Tatuajes',
+    generator: `${MARCA}`,
+    formatDetection: {
+      address: false,
+      email: false,
+      telephone: false,
+      url: true,
+    },
+    metadataBase: new URL(APP_URL as string),
+    openGraph: {
+      title: `${MARCA} TATTOOS`,
+      description: data?.main_data,
+      url: APP_URL,
+      siteName: `${MARCA} TATTOOS`,
+      type: 'website',
+      locale: 'es_AR',
+    },
+    alternates: {
+      canonical: APP_URL,
+    },
+  }
 }
 
 export default function RootLayout({

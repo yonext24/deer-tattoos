@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
+import { PolymorphicProps } from '@/lib/types/common'
 import { cn } from '@/lib/utils/utils'
-import { forwardRef } from 'react'
+import { ElementType } from 'react'
 
 type Props = {
   text: string
@@ -8,18 +9,24 @@ type Props = {
   className?: string
 }
 
-export const TextWithLineJumps = forwardRef<HTMLParagraphElement, Props>(
-  ({ text, linesClassName, ...props }, ref) => {
-    const lines = text.split('\\n')
+const defaultElement = 'p'
 
-    return (
-      <p {...props} ref={ref}>
-        {lines.map((el) => (
-          <span className={cn('block', linesClassName)}>{el}</span>
-        ))}
-      </p>
-    )
-  }
-)
+type TextProps<E extends ElementType = typeof defaultElement> =
+  PolymorphicProps<E> & Props
+
+export function TextWithLineJumps<
+  E extends ElementType = typeof defaultElement,
+>({ text, linesClassName, as, ...props }: TextProps<E>) {
+  const Element = as ?? defaultElement
+  const lines = text.split('\\n')
+
+  return (
+    <Element {...props}>
+      {lines.map((el) => (
+        <span className={cn('block', linesClassName)}>{el}</span>
+      ))}
+    </Element>
+  )
+}
 
 TextWithLineJumps.displayName = 'TextWithLineJumps'

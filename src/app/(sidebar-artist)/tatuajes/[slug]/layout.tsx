@@ -32,7 +32,7 @@ export default async function Layout({
       </Suspense>
 
       <div className="flex flex-col gap-4">
-        <Main className="ml-auto flex flex-col gap-4 p-4 w-full max-w-[700px]">
+        <Main className="ml-auto flex flex-col gap-4 p-4 w-full large:w-3/4 large:max-w-[1200px] max-large:max-w-[700px]">
           {children}
           {recommended}
         </Main>

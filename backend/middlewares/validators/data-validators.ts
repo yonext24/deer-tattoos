@@ -29,6 +29,9 @@ const schema = z.object({
       'Este campo tiene que ser una url válida, por ejemplo: "https://google.com"'
     )
     .or(z.literal('')),
+
+  email: z.string().email().or(z.literal('')),
+  address: z.string().or(z.literal(''))
 })
 
 export const DataChangeValidator: Middleware = async (req, next) => {
