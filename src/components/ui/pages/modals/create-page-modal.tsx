@@ -141,7 +141,11 @@ export function CreatePageModal({
                     <RichEditor {...field} />
                   </FormControl>
                   <FormDescription className="flex gap-2 items-center">
-                    <span>Este será el contenido de la página</span>
+                    <span>
+                      Este será el contenido de la página, no hace falta que
+                      repitas el título porque este aparece aparte, recordá que
+                      podes usar emojis.
+                    </span>
                     <HoverCard>
                       <HoverCardTrigger>
                         <MessageCircleQuestionIcon

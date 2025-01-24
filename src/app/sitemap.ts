@@ -1,5 +1,6 @@
 import { getAllArtists } from '@/lib/backend/utils/artists';
-import { getCollections, getPages, getProducts } from '@/lib/shopify';
+import { getPages } from '@/lib/backend/utils/pages';
+import { getCollections, getProducts } from '@/lib/shopify';
 import { validateEnvironmentVariables } from '@/lib/utils/utils';
 import { filterAndPaginateTattoos } from '@backend/utils/tattoos-utils';
 import { MetadataRoute } from 'next';
@@ -34,6 +35,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
+  const dinamicPagesPromise = getPages().then(res => res.map(el => ({ url: `${baseUrl}/${el.slug}`, lastModified: new Date().toISOString() })))
+
   const productsPromise = getProducts({}).then((products) =>
     products.map((product) => ({
       url: `${baseUrl}/product/${product.handle}`,
@@ -44,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let fetchedRoutes: Route[] = [];
 
   try {
-    fetchedRoutes = (await Promise.all([tattoosPromise, artistsPromise, collectionsPromise, productsPromise])).flat();
+    fetchedRoutes = (await Promise.all([tattoosPromise, artistsPromise, collectionsPromise, productsPromise, dinamicPagesPromise])).flat();
   } catch (error) {
     throw JSON.stringify(error, null, 2);
   }

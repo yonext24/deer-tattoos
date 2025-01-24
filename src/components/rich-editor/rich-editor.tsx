@@ -6,10 +6,14 @@ import { EditorProvider, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import TextStyle from '@tiptap/extension-text-style'
 import Heading from '@tiptap/extension-heading'
+import Link from '@tiptap/extension-link'
 import React from 'react'
 import { Bold, Italic, Redo, Strikethrough, Undo } from 'lucide-react'
 import { FormatSelector } from './format-selector'
 import { MenuButton } from './menu-button'
+import { ListBulletIcon } from '@radix-ui/react-icons'
+import { LinkButton } from './link-button'
+import { toast } from 'sonner'
 
 const MenuBar = () => {
   const { editor } = useCurrentEditor()
@@ -42,7 +46,16 @@ const MenuBar = () => {
         >
           <Strikethrough height={20} width={20} />
         </MenuButton>
+
         <FormatSelector />
+        <MenuButton
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          disabled={!editor.can().chain().focus().toggleBulletList().run()}
+          data-is-active={editor.isActive('bulletList')}
+        >
+          <ListBulletIcon />
+        </MenuButton>
+        <LinkButton />
 
         <MenuButton
           className="ml-auto"
@@ -64,8 +77,29 @@ const MenuBar = () => {
 
 const extensions = [
   TextStyle.configure({}),
-  StarterKit.configure({}),
+  StarterKit.configure({ bulletList: {} }),
   Heading.configure({ levels: [2, 3, 4] }),
+  Link.configure({
+    autolink: true,
+    isAllowedUri: (url, ctx) => {
+      try {
+        if (!url.includes(':')) {
+          toast.error('El link no es válido, debe empezar con https://')
+          return false
+        }
+        const parsedUrl = new URL(url)
+
+        if (!ctx.defaultValidate(parsedUrl.href)) {
+          toast.error('El link no es válido, porfavor revisar.')
+          return false
+        }
+
+        return true
+      } catch {
+        return false
+      }
+    },
+  }),
 ]
 
 export const RichEditor = ({
