@@ -34,7 +34,7 @@ export function TopPagesChart() {
         const index = kpiOption === 'visits' ? 'visits' : 'hits'
 
         return {
-          icon: () => <PagesChartTattooIcon slug={slug} />,
+          // icon: () => <PagesChartTattooIcon slug={slug} />,
           name: slug,
           value: d[index],
           href: `${d.pathname}`,

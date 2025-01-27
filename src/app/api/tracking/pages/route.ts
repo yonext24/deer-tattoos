@@ -15,12 +15,10 @@ const func = async (req: ParsedRequest) => {
     date_from: fromRaw,
     date_to: toRaw,
   })
-  const type = typeRaw === 'tattoo' ? 'tattoo' : 'artist'
 
   const { data } = await queryPipe('top_pages', {
     date_from,
     date_to,
-    q: `SELECT * FROM _ WHERE pathname LIKE '%/tatuajes/%'`,
   })
 
   return NextResponse.json(data)

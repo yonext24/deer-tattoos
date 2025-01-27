@@ -16,6 +16,7 @@ export default async function Page() {
           </DecoratedTitle>
           <div className="relative w-full max-[850px]:mx-auto after:top-0 after:left-0 after:absolute after:z-10 after:w-full after:h-full after:[background:_radial-gradient(circle,_rgba(10,10,10,0)_0%,_rgba(0,0,0,1)_100%)]">
             <Image
+              loading="eager"
               src="/local.webp"
               className="w-full max-w-auto max-h-auto"
               alt="local"

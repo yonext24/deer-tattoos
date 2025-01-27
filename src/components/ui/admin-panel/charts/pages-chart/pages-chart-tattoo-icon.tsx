@@ -32,18 +32,20 @@ export function PagesChartTattooIcon({ slug }: { slug: string }) {
       ref={fromRef}
       className={cn('mr-4 w-[35px] bg-neutral rounded-md overflow-hidden')}
     >
-      {!intersected || !data ? (
-        <Skeleton className="h-full w-full" />
-      ) : (
-        <ImageWithBlur
-          className="h-full w-full"
-          width={50}
-          height={50}
-          src={data.images.card.src}
-          alt="Imaágen de tatuaje"
-          withSkeleton
-        />
-      )}
+      {(() => {
+        if (!slug.includes('/tatuajes')) return null
+        if (!intersected || !data) return <Skeleton className="h-full w-full" />
+        return (
+          <ImageWithBlur
+            className="h-full w-full"
+            width={50}
+            height={50}
+            src={data.images.card.src}
+            alt="Imaágen de tatuaje"
+            withSkeleton
+          />
+        )
+      })()}
     </div>
   )
 }

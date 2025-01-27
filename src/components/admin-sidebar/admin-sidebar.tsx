@@ -21,6 +21,8 @@ const entrys = [
 export async function AdminSidebar() {
   const session = await auth()
 
+  console.log(session)
+
   return (
     <aside className="border-r border-border flex flex-col relative">
       <div className="absolute top-[calc(0px-1px)] z-20 h-px w-full bg-black" />
