@@ -25,6 +25,7 @@ const TattooCreateSchema = z.object({
   extra_images: z.array(
     z.any().refine(imageValidation).refine(imageTypeValidation)
   ),
+  position: z.string().min(1, 'La posición no es válida'),
 })
 
 export type TattooCreateBodyType = z.infer<typeof TattooCreateSchema>
@@ -68,6 +69,7 @@ const TattooUpdateSchema = z.object({
   tags: z.array(z.string().min(1)).optional(),
   styles: z.array(z.string().min(1)).optional(),
   artistSlug: z.string().min(1).nullable().optional(),
+  position: z.string().min(1, 'La posición no es válida').optional(),
 })
 
 export type TattooUpdateSchemaType = z.infer<typeof TattooUpdateSchema>

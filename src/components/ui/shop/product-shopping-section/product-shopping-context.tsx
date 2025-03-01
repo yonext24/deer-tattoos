@@ -40,7 +40,7 @@ export const ProductShoppingContextProvider = ({
       ...update,
     })
   )
-  console.log(state)
+
 
   const updateOption = (name: string, value: string) => {
     const newState = { [name]: value }

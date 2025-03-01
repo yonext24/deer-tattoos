@@ -27,14 +27,8 @@
       "title": "Botánico",
       "slug": "botanico-blackwork-ilustrativo",
       "type": "single",
-      "styles": [
-        "blackwork",
-        "ilustrativo"
-      ],
-      "tags": [
-        "flor",
-        "flores"
-      ],
+      "styles": ["blackwork", "ilustrativo"],
+      "tags": ["flor", "flores"],
       "artistSlug": "alan",
       "ranking": 85
     },
@@ -65,17 +59,8 @@
       "title": "El ángel caído",
       "slug": "el-angel-caido-etnico-o-cultural-puntillismo",
       "type": "single",
-      "styles": [
-        "etnico o cultural",
-        "puntillismo",
-        "ilustrativo"
-      ],
-      "tags": [
-        "cuadro",
-        "arte",
-        "cabanel",
-        "angel"
-      ],
+      "styles": ["etnico o cultural", "puntillismo", "ilustrativo"],
+      "tags": ["cuadro", "arte", "cabanel", "angel"],
       "artistSlug": "alan",
       "ranking": 44
     },
@@ -100,15 +85,8 @@
       "title": "Memento mori",
       "slug": "memento-mori-etnico-o-cultural-puntillismo",
       "type": "single",
-      "styles": [
-        "etnico o cultural",
-        "puntillismo",
-        "hiperrealismo"
-      ],
-      "tags": [
-        "cuadro",
-        "arte"
-      ],
+      "styles": ["etnico o cultural", "puntillismo", "hiperrealismo"],
+      "tags": ["cuadro", "arte"],
       "artistSlug": "alan",
       "ranking": 24
     },
@@ -133,14 +111,8 @@
       "title": "Charly",
       "slug": "charly-blackwork",
       "type": "single",
-      "styles": [
-        "blackwork"
-      ],
-      "tags": [
-        "rock nacional",
-        "rock",
-        "charly"
-      ],
+      "styles": ["blackwork"],
+      "tags": ["rock nacional", "rock", "charly"],
       "artistSlug": null,
       "ranking": 20
     }

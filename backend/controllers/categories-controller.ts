@@ -19,13 +19,18 @@ export const CATEGORIES_CONTROLLER = {
   deleteCategory: async (req: ParsedRequest) => {
     const { name } = (await req.parsedBody()) as Style
 
-    const allTattoosWithCategory = await prisma.tattoo.findMany({ where: { styles: { has: name } } })
-    allTattoosWithCategory.forEach(async el => {
-      await prisma.tattoo.update({ where: { id: el.id }, data: { styles: { set: el.styles.filter(el => el !== name) } } })
+    const allTattoosWithCategory = await prisma.tattoo.findMany({
+      where: { styles: { has: name } },
+    })
+    allTattoosWithCategory.forEach(async (el) => {
+      await prisma.tattoo.update({
+        where: { id: el.id },
+        data: { styles: { set: el.styles.filter((el) => el !== name) } },
+      })
     })
 
     await prisma.category.delete({ where: { name } })
 
     return NextResponse.json({ name })
-  }
+  },
 }

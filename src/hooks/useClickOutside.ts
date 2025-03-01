@@ -10,15 +10,17 @@ export function useClickOutside(
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const excludedIdsElements: Node[] = []
-      excludedIds.forEach(id => {
+      excludedIds.forEach((id) => {
         const found = document.querySelector(`#${id}`)
         if (!found) return
         excludedIdsElements.push(found)
       })
 
-      const someExcludedElementContainsClick = excludedIdsElements.some(node => {
-        return node.contains(event.target as any)
-      })
+      const someExcludedElementContainsClick = excludedIdsElements.some(
+        (node) => {
+          return node.contains(event.target as any)
+        }
+      )
 
       if (someExcludedElementContainsClick) {
         return

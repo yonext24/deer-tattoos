@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
-type sizeType = { x: number, y: number }
+type sizeType = { x: number; y: number }
 
 export function useResize() {
   const [size, setSize] = useState<sizeType | null>(null)

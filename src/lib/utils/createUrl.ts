@@ -25,8 +25,8 @@ export const generateParams = (
   params?:
     | ReadonlyURLSearchParams
     | {
-      [key: string]: string | string[] | undefined
-    }
+        [key: string]: string | string[] | undefined
+      }
 ) => {
   const urlParams = new URLSearchParams()
 

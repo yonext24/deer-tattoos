@@ -24,7 +24,6 @@ export function TattooImages({ tattoo }: { tattoo: Tattoo }) {
 
   return (
     <>
-
       <ImageWithBlur
         pictureClassName="w-full"
         alt="Image"

@@ -33,6 +33,7 @@ const filterAndPaginateTattoosSchema = z.object({
     artist: z.union([z.string(), z.null()]).optional(),
     sortByRanking: z.union([z.boolean(), z.null()]).optional(),
     exclude: z.union([z.string(), z.null()]).optional(),
+    position: z.union([z.string(), z.array(z.string()), z.null()]).optional(),
   }),
   pagination: z.object({
     size: z
@@ -53,12 +54,13 @@ export const filterAndPaginateTattoos: FilterFuncType = async (
     sortByRanking: null,
     style: null,
     exclude: null,
+    position: null,
   },
   pagination
 ) => {
   const {
     pagination: { page, size },
-    filter: { artist, search, sortByRanking, style, exclude },
+    filter: { artist, search, sortByRanking, style, exclude, position },
   } = filterAndPaginateTattoosSchema.parse({
     filter,
     pagination,
@@ -66,7 +68,6 @@ export const filterAndPaginateTattoos: FilterFuncType = async (
 
   const offset = (page - 1) * size
 
-  // Construir el objeto de filtro para la consulta Prisma
   const where = {
     AND: [] as any[],
   }
@@ -121,6 +122,23 @@ export const filterAndPaginateTattoos: FilterFuncType = async (
     })
   }
 
+  if (position) {
+    if (Array.isArray(position)) {
+      where.AND.push({
+        position: {
+          in: position,
+        },
+      })
+    } else {
+      where.AND.push({
+        position: {
+          contains: position,
+          mode: 'insensitive',
+        },
+      })
+    }
+  }
+
   // Realizar la consulta Prisma con paginación y filtrado
   const [data, total] = await Promise.all([
     prisma.tattoo.findMany({
@@ -130,10 +148,10 @@ export const filterAndPaginateTattoos: FilterFuncType = async (
       where,
       ...(sortByRanking
         ? {
-          orderBy: {
-            ranking: 'desc',
-          },
-        }
+            orderBy: {
+              ranking: 'desc',
+            },
+          }
         : {}),
       take: size,
       skip: offset,

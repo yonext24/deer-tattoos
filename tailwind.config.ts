@@ -40,7 +40,7 @@ const config = {
     extend: {
       screens: {
         xs: '400px',
-        large: '1450px'
+        large: '1450px',
       },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],

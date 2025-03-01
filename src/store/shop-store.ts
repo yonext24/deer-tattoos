@@ -15,18 +15,22 @@ export type CartStore = {
 }
 
 function calculateItemCost(quantity: number, price: string | number): string {
-  return (Number(price) * quantity).toString();
+  return (Number(price) * quantity).toString()
 }
 
-function generateItemFromProduct(product: Product, variant: ProductVariant, amount: string): CartItem {
+function generateItemFromProduct(
+  product: Product,
+  variant: ProductVariant,
+  amount: string
+): CartItem {
   return {
     id: product?.id,
     quantity: 1,
     cost: {
       totalAmount: {
         amount,
-        currencyCode: variant.price.currencyCode
-      }
+        currencyCode: variant.price.currencyCode,
+      },
     },
     merchandise: {
       id: variant.id,
@@ -37,102 +41,120 @@ function generateItemFromProduct(product: Product, variant: ProductVariant, amou
         id: product.id,
         handle: product.handle,
         title: product.title,
-        featuredImage: product.featuredImage
-      }
-    }
+        featuredImage: product.featuredImage,
+      },
+    },
   }
 }
 
-export const useCartStore = create<CartStore>(set => ({
+export const useCartStore = create<CartStore>((set) => ({
   cart: createEmptyCart(),
   open: false,
 
   openCart: () => set({ open: true }),
   closeCart: () => set({ open: false }),
 
-
   setCart: (cart) => set({ cart }),
 
-  addToCart: (product, variant) => set((state) => {
-    const existingProductIndex = state.cart.lines.findIndex(el => el.merchandise.id === variant.id)
+  addToCart: (product, variant) =>
+    set((state) => {
+      const existingProductIndex = state.cart.lines.findIndex(
+        (el) => el.merchandise.id === variant.id
+      )
 
-    if (existingProductIndex === -1) {
-      const newProduct = generateItemFromProduct(product, variant, calculateItemCost(1, variant.price.amount));
-      const updatedCartLines = [newProduct, ...state.cart?.lines]
+      if (existingProductIndex === -1) {
+        const newProduct = generateItemFromProduct(
+          product,
+          variant,
+          calculateItemCost(1, variant.price.amount)
+        )
+        const updatedCartLines = [newProduct, ...state.cart?.lines]
+
+        return generateCartFromNewLines(state, updatedCartLines)
+      }
+
+      const updatedCartLines = [...state.cart.lines]
+      updatedCartLines[existingProductIndex].quantity++
 
       return generateCartFromNewLines(state, updatedCartLines)
-    }
+    }),
+  quantityDown: (variantId) =>
+    set((state) => {
+      const itemIndex = state.cart.lines.findIndex(
+        (item) => item.merchandise.id === variantId
+      )
+      if (itemIndex === -1) {
+        return state
+      }
+      const item = state.cart.lines[itemIndex]
 
-    const updatedCartLines = [...state.cart.lines]
-    updatedCartLines[existingProductIndex].quantity++
+      if (item.quantity <= 1) {
+        return state
+      }
+      const originalItemPrice =
+        Number(item.cost.totalAmount.amount) / item.quantity
 
-    return generateCartFromNewLines(state, updatedCartLines)
-  }
-  ),
-  quantityDown: (variantId) => set((state) => {
-    const itemIndex = state.cart.lines.findIndex((item) => item.merchandise.id === variantId)
-    if (itemIndex === -1) {
-      return state
-    }
-    const item = state.cart.lines[itemIndex]
+      const updatedCartLines = [...state.cart.lines]
+      updatedCartLines[itemIndex].quantity--
+      const newItemPrice =
+        originalItemPrice * updatedCartLines[itemIndex].quantity
+      updatedCartLines[itemIndex].cost.totalAmount = {
+        ...updatedCartLines[itemIndex].cost.totalAmount,
+        amount: generateNewAmountString(String(newItemPrice)),
+      }
 
-    if (item.quantity <= 1) {
-      return state
-    }
-    const originalItemPrice = Number(item.cost.totalAmount.amount) / item.quantity
+      return generateCartFromNewLines(state, updatedCartLines)
+    }),
+  quantityUp: (variantId) =>
+    set((state) => {
+      const itemIndex = state.cart.lines.findIndex(
+        (item) => item.merchandise.id === variantId
+      )
+      if (itemIndex === -1) {
+        return state
+      }
+      const item = state.cart.lines[itemIndex]
 
-    const updatedCartLines = [...state.cart.lines]
-    updatedCartLines[itemIndex].quantity--
-    const newItemPrice = originalItemPrice * updatedCartLines[itemIndex].quantity
-    updatedCartLines[itemIndex].cost.totalAmount = {
-      ...updatedCartLines[itemIndex].cost.totalAmount,
-      amount: generateNewAmountString(String(newItemPrice))
-    }
+      const originalItemPrice =
+        Number(item.cost.totalAmount.amount) / item.quantity
 
-    return generateCartFromNewLines(state, updatedCartLines)
-  }
-  ),
-  quantityUp: (variantId) => set((state) => {
-    const itemIndex = state.cart.lines.findIndex((item) => item.merchandise.id === variantId)
-    if (itemIndex === -1) {
-      return state
-    }
-    const item = state.cart.lines[itemIndex]
+      const updatedCartLines = [...state.cart.lines]
+      updatedCartLines[itemIndex].quantity++
+      const newItemPrice =
+        originalItemPrice * updatedCartLines[itemIndex].quantity
+      updatedCartLines[itemIndex].cost.totalAmount = {
+        ...updatedCartLines[itemIndex].cost.totalAmount,
+        amount: generateNewAmountString(String(newItemPrice)),
+      }
 
-    const originalItemPrice = Number(item.cost.totalAmount.amount) / item.quantity
+      return generateCartFromNewLines(state, updatedCartLines)
+    }),
+  removeFromCart: (variantId) =>
+    set((state) => {
+      const updatedCartLines = state.cart.lines.filter(
+        (item) => item.merchandise.id !== variantId
+      )
 
-    const updatedCartLines = [...state.cart.lines]
-    updatedCartLines[itemIndex].quantity++
-    const newItemPrice = originalItemPrice * updatedCartLines[itemIndex].quantity
-    updatedCartLines[itemIndex].cost.totalAmount = {
-      ...updatedCartLines[itemIndex].cost.totalAmount,
-      amount: generateNewAmountString(String(newItemPrice))
-    }
-
-    return generateCartFromNewLines(state, updatedCartLines)
-  }
-  ),
-  removeFromCart: (variantId) => set((state) => {
-    const updatedCartLines = state.cart.lines.filter((item) => item.merchandise.id !== variantId)
-
-    return generateCartFromNewLines(state, updatedCartLines)
-  })
-  ,
+      return generateCartFromNewLines(state, updatedCartLines)
+    }),
   clearCart: () => {
-    return set(s => server({ cart: createEmptyCart(s.cart.id) }))
+    return set((s) => server({ cart: createEmptyCart(s.cart.id) }))
   },
 }))
 
 function server(state: CartStore | Partial<CartStore>) {
-
   return state
 }
 
-
-function updateCartTotals(lines: CartItem[]): Pick<Cart, 'totalQuantity' | 'cost'> {
-  const totalQuantity = lines.reduce((sum, item) => sum + item.quantity, 0);
-  const totalAmount = lines.reduce((sum, item) => sum + Number(item.cost.totalAmount.amount), 0);
-  const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? 'ARS';
+function updateCartTotals(
+  lines: CartItem[]
+): Pick<Cart, 'totalQuantity' | 'cost'> {
+  const totalQuantity = lines.reduce((sum, item) => sum + item.quantity, 0)
+  const totalAmount = lines.reduce(
+    (sum, item) => sum + Number(item.cost.totalAmount.amount),
+    0
+  )
+  const currencyCode = lines[0]?.cost.totalAmount.currencyCode ?? 'ARS'
 
   return {
     totalQuantity,
@@ -140,12 +162,15 @@ function updateCartTotals(lines: CartItem[]): Pick<Cart, 'totalQuantity' | 'cost
       isLoading: true,
       subtotalAmount: { amount: totalAmount.toString(), currencyCode },
       totalAmount: { amount: totalAmount.toString(), currencyCode },
-      totalTaxAmount: { amount: '0', currencyCode }
-    }
-  };
+      totalTaxAmount: { amount: '0', currencyCode },
+    },
+  }
 }
 
-function generateCartFromNewLines(state: CartStore, newLines: CartItem[]): CartStore {
+function generateCartFromNewLines(
+  state: CartStore,
+  newLines: CartItem[]
+): CartStore {
   const cart = state.cart
 
   if (newLines.length === 0) {
@@ -157,15 +182,16 @@ function generateCartFromNewLines(state: CartStore, newLines: CartItem[]): CartS
         totalQuantity: 0,
         cost: {
           ...cart.cost,
-          totalAmount: { ...cart.cost.totalAmount, amount: '0' }
+          totalAmount: { ...cart.cost.totalAmount, amount: '0' },
         },
-      }
-
-    };
+      },
+    }
   }
 
-
-  return { ...state, cart: { ...state.cart, lines: newLines, ...updateCartTotals(newLines) } }
+  return {
+    ...state,
+    cart: { ...state.cart, lines: newLines, ...updateCartTotals(newLines) },
+  }
 }
 
 function createEmptyCart(id?: string): Cart {
@@ -177,15 +203,13 @@ function createEmptyCart(id?: string): Cart {
     cost: {
       subtotalAmount: { amount: '0', currencyCode: 'ARS' },
       totalAmount: { amount: '0', currencyCode: 'ARS' },
-      totalTaxAmount: { amount: '0', currencyCode: 'ARS' }
-    }
-  };
+      totalTaxAmount: { amount: '0', currencyCode: 'ARS' },
+    },
+  }
 }
 
 function generateNewAmountString(price: string) {
   const hasDecimals = price.split('.').length > 1
 
-  return hasDecimals ?
-    price
-    : price + '.0'
+  return hasDecimals ? price : price + '.0'
 }

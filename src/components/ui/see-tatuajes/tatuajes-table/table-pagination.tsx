@@ -2,8 +2,6 @@ import {
   Pagination,
   PaginationButton,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
   PaginationNextButton,
   PaginationPreviousButton,
 } from '@/components/shadcn/ui/pagination'
@@ -21,8 +19,6 @@ export function TablePagination({
 }) {
   const canPrevious = table.getCanPreviousPage()
   const canNext = table.getCanNextPage()
-
-  console.log(canPrevious)
 
   return (
     <Pagination>

@@ -14,6 +14,7 @@ model Tattoo {
   type   TattooType
   styles String[]
   tags   String[]
+  position String
 
   artistSlug String?
   artist     Artist? @relation(fields: [artistSlug], references: [slug], onDelete: SetNull)

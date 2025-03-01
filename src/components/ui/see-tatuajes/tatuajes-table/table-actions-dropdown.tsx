@@ -43,12 +43,14 @@ export function TableActionsDropdown({
               {
                 initialStyles: row.getValue('styles'),
                 initialTags: row.original.tags,
+                initialPosition: row.original.position,
                 id: row.original.id,
                 onChangeData: (data) => {
                   table.options.meta?.changeData({
                     index: row.index,
                     styles: data.styles,
                     tags: data.tags,
+                    position: data.position,
                   })
                 },
               },

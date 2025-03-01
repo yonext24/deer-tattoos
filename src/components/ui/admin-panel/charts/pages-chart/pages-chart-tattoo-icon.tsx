@@ -19,13 +19,13 @@ export function PagesChartTattooIcon({ slug }: { slug: string }) {
 
     appFetch(`/api/tattoo?&slug=${slug}`)
       .then((res) => {
-        console.log(res)
+
         setData(res)
       })
       .catch(() => setData(null))
   }, [intersected])
 
-  console.log({ data })
+
 
   return (
     <div

@@ -19,4 +19,3 @@ type PolymorphicAsProp<E extends ElementType> = {
 type PolymorphicProps<E extends ElementType> = PropsWithChildren<
   ComponentPropsWithoutRef<E> & PolymorphicAsProp<E>
 >
-

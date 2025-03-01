@@ -1,4 +1,4 @@
-import { AppError, Middleware } from "../helpers"
+import { AppError, Middleware } from '../helpers'
 import * as z from 'zod'
 
 const schema = z.object({
@@ -31,7 +31,7 @@ const schema = z.object({
     .or(z.literal('')),
 
   email: z.string().email().or(z.literal('')),
-  address: z.string().or(z.literal(''))
+  address: z.string().or(z.literal('')),
 })
 
 export const DataChangeValidator: Middleware = async (req, next) => {

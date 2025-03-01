@@ -63,7 +63,10 @@ export function useNavInput() {
 
   const [search, setSearch] = useState<SearchResponse>([])
   const [styles, setStyles] = useState<string[]>([])
-  const [stylesDisplay, setStylesDisplay] = useState<{ show: string[], group: string[] }>({ show: [], group: [] })
+  const [stylesDisplay, setStylesDisplay] = useState<{
+    show: string[]
+    group: string[]
+  }>({ show: [], group: [] })
 
   const isFirstFocus = useRef<boolean>(true)
   const formRef = useRef<HTMLFormElement>(null)
@@ -79,12 +82,20 @@ export function useNavInput() {
       It probably should be a memo, because i can have issues with having two sources of truth, but if i dont use a layoutEffect it can clip at first load
     */
     const getIfOverflowed = (externalSize?: DOMRect): boolean => {
-      if (!inputContainerRef.current || (!externalSize && !stylesContainerRef.current)) return false
+      if (
+        !inputContainerRef.current ||
+        (!externalSize && !stylesContainerRef.current)
+      )
+        return false
       let stylesSize
 
       const inputSize = inputContainerRef.current.getBoundingClientRect()
-      const groupBadgeSize = inputContainerRef.current.querySelector('#groupBadge')?.getBoundingClientRect?.()
-      const artistBadgeSize = inputContainerRef.current.querySelector('#artistBadge')?.getBoundingClientRect?.()
+      const groupBadgeSize = inputContainerRef.current
+        .querySelector('#groupBadge')
+        ?.getBoundingClientRect?.()
+      const artistBadgeSize = inputContainerRef.current
+        .querySelector('#artistBadge')
+        ?.getBoundingClientRect?.()
 
       if (externalSize) {
         stylesSize = externalSize
@@ -97,31 +108,57 @@ export function useNavInput() {
       }
 
       // The "+number" and artist badges doesnt count in the formula
-      const normalizedGroupBadgeSize = externalSize ? 0 : groupBadgeSize?.width ? (groupBadgeSize.width + 1) : 0
-      const normalizedArtistBadgeSize = externalSize ? 0 : artistBadgeSize?.width ? (artistBadgeSize.width + 1) : 0
+      const normalizedGroupBadgeSize = externalSize
+        ? 0
+        : groupBadgeSize?.width
+          ? groupBadgeSize.width + 1
+          : 0
+      const normalizedArtistBadgeSize = externalSize
+        ? 0
+        : artistBadgeSize?.width
+          ? artistBadgeSize.width + 1
+          : 0
 
-      const isThresholdOverflowed = ((stylesSize.width - normalizedGroupBadgeSize - normalizedArtistBadgeSize) / inputSize.width) * 100 > NAV_STYLES_WIDTH_THRESHOLD_PERCENTAGE
+      const isThresholdOverflowed =
+        ((stylesSize.width -
+          normalizedGroupBadgeSize -
+          normalizedArtistBadgeSize) /
+          inputSize.width) *
+          100 >
+        NAV_STYLES_WIDTH_THRESHOLD_PERCENTAGE
 
       return isThresholdOverflowed
     }
 
     let isOverflowed = getIfOverflowed()
     if (!isOverflowed && !stylesDisplay.group.length) return
-
     // If theres a resize on the window and there are styles that are not displaying i need to recalculate if i need to show them
     else if (!isOverflowed && stylesDisplay.group.length) {
-      const itOverflowsWithOneMore = getIfOverflowed(createHipoteticBadgeContainer([...stylesDisplay.show, stylesDisplay.group[0]]))
+      const itOverflowsWithOneMore = getIfOverflowed(
+        createHipoteticBadgeContainer([
+          ...stylesDisplay.show,
+          stylesDisplay.group[0],
+        ])
+      )
       if (itOverflowsWithOneMore) return
 
       let sliceCount = 1
       let itOverflows = false
 
       while (!itOverflows && sliceCount <= stylesDisplay.group.length) {
-        itOverflows = getIfOverflowed(createHipoteticBadgeContainer([...stylesDisplay.show, ...stylesDisplay.group.slice(0, sliceCount)]))
+        itOverflows = getIfOverflowed(
+          createHipoteticBadgeContainer([
+            ...stylesDisplay.show,
+            ...stylesDisplay.group.slice(0, sliceCount),
+          ])
+        )
         !itOverflows && sliceCount++
       }
       sliceCount--
-      setStylesDisplay(prev => ({ show: [...prev.show, ...prev.group.slice(0, sliceCount)], group: prev.group.slice(sliceCount, prev.group.length) }))
+      setStylesDisplay((prev) => ({
+        show: [...prev.show, ...prev.group.slice(0, sliceCount)],
+        group: prev.group.slice(sliceCount, prev.group.length),
+      }))
     }
     // If it overflows i need to know how many badges i need to stop showing for it to stop happening
     else if (isOverflowed) {
@@ -129,11 +166,21 @@ export function useNavInput() {
       let itOverflows = true
 
       while (itOverflows && sliceCount >= 0) {
-        itOverflows = getIfOverflowed(createHipoteticBadgeContainer([...stylesDisplay.show.slice(0, sliceCount)]))
+        itOverflows = getIfOverflowed(
+          createHipoteticBadgeContainer([
+            ...stylesDisplay.show.slice(0, sliceCount),
+          ])
+        )
         itOverflows && sliceCount--
       }
 
-      setStylesDisplay(prev => ({ show: prev.show.slice(0, sliceCount), group: [...prev.show.slice(sliceCount, prev.show.length), ...prev.group] }))
+      setStylesDisplay((prev) => ({
+        show: prev.show.slice(0, sliceCount),
+        group: [
+          ...prev.show.slice(sliceCount, prev.show.length),
+          ...prev.group,
+        ],
+      }))
     }
   }, [size?.x, size?.y, styles.length])
 
@@ -206,9 +253,8 @@ export function useNavInput() {
     setOpen(false)
     setSearch([])
 
-    const pathToUse = artist === null
-      ? '/tatuajes'
-      : `/tatuador/${artist}/tatuajes`
+    const pathToUse =
+      artist === null ? '/tatuajes' : `/tatuador/${artist}/tatuajes`
 
     router.push(createUrl(pathToUse, newParams))
   }
@@ -220,7 +266,9 @@ export function useNavInput() {
         if (alreadyMadeSearchs.current[search].length > 0) setOpen(true)
         return
       }
-      fetch(`/api/search?q=${search}&${styles.length > 0 ? `ignore=${styles.join(',')}` : ''}`)
+      fetch(
+        `/api/search?q=${search}&${styles.length > 0 ? `ignore=${styles.join(',')}` : ''}`
+      )
         .then((res) => res.json())
         .then((data: SearchResponse) => {
           alreadyMadeSearchs.current[search] = data
@@ -297,7 +345,10 @@ export function useNavInput() {
 
   const handleDeleteStyle = (style: string) => {
     setStyles((prev) => prev.filter((s) => s !== style))
-    setStylesDisplay(prev => ({ show: prev.show.filter(s => s !== style), group: prev.group.filter(s => s !== style) }))
+    setStylesDisplay((prev) => ({
+      show: prev.show.filter((s) => s !== style),
+      group: prev.group.filter((s) => s !== style),
+    }))
   }
   const handleDeleteArtist = () => {
     setArtist(null)
@@ -331,10 +382,11 @@ export function useNavInput() {
 }
 
 const createHipoteticBadgeContainer = (styles: string[]) => {
-  return measureHipoteticElement('div',
+  return measureHipoteticElement(
+    'div',
     `<div class="grid w-full relative bg-black/30 backdrop-blur grid-cols-[auto_1fr]">
       <div class="flex gap-px">
-        ${styles.map(el => `<div class="${cn(badgeVariants({ variant: 'outline' }), 'flex flex-nowrap border-gold/50 text-gold/80 self-center cursor-pointer')}">${el}</div>`).join('')}
+        ${styles.map((el) => `<div class="${cn(badgeVariants({ variant: 'outline' }), 'flex flex-nowrap border-gold/50 text-gold/80 self-center cursor-pointer')}">${el}</div>`).join('')}
       </div>
     </div>`
   )

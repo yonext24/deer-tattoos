@@ -25,8 +25,6 @@ export function ProductShoppingSectionWithContext({
 }) {
   const { variants, options } = product
 
-  console.log(product)
-
   return (
     <>
       <ProductVariantSelector variants={variants} options={options} />

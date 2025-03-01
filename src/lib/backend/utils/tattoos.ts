@@ -30,10 +30,24 @@ const getRankedTattoos = async (): Promise<Tattoo[]> => {
   return data
 }
 
-const cachedGetTattooBySlug = unstable_cache(getTattooBySlug, ['tattoo', 'slug'], { tags: [TAGS.tattoos] })
-const cachedGetTattoos = unstable_cache(getTattoos, ['tattoo'], { tags: [TAGS.tattoos] })
-const cachedGetRankedTattoos = unstable_cache(getRankedTattoos, ['tattoo', 'ranked'], { tags: [TAGS.tattoos] })
-const cachedGetArtistTattos = unstable_cache(getArtistTattoos, ['tattoo', 'artist'], { tags: [TAGS.tattoos] })
+const cachedGetTattooBySlug = unstable_cache(
+  getTattooBySlug,
+  ['tattoo', 'slug'],
+  { tags: [TAGS.tattoos] }
+)
+const cachedGetTattoos = unstable_cache(getTattoos, ['tattoo'], {
+  tags: [TAGS.tattoos],
+})
+const cachedGetRankedTattoos = unstable_cache(
+  getRankedTattoos,
+  ['tattoo', 'ranked'],
+  { tags: [TAGS.tattoos] }
+)
+const cachedGetArtistTattos = unstable_cache(
+  getArtistTattoos,
+  ['tattoo', 'artist'],
+  { tags: [TAGS.tattoos] }
+)
 
 export {
   cachedGetTattoos as getTattoos,

@@ -16,23 +16,24 @@ export const nextAuthOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   session: {
     strategy: 'jwt',
-
   },
   providers: [
     CredentialsProvider({
       name: 'Credenciales',
       credentials: {
         username: { label: 'Nombre de usuario', type: 'text' },
-        password: { label: 'Contraseña', type: 'password' }
+        password: { label: 'Contraseña', type: 'password' },
       },
       async authorize(credentials, req) {
-        if (credentials?.username !== process.env.ADMIN_USERNAME && credentials?.password !== process.env.ADMIN_PASSWORD) return null
+        if (
+          credentials?.username !== process.env.ADMIN_USERNAME &&
+          credentials?.password !== process.env.ADMIN_PASSWORD
+        )
+          return null
 
         return user as User
       },
-
-    })
-
+    }),
   ],
   callbacks: {
     jwt({ token, user }) {
@@ -49,7 +50,7 @@ export const nextAuthOptions: AuthOptions = {
     },
     redirect() {
       return '/admin'
-    }
+    },
   },
 }
 

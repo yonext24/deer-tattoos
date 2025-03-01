@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export function useMediaQuery(query: string, initialState: boolean = false) {
   const [breakpoint, setBreakpoint] = useState<boolean>(() => {

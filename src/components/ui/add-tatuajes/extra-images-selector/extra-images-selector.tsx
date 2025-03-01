@@ -32,6 +32,7 @@ export const ExtraImagesSelector = forwardRef(
         <Button
           type="button"
           variant={'outline'}
+          size="sm"
           className="flex gap-2"
           onClick={() => {
             setModalOpen(true)

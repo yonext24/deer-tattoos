@@ -7,7 +7,7 @@ export function UserEntry({ name, image }: { name?: string; image?: string }) {
     <button
       className={cn(
         buttonVariants({ variant: 'ghost' }),
-        'px-2 py-3 w-full flex justify-evenly h-auto',
+        'px-2 py-3 w-full flex justify-evenly h-auto'
       )}
     >
       {image && (

@@ -22,7 +22,7 @@ export function TattooCard({
       role="link"
       key={slug}
       className={cn(
-        'overflow-hidden rounded relative border border-border hover:border-gold transition-colors group',
+        'overflow-hidden rounded relative border border-border focus-visible:border-gold hover:border-gold transition-colors group',
         type === 'double' && 'col-start-1 col-end-3',
         type === 'quad' && 'col-start-1 col-end-3',
         withAnimation && 'animate-fadeIn'

@@ -68,13 +68,13 @@ export function UpdatePageModal({
 
   useEffect(() => {
     if (state.status === 1) {
-      console.log(state.status, 'trigger')
+
       onEdit(form.getValues())
       toast.success(state.message)
       closeModal()
     }
   }, [state.status])
-  console.log(form.formState.errors, state)
+
 
   return (
     <div
@@ -90,7 +90,7 @@ export function UpdatePageModal({
           onSubmit={(evt) => {
             evt.preventDefault()
             form.handleSubmit(async (data) => {
-              console.log('client')
+
               const formData = new FormData()
               formData.append('content', data.content)
               formData.append('description', data.description)

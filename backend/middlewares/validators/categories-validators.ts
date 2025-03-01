@@ -5,7 +5,7 @@ export const addCategoryValidator: Middleware = async (req, next) => {
   const body = await req.parsedBody()
   const schema = z.object({
     name: z.string().min(1),
-    variants: z.array(z.string().min(1))
+    variants: z.array(z.string().min(1)),
   })
 
   try {
@@ -19,7 +19,7 @@ export const addCategoryValidator: Middleware = async (req, next) => {
 export const removeCategoryValidator: Middleware = async (req, next) => {
   const body = await req.parsedBody()
   const schema = z.object({
-    name: z.string().min(1)
+    name: z.string().min(1),
   })
   try {
     schema.parse(body)

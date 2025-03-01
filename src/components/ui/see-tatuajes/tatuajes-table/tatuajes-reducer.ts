@@ -11,7 +11,12 @@ type TatuajesAction =
     }
   | {
       type: 'change-data'
-      payload: { index: number; tags?: string[]; styles?: string[] }
+      payload: {
+        index: number
+        tags?: string[]
+        styles?: string[]
+        position?: string
+      }
     }
 
 export const TatuajesReducer = (
@@ -38,7 +43,7 @@ export const TatuajesReducer = (
   }
 
   if (action.type === 'change-data') {
-    const { index, tags, styles } = action.payload
+    const { index, tags, styles, position } = action.payload
 
     return state.map((el, i) => {
       if (i !== index) return el
@@ -46,6 +51,7 @@ export const TatuajesReducer = (
         ...el,
         tags: tags || el.tags,
         styles: styles || el.styles,
+        position: position || el.position,
       }
     }) as Tattoo[]
   }

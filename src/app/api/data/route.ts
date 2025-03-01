@@ -2,10 +2,9 @@ import { AuthMiddleware } from '@backend/middlewares/auth-middleware'
 import { handler } from '@backend/middlewares/helpers'
 import { DataChangeValidator } from '@backend/middlewares/validators/data-validators'
 import { NextResponse } from 'next/server'
-import { pageData, saveAllPageData } from '@/lib/backend/utils/data';
-import { revalidateTag } from 'next/cache';
-import { TAGS } from '@/lib/utils/consts';
-
+import { pageData, saveAllPageData } from '@/lib/backend/utils/data'
+import { revalidateTag } from 'next/cache'
+import { TAGS } from '@/lib/utils/consts'
 
 export const POST = handler(
   AuthMiddleware(true),
@@ -14,7 +13,6 @@ export const POST = handler(
     const data = (await req.parsedBody()) as pageData
     console.log({ data })
     try {
-
       await saveAllPageData(data)
       revalidateTag(TAGS.data)
 

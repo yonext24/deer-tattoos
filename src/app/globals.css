@@ -107,8 +107,8 @@ html {
     --total-vertical-padding: calc(
       var(--padding) *
         (
-          var(--amount-of-tattoos) / var(--amount-of-tattoos-in-horizontal-view) -
-            1
+          var(--amount-of-tattoos) /
+            var(--amount-of-tattoos-in-horizontal-view) - 1
         )
     );
   }
@@ -129,7 +129,8 @@ html {
                   var(--total-vertical-padding) -
                   (var(--tattoo-height) * 2 + var(--padding))
               )
-            ) * -1
+            ) *
+            -1
         )
       );
     }

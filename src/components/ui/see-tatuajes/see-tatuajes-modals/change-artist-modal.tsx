@@ -20,7 +20,8 @@ const formSchema = z.object({
     slug: z
       .string()
       .min(1)
-      .transform((val) => (val === 'none' ? null : val)),
+      .transform((val) => (val === 'Ninguno' ? null : val))
+      .nullable(),
   }),
 })
 

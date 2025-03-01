@@ -19,6 +19,7 @@ export type Tattoo = {
   artistSlug: string
   createdAt: Date
   updatedAt: Date
+  position: string
 }
 
 export type TattooWithIndex = Tattoo & { __number__: number }

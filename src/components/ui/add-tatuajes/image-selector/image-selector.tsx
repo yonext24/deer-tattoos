@@ -32,7 +32,7 @@ export const ImageSelector = forwardRef(function ImageSelector(
   },
   ref
 ) {
-  const handleChange = () => {}
+  const handleChange = () => { }
 
   const {
     open,
@@ -89,6 +89,7 @@ export const ImageSelector = forwardRef(function ImageSelector(
       {croppedUrl && (
         <div className="w-[500px]">
           <TattooCard
+            position=""
             artistSlug=""
             title=""
             id={''}

@@ -29,7 +29,7 @@ export function ProductShoppingButton({ product }: { product: Product }) {
 
   {
   }
-  console.log(finalVariant)
+
 
   return (
     <>

@@ -20,7 +20,10 @@ export const fetchHandler = async (res: Response) => {
   }
 }
 
-export const appFetch = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
+export const appFetch = async <T = any>(
+  url: string,
+  options?: RequestInit
+): Promise<T> => {
   try {
     return fetch(url, options).then(fetchHandler)
   } catch (err) {

@@ -17,7 +17,7 @@ export function MobileNavbarLink({
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     router.push(href)
-    console.log(closeModal)
+
     closeModal()
   }
 

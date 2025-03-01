@@ -32,7 +32,7 @@ export function ScalonatedInput({
   }
 
   const handleDelete = (removed: string) => {
-    console.log('delete')
+
     const newValue = selectedValues.filter((el) => el !== removed)
     onChange(newValue)
   }

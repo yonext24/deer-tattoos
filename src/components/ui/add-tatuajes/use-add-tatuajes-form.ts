@@ -43,6 +43,7 @@ const formSchema = zod.object({
   artist: zod.object({
     slug: zod.string().min(1).nullable(),
   }),
+  position: zod.string().min(1, 'La posición es obligatoria'),
 })
 
 export type AddTatuajesFormValues = zod.infer<typeof formSchema>
@@ -52,6 +53,7 @@ const formDefaultValues = {
   type: 'single' as 'single' | 'double' | 'quad',
   styles: [],
   tags: [],
+  position: '',
   image: {
     card: undefined,
     card_height: undefined,

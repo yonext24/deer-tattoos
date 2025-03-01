@@ -9,7 +9,7 @@ export function LinkButton() {
 
   if (!editor) return null
 
-  console.log(editor.state.selection.empty)
+
 
   return (
     <MenuButton

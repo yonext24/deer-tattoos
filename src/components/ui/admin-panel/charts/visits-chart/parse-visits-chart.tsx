@@ -15,7 +15,7 @@ function parseData(
   date_from?: Date,
   date_to?: Date
 ) {
-  console.log({ date_from, date_to })
+
 
   const isHourlyGranularity = !!date_from && !!date_to && date_from === date_to
 
@@ -28,21 +28,21 @@ function parseData(
 
   const data = isCurrentData
     ? queryData.reduce(
-        (acc, record, index) => {
-          const value = record[kpi] ?? 0
+      (acc, record, index) => {
+        const value = record[kpi] ?? 0
 
-          const pastValue = index < queryData.length - 1 ? value : ''
-          const currentValue = index > queryData.length - 3 ? value : ''
+        const pastValue = index < queryData.length - 1 ? value : ''
+        const currentValue = index > queryData.length - 3 ? value : ''
 
-          const [pastPart, currentPart] = acc
+        const [pastPart, currentPart] = acc
 
-          return [
-            [...pastPart, pastValue],
-            [...currentPart, currentValue],
-          ]
-        },
-        [[], []] as ChartValue[][]
-      )
+        return [
+          [...pastPart, pastValue],
+          [...currentPart, currentValue],
+        ]
+      },
+      [[], []] as ChartValue[][]
+    )
     : [queryData.map((value) => value[kpi] ?? 0), ['']]
 
   return {

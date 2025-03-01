@@ -87,8 +87,6 @@ export function CategoriesFilter() {
   const params = generateParams(searchParams)
   const selectedValues = params.getAll('style')
 
-  console.log({ status })
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -96,7 +94,7 @@ export function CategoriesFilter() {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">
         <Command>
-          <CommandInput placeholder={'Estilos'} />
+          <CommandInput placeholder={'Estilo'} />
           <CommandList
             className={cn(status === 'loading' && 'overflow-y-hidden')}
           >

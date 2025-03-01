@@ -36,6 +36,7 @@ declare module '@tanstack/table-core' {
       index: number
       tags?: string[]
       styles?: string[]
+      position?: string
     }) => void
   }
 }
@@ -165,6 +166,11 @@ export function useTatuajesTable({
         },
       },
       {
+        header: 'Posición',
+        accessorKey: 'position',
+        cell: ({ row }) => <span>{row.getValue('position')}</span>
+      },
+      {
         header: 'Artista',
         accessorKey: 'artistSlug',
         cell: ({ row }) => {
@@ -221,6 +227,7 @@ export function useTatuajesTable({
         index: number
         tags?: string[]
         styles?: string[]
+        position?: string
       }) => {
         dispatch({ type: 'change-data', payload: data })
       },

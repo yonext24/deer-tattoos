@@ -1,4 +1,4 @@
-import { CategoriesFilter } from '@/components/filters/categories-filter/categories-filter'
+import { Filters } from '@/components/filters/filters'
 import { Main } from '@/components/ui/common/main'
 import { Section } from '@/components/ui/common/section'
 
@@ -13,7 +13,7 @@ export default function Layout({
     <Main>
       <Section className="w-full">
         <div className="p-4 py-2">
-          <CategoriesFilter />
+          <Filters />
         </div>
         {children}
         {pagination}

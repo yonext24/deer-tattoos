@@ -30,6 +30,7 @@ const Children = async ({
   const filterParams = transformSearchParams(searchParams, {
     search: 'unique',
     style: 'multiple',
+    position: 'multiple',
   })
   const paginationParams = transformSearchParams(searchParams, {
     page: 'unique',

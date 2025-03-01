@@ -16,7 +16,7 @@ export async function generateImageUrl(
   image: HTMLImageElement,
   crop: PixelCrop,
   imageData: ReturnType<typeof getScale>,
-  scale = 1,
+  scale = 1
 ) {
   const canvas = document.createElement('canvas')
 

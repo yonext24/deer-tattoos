@@ -12,7 +12,10 @@ export const uncachedGetPageBySlug = async (slug: string) => {
 }
 
 export const updatePage = async (page: Omit<Omit<Page, 'slug'>, 'title'>) => {
-  return prisma.page.update({ where: { id: page.id }, data: { content: page.content, description: page.description } })
+  return prisma.page.update({
+    where: { id: page.id },
+    data: { content: page.content, description: page.description },
+  })
 }
 
 export const deletePage = async (id: string) => {
@@ -23,5 +26,11 @@ export const createPage = async (page: PageWithoutId) => {
   return prisma.page.create({ data: page })
 }
 
-export const getPages = unstable_cache(uncachedGetPages, ['pages', 'all'], { tags: [TAGS.pages] })
-export const getPageBySlug = unstable_cache(uncachedGetPageBySlug, ['pages', 'slug'], { tags: [TAGS.pages] })
+export const getPages = unstable_cache(uncachedGetPages, ['pages', 'all'], {
+  tags: [TAGS.pages],
+})
+export const getPageBySlug = unstable_cache(
+  uncachedGetPageBySlug,
+  ['pages', 'slug'],
+  { tags: [TAGS.pages] }
+)

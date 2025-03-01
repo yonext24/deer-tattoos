@@ -6,6 +6,7 @@ export type FilterFuncPropFilterType = {
   artist?: string | null
   sortByRanking?: boolean | null
   exclude?: string | null
+  position?: string | string[] | null
 }
 export type FilterFuncPropPaginationType = {
   size?: string | number | null

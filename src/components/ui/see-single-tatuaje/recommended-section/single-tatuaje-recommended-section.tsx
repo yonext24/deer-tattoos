@@ -77,7 +77,7 @@ export function SingleTatuajeRecommendedSection({
 
   if (!tattoo) return null
 
-  console.log({ related, recommended })
+
 
   return (
     <div className="flex flex-col">

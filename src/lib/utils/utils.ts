@@ -25,10 +25,10 @@ export const transformSearchParams = <
   params: SearchParamsType,
   args: TransformSearchParamsArgs
 ): {
-    [K in keyof TransformSearchParamsArgs]: TransformSearchParamsArgs[K] extends 'unique'
+  [K in keyof TransformSearchParamsArgs]: TransformSearchParamsArgs[K] extends 'unique'
     ? string | undefined
     : string[] | undefined
-  } => {
+} => {
   const newParams: {
     [K in keyof TransformSearchParamsArgs]: TransformSearchParamsArgs[K]
   } = {} as any
@@ -157,17 +157,24 @@ type mediaType = {
   icon: any
 }
 
-function createWrapper(elementTag: keyof HTMLElementTagNameMap = 'div', id?: string) {
+function createWrapper(
+  elementTag: keyof HTMLElementTagNameMap = 'div',
+  id?: string
+) {
   const hipoteticElementWrapper = document.createElement(elementTag)
 
   hipoteticElementWrapper.setAttribute('id', 'hipotetic-element')
-  hipoteticElementWrapper.className = 'absolute left-[-99999px] top-[-999999px] flex'
+  hipoteticElementWrapper.className =
+    'absolute left-[-99999px] top-[-999999px] flex'
   document.body.appendChild(hipoteticElementWrapper)
 
   return hipoteticElementWrapper
 }
 
-export const measureHipoteticElement = (propElement: keyof HTMLElementTagNameMap, content?: string) => {
+export const measureHipoteticElement = (
+  propElement: keyof HTMLElementTagNameMap,
+  content?: string
+) => {
   // not so hipotetic lol
   const element = createWrapper(propElement, 'measuring-wrapper')
 
@@ -179,7 +186,9 @@ export const measureHipoteticElement = (propElement: keyof HTMLElementTagNameMap
   return elementSizes
 }
 
-export const transformPageMedias = (data: pageData | null): Array<Omit<mediaType, 'key_name'>> => {
+export const transformPageMedias = (
+  data: pageData | null
+): Array<Omit<mediaType, 'key_name'>> => {
   if (!data) return []
   const medias: Array<Omit<Omit<mediaType, 'name'>, 'href'>> = [
     {
@@ -196,28 +205,35 @@ export const transformPageMedias = (data: pageData | null): Array<Omit<mediaType
     },
   ]
 
-  return medias.map(({ key_name, ...el }) => ({ ...el, href: data[key_name] })).filter(el => el.href)
+  return medias
+    .map(({ key_name, ...el }) => ({ ...el, href: data[key_name] }))
+    .filter((el) => el.href)
 }
 
 export const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
-  stringToCheck.startsWith(startsWith) ? stringToCheck : `${startsWith}${stringToCheck}`;
+  stringToCheck.startsWith(startsWith)
+    ? stringToCheck
+    : `${startsWith}${stringToCheck}`
 
 export const validateEnvironmentVariables = () => {
-  const requiredEnvironmentVariables = ['SHOPIFY_STORE_DOMAIN', 'SHOPIFY_STOREFRONT_ACCESS_TOKEN'];
-  const missingEnvironmentVariables = [] as string[];
+  const requiredEnvironmentVariables = [
+    'SHOPIFY_STORE_DOMAIN',
+    'SHOPIFY_STOREFRONT_ACCESS_TOKEN',
+  ]
+  const missingEnvironmentVariables = [] as string[]
 
   requiredEnvironmentVariables.forEach((envVar) => {
     if (!process.env[envVar]) {
-      missingEnvironmentVariables.push(envVar);
+      missingEnvironmentVariables.push(envVar)
     }
-  });
+  })
 
   if (missingEnvironmentVariables.length) {
     throw new Error(
       `The following environment variables are missing. Your site will not work without them. Read more: https://vercel.com/docs/integrations/shopify#configure-environment-variables\n\n${missingEnvironmentVariables.join(
         '\n'
       )}\n`
-    );
+    )
   }
 
   if (
@@ -226,9 +242,9 @@ export const validateEnvironmentVariables = () => {
   ) {
     throw new Error(
       'Your `SHOPIFY_STORE_DOMAIN` environment variable includes brackets (ie. `[` and / or `]`). Your site will not work with them there. Please remove them.'
-    );
+    )
   }
-};
+}
 
 export const sortWithoutStockToEnd = (a: Product, b: Product) => {
   if (!a.availableForSale && b.availableForSale) return 1

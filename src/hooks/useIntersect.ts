@@ -26,7 +26,7 @@ export function useIntersect({
         return prev
       })
     },
-    [once, setIntersecting],
+    [once, setIntersecting]
   )
 
   useEffect(() => {

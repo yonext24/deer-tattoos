@@ -8,41 +8,41 @@ export type Middleware = (
 
 export const handler =
   (...middleware: Middleware[]) =>
-    async (request: NextRequest) => {
-      let result
-      let pReq: ParsedRequest = new ParsedRequest(request)
+  async (request: NextRequest) => {
+    let result
+    let pReq: ParsedRequest = new ParsedRequest(request)
 
-      for (let i = 0; i < middleware.length; i++) {
-        let nextInvoked = false
+    for (let i = 0; i < middleware.length; i++) {
+      let nextInvoked = false
 
-        const next: NextFunction = async () => {
-          nextInvoked = true
-        }
-
-        try {
-          result = await middleware[i](pReq, next)
-
-          if (result) break
-        } catch (error) {
-          const { code, message } = parseError(error)
-
-          console.log('ERROR EN HANDLER *************')
-          console.log('CODE: ', code)
-          console.log('MESSAGE: ', message)
-          console.log('******************************')
-
-          return NextResponse.json({ error: message }, { status: code })
-        }
-
-        if (!nextInvoked) {
-          break
-        }
+      const next: NextFunction = async () => {
+        nextInvoked = true
       }
 
-      if (result) return result
+      try {
+        result = await middleware[i](pReq, next)
 
-      throw new Error('Your handler or middleware must return a NextResponse!')
+        if (result) break
+      } catch (error) {
+        const { code, message } = parseError(error)
+
+        console.log('ERROR EN HANDLER *************')
+        console.log('CODE: ', code)
+        console.log('MESSAGE: ', message)
+        console.log('******************************')
+
+        return NextResponse.json({ error: message }, { status: code })
+      }
+
+      if (!nextInvoked) {
+        break
+      }
     }
+
+    if (result) return result
+
+    throw new Error('Your handler or middleware must return a NextResponse!')
+  }
 
 const parseError = (error: unknown) => {
   if (error instanceof Error) {

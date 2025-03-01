@@ -10,7 +10,6 @@ export type SearchResponse = {
 }[]
 
 export const GET = async (request: Request) => {
-
   const url = request.url
   const params = new URLSearchParams(url.split('?')[1])
   const query = params.get('q')
@@ -39,8 +38,7 @@ export const GET = async (request: Request) => {
     const matchesWithStyles = item.styles.filter((style) => {
       if (ignore && ignore.includes(style)) return false
       return new RegExp(query, 'i').test(style)
-    }
-    )
+    })
 
     if (matchesWithStyles.length > 0) {
       arr.push(
@@ -105,11 +103,22 @@ export const GET = async (request: Request) => {
     href: `/tatuador/${artist.slug}/tatuajes`,
   }))
 
-  return Response.json([...parsedSearch, ...parsedArtists].map((el, id) => ({ ...el, id })))
+  return Response.json(
+    [...parsedSearch, ...parsedArtists].map((el, id) => ({ ...el, id }))
+  )
 }
 
 async function getFeaturedSearch() {
   const { styles } = ranked
 
-  return Response.json([...styles].slice(0, 4).map((el, id) => ({ content: el, type: 'category', href: `/category/${el}`, id })))
+  return Response.json(
+    [...styles]
+      .slice(0, 4)
+      .map((el, id) => ({
+        content: el,
+        type: 'category',
+        href: `/category/${el}`,
+        id,
+      }))
+  )
 }

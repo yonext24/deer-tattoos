@@ -19,6 +19,7 @@ import { ArtistSelector } from '@/components/ui/add-tatuajes/artist-selector/art
 import { SubmitButton } from '@/components/ui/common/submit-button'
 import { ExtraImagesSelector } from '@/components/ui/add-tatuajes/extra-images-selector/extra-images-selector'
 import { ScalonatedInput } from '@/components/scalonated-input/scalonated-input'
+import { PositionSelector } from '@/components/ui/add-tatuajes/position-selector/position-selector'
 
 export default function Page() {
   const { form, onSubmit, imageRef, extraImagesRef } = useAddTatuajesForm()
@@ -44,6 +45,7 @@ export default function Page() {
                   <FormControl>
                     <Input
                       type="text"
+                      autoFocus
                       className="w-auto min-w-[400px]"
                       value={value}
                       onChange={onChange}
@@ -60,6 +62,26 @@ export default function Page() {
               )
             }}
           />
+
+          <FormField
+            control={control}
+            name="position"
+            render={({ field: { onChange, value } }) => {
+              return (
+                <FormItem className="flex flex-col items-start max-w-[300px]">
+                  <FormLabel>Posición</FormLabel>
+                  <FormControl>
+                    <PositionSelector onChange={onChange} value={value} />
+                  </FormControl>
+                  <FormDescription>
+                    La posición donde está hecho el tatuaje.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )
+            }}
+          />
+
           <FormField
             control={control}
             name="artist.slug"
@@ -79,7 +101,6 @@ export default function Page() {
               )
             }}
           />
-
           <FormField
             control={control}
             name="styles"

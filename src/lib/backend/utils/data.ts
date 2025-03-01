@@ -3,15 +3,15 @@ import { prisma } from '@backend/prisma'
 import { unstable_cache } from 'next/cache'
 
 export type pageData = {
-  id?: string,
+  id?: string
   main_data: string
-  footer_data: string,
-  who_we_are: string,
-  instagram: string,
-  facebook: string,
+  footer_data: string
+  who_we_are: string
+  instagram: string
+  facebook: string
   twitter: string
 
-  email: string,
+  email: string
   address: string
 }
 
@@ -25,17 +25,22 @@ export const saveAllPageData = async (pageData: pageData) => {
   const actualPageData = await prisma.pageData.findFirst()
 
   try {
-
     if (actualPageData) {
-      return await prisma.pageData.update({ where: { id: actualPageData.id }, data: pageData })
+      return await prisma.pageData.update({
+        where: { id: actualPageData.id },
+        data: pageData,
+      })
     }
 
     return await prisma.pageData.create({ data: pageData })
   } catch (err) {
     console.error(err)
     throw new Error('Ocurrió un error al intentar cambiar los datos.')
-
   }
 }
 
-export const getAllPageData = unstable_cache(uncachedGetAllPageData, ['page-data-cached'], { tags: [TAGS.data] })
+export const getAllPageData = unstable_cache(
+  uncachedGetAllPageData,
+  ['page-data-cached'],
+  { tags: [TAGS.data] }
+)

@@ -48,6 +48,7 @@ export const tattooController = {
       card_width,
       title,
       extra_images,
+      position,
     } = (await request.parsedBody()) as TattooCreateBodyType
 
     const { width: main_width, height: main_height } =
@@ -103,6 +104,7 @@ export const tattooController = {
         slug,
         styles,
         tags,
+        position,
         images: {
           images,
           card: {
@@ -142,7 +144,7 @@ export const tattooController = {
 
   updateTattoo: async (request: ParsedRequest) => {
     try {
-      const { styles, tags, artistSlug, id } =
+      const { styles, tags, artistSlug, id, position } =
         (await request.parsedBody()) as TattooUpdateSchemaType
 
       const toUpdate: any = {}
@@ -155,6 +157,9 @@ export const tattooController = {
       }
       if (artistSlug !== undefined) {
         toUpdate['artistSlug'] = artistSlug
+      }
+      if (position) {
+        toUpdate['position'] = position
       }
 
       const updated = await prisma.tattoo.update({
@@ -182,5 +187,17 @@ export const tattooController = {
     })
 
     return NextResponse.json({})
+  },
+  async getAllPositions(request: Request) {
+    const artist = new URL(request.url).searchParams.get('artist')
+
+    const allTattoos = await prisma.tattoo.findMany({
+      ...(artist && { where: { artistSlug: artist } }),
+    })
+    const allPositions = allTattoos.map((el) => el.position as string)
+
+    const positions = Array.from(new Set(allPositions))
+
+    return NextResponse.json(positions)
   },
 }

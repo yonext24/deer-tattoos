@@ -16,7 +16,7 @@ const AdminCategoryReducer = (
   state: Style[],
   action: AdminCategoryAction
 ): Style[] => {
-  console.log(action.type)
+
   if (action.type === 'add-category') {
     return [...state, action.payload]
   }
@@ -33,7 +33,7 @@ const AdminCategoryReducer = (
 export const AdminCategoriesContext = createContext<{
   state: Style[]
   dispatch: Dispatch<AdminCategoryAction>
-}>({ state: [], dispatch: () => {} })
+}>({ state: [], dispatch: () => { } })
 
 export const AdminCategoriesProvider = ({
   children,
